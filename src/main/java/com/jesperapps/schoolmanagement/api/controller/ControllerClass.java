@@ -42,14 +42,14 @@ public class ControllerClass {
 	}
 	
 	@PostMapping("/class")
-	public ResponseClass checkclass(@RequestBody RequestClass schoolManagementRequest  ) {
+	public ResponseClass checkclass(@RequestBody RequestClass schoolManagementRequest ) {
 		Class classOfName=schoolmanagementservice.checkclass( schoolManagementRequest.getClassName());
-		System.out.println("ClassOfName:"+ classOfName);
+//		System.out.println("ClassOfName:"+ classOfName);
 		ResponseClass response= new ResponseClass(409,"classexists");
 		if(classOfName != null) {
 			return response;
 		}else{
-			Class newClass =schoolmanagementservice.createnewclass( schoolManagementRequest.getClassName(), schoolManagementRequest.getClassId());
+			Class newClass =schoolmanagementservice.createnewclass(schoolManagementRequest.getClassName(), schoolManagementRequest.getClassId());
 			response.setStatuscode(200);
 			response.setDescription("new class created");
 			return response;

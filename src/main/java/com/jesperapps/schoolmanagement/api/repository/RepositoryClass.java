@@ -14,7 +14,7 @@ public interface RepositoryClass extends JpaRepository<Class, Integer> {
 
 	Class findByClassId(int classid);
 
-	Class findByclassName(String className);
+	Class findByClassName(String className);
 
 }
 

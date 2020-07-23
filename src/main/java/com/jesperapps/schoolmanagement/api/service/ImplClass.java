@@ -48,14 +48,15 @@ public class ImplClass implements ServiceClass {
 
 	private Class getClassName(String className) {
 		
-		return  schoolmanagementrepository.findByclassName(className);
+		return  schoolmanagementrepository.findByClassName(className);
 	}
 
 
-	public Class createnewclass(String name,int Id) {
+	public Class createnewclass(String name,Integer Id) {
+		System.out.println(name+","+Id);
 		Class newclass = new Class();
 		newclass.setClassName(name);
-		newclass.setClassId(Id);
+//		newclass.setClassId(Id);
 		schoolmanagementrepository.save(newclass);
 		return newclass;
 	}
