@@ -1,7 +1,7 @@
 package com.jesperapps.schoolmanagement.api.controller;
 
-import java.util.List;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,77 +10,109 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.jesperapps.schoolmanagement.api.message.RequestClass;
 import com.jesperapps.schoolmanagement.api.message.ResponseClass;
 import com.jesperapps.schoolmanagement.api.model.Class;
 import com.jesperapps.schoolmanagement.api.service.ImplClass;
+
 
 @RestController
 public class ControllerClass {
 	
 	
 	@Autowired
-	private ImplClass schoolmanagementservice; 
+	private ImplClass implClassservice; 
 	
 	
-	
-	
-	
-	@PostMapping("/addclass")
-	public List<Class> addclass(@RequestBody List<Class> classes){
-		schoolmanagementservice.addclass(classes);
-		return classes;
-	}
-	
-	
-	
-	
-	@GetMapping("/showAll")
-	public Iterable<Class> listAllclasses(){
-		return schoolmanagementservice.findAll();
-	}
 	
 	@PostMapping("/class")
-	public ResponseClass checkclass(@RequestBody RequestClass schoolManagementRequest ) {
-		Class classOfName=schoolmanagementservice.checkclass( schoolManagementRequest.getClassName());
-//		System.out.println("ClassOfName:"+ classOfName);
+	public ResponseClass checkclass(@RequestBody List<RequestClass> requestClass ) 
+	{
+		ResponseClass response1= new ResponseClass(200,"ClassIsCreated");
+		
+		for(RequestClass eachclass:requestClass) 
+		{
+		Class classOfName=implClassservice.checkclass( eachclass.getClassName());
 		ResponseClass response= new ResponseClass(409,"classexists");
-		if(classOfName != null) {
-			return response;
-		}else{
-			Class newClass =schoolmanagementservice.createnewclass(schoolManagementRequest.getClassName(), schoolManagementRequest.getClassId());
-			response.setStatuscode(200);
-			response.setDescription("new class created");
-			return response;
+		
+				if(classOfName != null) 
+					{
+						return response;
+					}
+				else
+					{
+						@SuppressWarnings("unused")
+						Class newClass =implClassservice.createnewclass(eachclass.getClassName(),eachclass.getClassId());
+					}
 		}
+		
+		return response1;
 	}
 	
-	@PutMapping("/update-class")
-	public ResponseClass updateClassName(@RequestBody RequestClass schoolManagementRequest) {
-		ResponseClass response = new ResponseClass(400,"Bad request");
-		if(schoolManagementRequest.getClassId() != null) {
-			Class classFromDatabase = schoolmanagementservice.fromClassId(schoolManagementRequest.getClassId());
-			if(classFromDatabase != null) {
-				classFromDatabase.setClassName(schoolManagementRequest.getClassName());
-				schoolmanagementservice.saveClass(classFromDatabase) ;
-					response.setDescription("Success");
+	
+	
+	@PutMapping("/class")
+	public ResponseClass updateClassName(@RequestBody RequestClass requestClass)
+	{
+		ResponseClass response = new ResponseClass(409,"No such Id found");
+		if(requestClass.getClassId() != null) 
+			{
+				Class classFromDatabase = implClassservice.fromClassId(requestClass.getClassId());
+				if(classFromDatabase != null) 
+					{
+					
+					classFromDatabase.setClassName(requestClass.getClassName());
+					implClassservice.saveClass(classFromDatabase) ;
+					response.setDescription("Successfully updated");
 					response.setStatuscode(200);
 				
+					}
 			}
-		}
+		
 		return response;
 	}
 	
-	@DeleteMapping("/deleteClass/{classId}")
-	public ResponseClass deleteClassById(@PathVariable int classId) {
-		ResponseClass response = new ResponseClass(400, "bad request");
-		Class classFromId = schoolmanagementservice.fromClassId(classId);
-		if(classFromId != null) {
-			schoolmanagementservice.deleteClass(classFromId);
-			response.setDescription("");
-			response.setStatuscode(200);
+	
+	
+	
+	@GetMapping("/class")
+	public Iterable<Class> listAllclasses()
+	{
+		return implClassservice.findAll();
+	}
+	
+	
+
+	@GetMapping("/class/{classId}")
+	public Class viewClass(@PathVariable int classId)
+	{
+		Class cls = implClassservice.findById(classId);
+
+		if(cls != null)
+		{
+			return(cls) ;
+		}else
+		{
+			cls = new Class();
+			
 		}
+		return cls;
+		
+	}
+	
+	
+	@DeleteMapping("/Class/{classId}")
+	public ResponseClass deleteClassById(@PathVariable int classId)
+	{
+		ResponseClass response = new ResponseClass(409, "No such Id found");
+		
+		Class classFromId = implClassservice.fromClassId(classId);
+			if(classFromId != null)
+				{
+					implClassservice.deleteClass(classFromId);
+					response.setDescription("deleted Successfully");
+					response.setStatuscode(200);
+				}
 		return response;
 		
 	}
