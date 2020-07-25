@@ -5,8 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.jesperapps.schoolmanagement.api.message.RequestClass;
-import com.jesperapps.schoolmanagement.api.utils.ClassStatus;
+import com.jesperapps.schoolmanagement.api.message.ClassRequest;
+//import com.jesperapps.schoolmanagement.api.utils.StatusClass;
 
 @Entity
 public class Class {
@@ -15,14 +15,14 @@ public class Class {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer classId;
 	private String className;
-	private String classStatus=ClassStatus.NULL;
+	private String status;
 	
 	public Class() {
 		super();
 	}
 	
 	
-	public Class(RequestClass requestClass) {
+	public Class(ClassRequest requestClass) {
 		
 		this.classId=requestClass.getClassId();
 		this.className=requestClass.getClassName();
@@ -44,15 +44,17 @@ public class Class {
 	}
 
 
-	public String getClassStatus() {
-		return classStatus;
+	public String getStatus() {
+		return status;
 	}
 
 
-	public void setClassStatus(String clsStatus) {
-		this.classStatus = clsStatus;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
+
+	
 
 
 

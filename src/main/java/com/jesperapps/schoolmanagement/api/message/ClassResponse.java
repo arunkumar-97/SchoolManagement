@@ -1,16 +1,16 @@
 package com.jesperapps.schoolmanagement.api.message;
 
-public class ResponseClass {
+public class ClassResponse {
 
 		public int statuscode;
 		public String description;
 		
-		public ResponseClass() 
+		public ClassResponse() 
 		{
 			
 		}
 		
-		public ResponseClass(int statuscode, String description) 
+		public ClassResponse(int statuscode, String description) 
 		{
 			super();
 			this.statuscode = statuscode;

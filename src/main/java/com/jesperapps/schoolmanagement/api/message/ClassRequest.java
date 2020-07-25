@@ -1,11 +1,12 @@
 package com.jesperapps.schoolmanagement.api.message;
 
-public class RequestClass {
+public class ClassRequest {
 	
 	
 	
 	private Integer classId;
 	private String className;
+	private String status;
 
 	
 	
@@ -25,6 +26,12 @@ public class RequestClass {
 	public void setClassName(String className)
 	{
 		this.className = className;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 	

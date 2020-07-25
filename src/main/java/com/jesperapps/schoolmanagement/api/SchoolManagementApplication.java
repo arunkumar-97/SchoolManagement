@@ -6,12 +6,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EnableJpaRepositories
-public class ClassApplication
+public class SchoolManagementApplication
 {
 
 	public static void main(String[] args)
 	{
-		SpringApplication.run(ClassApplication.class, args);
+		SpringApplication.run(SchoolManagementApplication.class, args);
 	}
 
 }
