@@ -24,8 +24,6 @@ import com.jesperapps.schoolmanagement.api.service.SubjectService;
 import com.jesperapps.schoolmanagement.api.utils.StatusClass;
 
 
-
-
 @RestController
 public class ClassController {
 
@@ -61,13 +59,13 @@ public class ClassController {
 		return response1;
 	}
 
-	@PostMapping("/add-subject/{class_id}")
-	public ClassResponse addSubjectToClass(@PathVariable int class_id, @RequestBody List<SubjectRequest> subjectsList) {
+	@PostMapping("/addSubject/{classId}")
+	public ClassResponse addSubjectToClass(@PathVariable int classId, @RequestBody List<SubjectRequest> subjectRequestList) {
 		ClassResponse response = new ClassResponse(400, "Bad request");
-		Class requestClass = classService.findById(class_id);
+		Class requestClass = classService.findById(classId);
 		if(requestClass != null) {
 			List<Subject> classListOfSubject = new ArrayList<>();
-			for(SubjectRequest subject : subjectsList) {
+			for(SubjectRequest subject : subjectRequestList) {
 				Subject subjectFromDB=null;
 				if(subject.getSubjectId() == null) {
 					subjectFromDB = subjectService.checksubject(subject.getSubjectName());	
@@ -130,7 +128,7 @@ public class ClassController {
 
 
 
-
+ 
 
 
 	@GetMapping("/class/{classId}")
@@ -170,7 +168,9 @@ public class ClassController {
 
 	@GetMapping("/subjects/{classId}")
 	public List<SubjectListResponse> getClassSubjects(@PathVariable int classId){
+		
 		List<SubjectListResponse> subjectList= new ArrayList<>();
+	
 		Class requestClass = classService.findById(classId);
 		if(requestClass != null) {
 			requestClass.getSubject().forEach(subject -> {
@@ -179,12 +179,15 @@ public class ClassController {
 						subject.getSubjectName(),
 						subject.getStatus()
 						));
+			
 			});
+		
 		}
-		return subjectList;
+		return (subjectList);
+		
 	}
 
-
+	
 }
 
 
