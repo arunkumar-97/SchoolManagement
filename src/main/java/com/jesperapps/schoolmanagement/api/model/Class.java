@@ -1,12 +1,15 @@
 package com.jesperapps.schoolmanagement.api.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import com.jesperapps.schoolmanagement.api.message.ClassRequest;
-//import com.jesperapps.schoolmanagement.api.utils.StatusClass;
 
 @Entity
 public class Class {
@@ -17,6 +20,11 @@ public class Class {
 	private String className;
 	private String status;
 	
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "cls ")
+	List<Subject> subject;
+	
+	
+
 	public Class() {
 		super();
 	}

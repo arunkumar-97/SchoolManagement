@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import com.jesperapps.schoolmanagement.api.message.SubjectListResponse;
 import com.jesperapps.schoolmanagement.api.model.Subject;
 import com.jesperapps.schoolmanagement.api.repository.SubjectRepository;
+import com.jesperapps.schoolmanagement.api.utils.StatusClass;
+import com.jesperapps.schoolmanagement.api.utils.StatusSubject;
 
 @Service
 public class ServiceImplementationSubject implements SubjectService {
@@ -57,5 +59,32 @@ public class ServiceImplementationSubject implements SubjectService {
 		
 	
 	}
+
+
+	@Override
+	public Subject findById(int subjectId) {
+		
+		return subjectRepository.findBySubjectId(subjectId);
+	}
+
+
+	@Override
+	public void deleteSubject(Subject subjectFromId) {
+		subjectFromId.setStatus(StatusClass.DELETED);
+		this.savesubject(subjectFromId);
+		
+	}
+
+
+	@Override
+	public List<SubjectListResponse> findAll() {
+		return subjectRepository.findByStatusIsNot(StatusSubject.DELETED);
+	
+	
+	}
+
+
+
+	
 
 }

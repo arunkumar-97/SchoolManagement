@@ -1,5 +1,8 @@
 package com.jesperapps.schoolmanagement.api.service;
 
+import java.util.List;
+
+import com.jesperapps.schoolmanagement.api.message.SubjectListResponse;
 import com.jesperapps.schoolmanagement.api.model.Subject;
 
 public interface SubjectService {
@@ -11,5 +14,12 @@ public interface SubjectService {
 	Subject fromSubjectId(Integer subjectId);
 
 	boolean savesubject(Subject subjectFromDatabase);
+
+	Subject findById(int subjectId);
+
+	void deleteSubject(Subject subjectFromId);
+
+	List<SubjectListResponse> findAll();
+
 
 }

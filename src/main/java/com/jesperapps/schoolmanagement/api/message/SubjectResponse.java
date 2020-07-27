@@ -11,6 +11,7 @@ public class SubjectResponse {
 	public SubjectResponse() {
 	
 	}
+	
 	public SubjectResponse(int statuscode, String description) {
 		super();
 		this.statuscode=statuscode;

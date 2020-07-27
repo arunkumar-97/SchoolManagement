@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import com.jesperapps.schoolmanagement.api.message.SubjectRequest;
 
@@ -27,7 +29,20 @@ public class Subject {
 		this.subjectName=subjectRequest.getSubjectName();
 	}
 	
+
+	@ManyToOne
+	@JoinColumn(name="classId",referencedColumnName = "classId")
+	private Class cls;
 	
+	
+	public Class getCls() {
+		return cls;
+	}
+
+	public void setCls(Class cls) {
+		this.cls = cls;
+	}
+
 	public Integer getSubjectId() {
 		return subjectId;
 	}

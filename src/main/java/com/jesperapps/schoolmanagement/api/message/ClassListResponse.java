@@ -7,15 +7,14 @@ public class ClassListResponse {
 	private String status;
 	
 	
-	public ClassListResponse() {
-		super();
-	}
+	
 	public ClassListResponse(Integer classId, String className, String status) {
 		
 		this.classId = classId;
 		this.className = className;
 		this.status = status;
 	}
+	
 	public Integer getClassId() {
 		return classId;
 	}

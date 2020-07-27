@@ -4,9 +4,7 @@ import java.util.List;
 import com.jesperapps.schoolmanagement.api.utils.StatusClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-
-
+import com.jesperapps.schoolmanagement.api.message.ClassListResponse;
 import com.jesperapps.schoolmanagement.api.model.Class;
 import com.jesperapps.schoolmanagement.api.repository.ClassRepository;
 
@@ -25,7 +23,7 @@ public class ServiceImplementationClass implements ClassService {
 
 	
 
-	public Iterable<Class> findAll()
+	public List<ClassListResponse> findAll()
 	{
 		
 		
@@ -62,17 +60,7 @@ public class ServiceImplementationClass implements ClassService {
 		return  classRepository.findByClassName(className);
 	}
 
-//
-//	public Class createnewclass(String name,Integer Id) 
-//	{
-//
-//		Class newclass = new Class();
-//		
-//		repositoryClass.save(newclass);
-//		return newclass;
-//	}
-//
-//	
+
 
 
 

@@ -2,6 +2,8 @@ package com.jesperapps.schoolmanagement.api.controller;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,13 +12,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-
+import com.jesperapps.schoolmanagement.api.message.ClassListResponse;
 import com.jesperapps.schoolmanagement.api.message.ClassRequest;
 import com.jesperapps.schoolmanagement.api.message.ClassResponse;
 import com.jesperapps.schoolmanagement.api.model.Class;
 import com.jesperapps.schoolmanagement.api.service.ClassService;
 import com.jesperapps.schoolmanagement.api.utils.StatusClass;
+
+
 
 
 @RestController
@@ -79,29 +82,35 @@ public class ClassController {
 	
 	
 	@GetMapping("/class")
-	public Iterable<Class>  listAllclasses()
+	public List<ClassListResponse>  listAllclasses()
 	{
-		
-		return classService.findAll();
+		List<ClassListResponse> res=new ArrayList<ClassListResponse>();
+ 
+		 classService.findAll().forEach(cls->{
+			 res.add(new ClassListResponse(cls.getClassId(),cls.getClassName(),cls.getStatus()));
+		 });;
+		 return res;
 	}
 	
-//	@GetMapping("/classs1")
-//	public Iterable<class> 
+
+
+
+
 
 	@GetMapping("/class/{classId}")
-	public Class viewClass(@PathVariable int classId)
+	public ClassListResponse viewClass(@PathVariable int classId)
 	{
 		Class cls = classService.findById(classId);
-		
+	
 		if(cls != null)
 		{
-			return(cls) ;
+			return(new ClassListResponse(cls.getClassId(),cls.getClassName(),cls.getStatus()));
 		}else
 		{
 			cls = new Class();
 			
 		}
-		return cls;
+		return new ClassListResponse(cls.getClassId(),cls.getClassName(),cls.getStatus()) ;
 		
 	}
 	
