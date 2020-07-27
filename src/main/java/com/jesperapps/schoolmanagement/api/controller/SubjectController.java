@@ -61,6 +61,7 @@ public class SubjectController {
 		
 	}
 	
+	
 	@GetMapping("/subject")
 	public List<SubjectListResponse>  listAllclasses()
 	{

@@ -20,10 +20,20 @@ public class Class {
 	private String className;
 	private String status;
 	
-	@OneToMany(cascade = CascadeType.ALL,mappedBy = "cls ")
-	List<Subject> subject;
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "cls")
+	private List<Subject> subject;
 	
 	
+
+	public List<Subject> getSubject() {
+		return subject;
+	}
+
+
+	public void setSubject(List<Subject> subject) {
+		this.subject = subject;
+	}
+
 
 	public Class() {
 		super();

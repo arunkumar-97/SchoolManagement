@@ -15,8 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jesperapps.schoolmanagement.api.message.ClassListResponse;
 import com.jesperapps.schoolmanagement.api.message.ClassRequest;
 import com.jesperapps.schoolmanagement.api.message.ClassResponse;
+import com.jesperapps.schoolmanagement.api.message.SubjectListResponse;
+import com.jesperapps.schoolmanagement.api.message.SubjectRequest;
 import com.jesperapps.schoolmanagement.api.model.Class;
+import com.jesperapps.schoolmanagement.api.model.Subject;
 import com.jesperapps.schoolmanagement.api.service.ClassService;
+import com.jesperapps.schoolmanagement.api.service.SubjectService;
 import com.jesperapps.schoolmanagement.api.utils.StatusClass;
 
 
@@ -24,74 +28,106 @@ import com.jesperapps.schoolmanagement.api.utils.StatusClass;
 
 @RestController
 public class ClassController {
-	
-	
+
+
 	@Autowired
 	private ClassService classService; 
-	
-	
-	
+
+	@Autowired
+	private SubjectService subjectService;
+
+
+
 	@PostMapping("/class")
 	public ClassResponse checkclass(@RequestBody ClassRequest classRequest ) 
 	{
 		ClassResponse response1= new ClassResponse(200,"ClassIsCreated");		
-//		for(ClassRequest eachclass:classRequest) 
-//		{
+		//		for(ClassRequest eachclass:classRequest) 
+		//		{
 		Class classOfName=classService.checkclass( classRequest.getClassName());
 		ClassResponse response= new ClassResponse(409,"classexists");
-		
-				if(classOfName != null) 
-					{
-						return response;
-					}
-				else
-					{
-						@SuppressWarnings("unused")
-						Class newClass =classService.createnewclass(classRequest.getClassName(),classRequest.getClassId(),StatusClass.getStatus(classRequest.getStatus()));
-					}
-		
-		
+
+		if(classOfName != null) 
+		{
+			return response;
+		}
+		else
+		{
+			@SuppressWarnings("unused")
+			Class newClass =classService.createnewclass(classRequest.getClassName(),classRequest.getClassId(),StatusClass.getStatus(classRequest.getStatus()));
+		}
+
+
 		return response1;
 	}
-	
-	
-	
+
+	@PostMapping("/add-subject/{class_id}")
+	public ClassResponse addSubjectToClass(@PathVariable int class_id, @RequestBody List<SubjectRequest> subjectsList) {
+		ClassResponse response = new ClassResponse(400, "Bad request");
+		Class requestClass = classService.findById(class_id);
+		if(requestClass != null) {
+			List<Subject> classListOfSubject = new ArrayList<>();
+			for(SubjectRequest subject : subjectsList) {
+				Subject subjectFromDB=null;
+				if(subject.getSubjectId() == null) {
+					subjectFromDB = subjectService.checksubject(subject.getSubjectName());	
+				}else {
+					subjectFromDB = subjectService.findById(subject.getSubjectId());
+				}
+				if(subjectFromDB != null) {
+					subjectFromDB.setCls(requestClass);
+					classListOfSubject.add(subjectFromDB);
+				}else {
+					Subject newSubject = new Subject(subject);
+					newSubject.setCls(requestClass);
+					classListOfSubject.add(newSubject);
+				}
+			}
+			requestClass.setSubject(classListOfSubject);
+			classService.saveClass(requestClass);
+			response.setDescription("Success");
+			response.setStatuscode(200);
+		}
+		return response;
+	}
+
+
 	@PutMapping("/class")
 	public ClassResponse updateClassName(@RequestBody ClassRequest classRequest)
 	{
 		ClassResponse response = new ClassResponse(409,"No such Id found");
 		if(classRequest.getClassId() != null) 
+		{
+			Class classFromDatabase = classService.fromClassId(classRequest.getClassId());
+			if(classFromDatabase != null) 
 			{
-				Class classFromDatabase = classService.fromClassId(classRequest.getClassId());
-				if(classFromDatabase != null) 
-					{
-					
-					classFromDatabase.setClassName(classRequest.getClassName());
-			
-					classService.saveClass(classFromDatabase) ;
-					response.setDescription("Successfully updated");
-					response.setStatuscode(200);
-				
-					}
+
+				classFromDatabase.setClassName(classRequest.getClassName());
+
+				classService.saveClass(classFromDatabase) ;
+				response.setDescription("Successfully updated");
+				response.setStatuscode(200);
+
 			}
-		
+		}
+
 		return response;
 	}
-	
-	
-	
-	
+
+
+
+
 	@GetMapping("/class")
 	public List<ClassListResponse>  listAllclasses()
 	{
 		List<ClassListResponse> res=new ArrayList<ClassListResponse>();
- 
-		 classService.findAll().forEach(cls->{
-			 res.add(new ClassListResponse(cls.getClassId(),cls.getClassName(),cls.getStatus()));
-		 });;
-		 return res;
+
+		classService.findAll().forEach(cls->{
+			res.add(new ClassListResponse(cls.getClassId(),cls.getClassName(),cls.getStatus()));
+		});;
+		return res;
 	}
-	
+
 
 
 
@@ -101,41 +137,56 @@ public class ClassController {
 	public ClassListResponse viewClass(@PathVariable int classId)
 	{
 		Class cls = classService.findById(classId);
-	
+
 		if(cls != null)
 		{
 			return(new ClassListResponse(cls.getClassId(),cls.getClassName(),cls.getStatus()));
 		}else
 		{
 			cls = new Class();
-			
+
 		}
 		return new ClassListResponse(cls.getClassId(),cls.getClassName(),cls.getStatus()) ;
-		
+
 	}
-	
-	
+
+
 	@DeleteMapping("/Class/{classId}")
 	public ClassResponse deleteClassById(@PathVariable int classId)
 	{
 		ClassResponse response = new ClassResponse(409, "No such Id found");
-		
+
 		Class classFromId = classService.fromClassId(classId);
-			if(classFromId != null)
-				{
-					classService.deleteClass(classFromId);
-					response.setDescription("deleted Successfully");
-					response.setStatuscode(200);
-				}
+		if(classFromId != null)
+		{
+			classService.deleteClass(classFromId);
+			response.setDescription("deleted Successfully");
+			response.setStatuscode(200);
+		}
 		return response;
-		
+
 	}
-	
-	
-	
+
+
+	@GetMapping("/subjects/{classId}")
+	public List<SubjectListResponse> getClassSubjects(@PathVariable int classId){
+		List<SubjectListResponse> subjectList= new ArrayList<>();
+		Class requestClass = classService.findById(classId);
+		if(requestClass != null) {
+			requestClass.getSubject().forEach(subject -> {
+				subjectList.add(new SubjectListResponse(
+						subject.getSubjectId(),
+						subject.getSubjectName(),
+						subject.getStatus()
+						));
+			});
+		}
+		return subjectList;
+	}
+
 
 }
-	
-	
+
+
 
 

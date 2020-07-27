@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -27,11 +28,12 @@ public class Subject {
 	public Subject(SubjectRequest subjectRequest) {
 		this.subjectId=subjectRequest.getSubjectId();
 		this.subjectName=subjectRequest.getSubjectName();
+		this.status = subjectRequest.getStatus();
 	}
 	
 
 	@ManyToOne
-	@JoinColumn(name="classId",referencedColumnName = "classId")
+	@JoinTable(name="classSubject",joinColumns=@JoinColumn(name="subjectId", referencedColumnName="subjectId"), inverseJoinColumns=@JoinColumn(name="classId", referencedColumnName="classId"))
 	private Class cls;
 	
 	

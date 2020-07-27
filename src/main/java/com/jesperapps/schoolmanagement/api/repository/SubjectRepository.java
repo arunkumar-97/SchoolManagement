@@ -13,6 +13,4 @@ public interface SubjectRepository extends JpaRepository<Subject, Integer>{
 
 	List<SubjectListResponse> findByStatusIsNot(String dELETED);
 
-	List<SubjectListResponse> findByclassId(int classId);
-
 }
