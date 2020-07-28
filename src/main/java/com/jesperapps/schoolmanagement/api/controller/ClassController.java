@@ -5,6 +5,7 @@ package com.jesperapps.schoolmanagement.api.controller;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,8 +23,9 @@ import com.jesperapps.schoolmanagement.api.model.Subject;
 import com.jesperapps.schoolmanagement.api.service.ClassService;
 import com.jesperapps.schoolmanagement.api.service.SubjectService;
 import com.jesperapps.schoolmanagement.api.utils.StatusClass;
+import com.jesperapps.schoolmanagement.api.utils.StatusSubject;
 
-
+@CrossOrigin(origins="*",allowedHeaders="*")
 @RestController
 public class ClassController {
 
@@ -35,7 +37,7 @@ public class ClassController {
 	private SubjectService subjectService;
 
 
-
+	
 	@PostMapping("/class")
 	public ClassResponse checkclass(@RequestBody ClassRequest classRequest ) 
 	{
@@ -58,10 +60,10 @@ public class ClassController {
 
 		return response1;
 	}
-
+	
 	@PostMapping("/addSubject/{classId}")
 	public ClassResponse addSubjectToClass(@PathVariable int classId, @RequestBody List<SubjectRequest> subjectRequestList) {
-		ClassResponse response = new ClassResponse(400, "Bad request");
+		ClassResponse response = new ClassResponse(409, "No such ClassId Found");
 		Class requestClass = classService.findById(classId);
 		if(requestClass != null) {
 			List<Subject> classListOfSubject = new ArrayList<>();
@@ -89,7 +91,7 @@ public class ClassController {
 		return response;
 	}
 
-
+	
 	@PutMapping("/class")
 	public ClassResponse updateClassName(@RequestBody ClassRequest classRequest)
 	{
@@ -114,7 +116,7 @@ public class ClassController {
 
 
 
-
+	
 	@GetMapping("/class")
 	public List<ClassListResponse>  listAllclasses()
 	{
@@ -148,8 +150,8 @@ public class ClassController {
 
 	}
 
-
-	@DeleteMapping("/Class/{classId}")
+	
+	@DeleteMapping("/class/{classId}")
 	public ClassResponse deleteClassById(@PathVariable int classId)
 	{
 		ClassResponse response = new ClassResponse(409, "No such Id found");
@@ -165,7 +167,7 @@ public class ClassController {
 
 	}
 
-
+	
 	@GetMapping("/subjects/{classId}")
 	public List<SubjectListResponse> getClassSubjects(@PathVariable int classId){
 		
@@ -174,11 +176,13 @@ public class ClassController {
 		Class requestClass = classService.findById(classId);
 		if(requestClass != null) {
 			requestClass.getSubject().forEach(subject -> {
-				subjectList.add(new SubjectListResponse(
-						subject.getSubjectId(),
-						subject.getSubjectName(),
-						subject.getStatus()
-						));
+				if(!subject.getStatus().equalsIgnoreCase(StatusSubject.DELETED)) {
+					subjectList.add(new SubjectListResponse(
+							subject.getSubjectId(),
+							subject.getSubjectName(),
+							subject.getStatus()
+							));
+				}
 			
 			});
 		

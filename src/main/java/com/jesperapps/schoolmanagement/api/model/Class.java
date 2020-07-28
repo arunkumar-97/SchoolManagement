@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.jesperapps.schoolmanagement.api.message.ClassRequest;
+import com.jesperapps.schoolmanagement.api.utils.StatusClass;
 
 @Entity
 public class Class {
@@ -18,7 +19,7 @@ public class Class {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer classId;
 	private String className;
-	private String status;
+	private String status=StatusClass.INACTIVE;
 	
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "cls")
 	private List<Subject> subject;
@@ -44,6 +45,7 @@ public class Class {
 		
 		this.classId=requestClass.getClassId();
 		this.className=requestClass.getClassName();
+		this.status = requestClass.getStatus() != null ? requestClass.getStatus() : this.status;
 		
 		
 	}

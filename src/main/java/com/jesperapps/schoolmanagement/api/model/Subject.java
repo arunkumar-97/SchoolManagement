@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.jesperapps.schoolmanagement.api.message.SubjectRequest;
+import com.jesperapps.schoolmanagement.api.utils.StatusSubject;
 
 
 @Entity
@@ -18,7 +19,7 @@ public class Subject {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer subjectId;
 	private String subjectName;
-	private String status;
+	private String status= StatusSubject.INACTIVE;
 	
 	
 	public Subject() {
@@ -28,7 +29,7 @@ public class Subject {
 	public Subject(SubjectRequest subjectRequest) {
 		this.subjectId=subjectRequest.getSubjectId();
 		this.subjectName=subjectRequest.getSubjectName();
-		this.status = subjectRequest.getStatus();
+		this.status = subjectRequest.getStatus() != null ? subjectRequest.getStatus() : this.status;
 	}
 	
 
