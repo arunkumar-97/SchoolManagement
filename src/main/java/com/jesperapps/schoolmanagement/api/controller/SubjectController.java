@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +19,7 @@ import com.jesperapps.schoolmanagement.api.model.Subject;
 import com.jesperapps.schoolmanagement.api.service.SubjectService;
 import com.jesperapps.schoolmanagement.api.utils.StatusSubject;
 
-
+@CrossOrigin(origins="*",allowedHeaders="*")
 @RestController
 public class SubjectController {
 	
@@ -28,7 +29,7 @@ public class SubjectController {
 	
 	@PostMapping("/subject")
 	public SubjectResponse checksubject(@RequestBody SubjectRequest subjectRequest) {
-		SubjectResponse response1=new SubjectResponse(200,"Subject Created");
+		SubjectResponse response1=new SubjectResponse(200,"Subject Created Successfully");
 		Subject subjectName=subjectService.checksubject(subjectRequest.getSubjectName());
 		
 		SubjectResponse response=new SubjectResponse(409,"Subject already exists");

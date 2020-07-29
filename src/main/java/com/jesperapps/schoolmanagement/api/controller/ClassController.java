@@ -41,11 +41,11 @@ public class ClassController {
 	@PostMapping("/class")
 	public ClassResponse checkclass(@RequestBody ClassRequest classRequest ) 
 	{
-		ClassResponse response1= new ClassResponse(200,"ClassIsCreated");		
+		ClassResponse response1= new ClassResponse(200,"Class created Successfully");		
 		//		for(ClassRequest eachclass:classRequest) 
 		//		{
 		Class classOfName=classService.checkclass( classRequest.getClassName());
-		ClassResponse response= new ClassResponse(409,"classexists");
+		ClassResponse response= new ClassResponse(409,"Class Exists");
 
 		if(classOfName != null) 
 		{
