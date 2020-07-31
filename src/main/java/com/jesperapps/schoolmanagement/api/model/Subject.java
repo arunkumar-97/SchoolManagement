@@ -1,5 +1,7 @@
 package com.jesperapps.schoolmanagement.api.model;
 
+
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,7 +15,7 @@ import com.jesperapps.schoolmanagement.api.utils.StatusSubject;
 
 
 @Entity
-public class Subject {
+public class Subject  {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

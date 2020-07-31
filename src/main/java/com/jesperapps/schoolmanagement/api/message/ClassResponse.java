@@ -2,36 +2,39 @@ package com.jesperapps.schoolmanagement.api.message;
 
 public class ClassResponse {
 
-		public int statuscode;
-		public String description;
+	private Integer classId;
+	private String className;
+	private String status;
+	
+	public ClassResponse() {
 		
-		public ClassResponse() 
-		{
-			
-		}
+	}
+	
+	
+	
+	public ClassResponse(Integer classId, String className, String status) {
 		
-		public ClassResponse(int statuscode, String description) 
-		{
-			super();
-			this.statuscode = statuscode;
-			this.description = description;
-		}
-		
-		public int getStatuscode() 
-		{
-			return statuscode;
-		}
-		public void setStatuscode(int statuscode) 
-		{
-			this.statuscode = statuscode;
-		}
-		public String getDescription()
-		{
-			return description;
-		}
-		public void setDescription(String description) 
-		{
-			this.description = description;
-		}
-		
+		this.classId = classId;
+		this.className = className;
+		this.status = status;
+	}
+	
+	public Integer getClassId() {
+		return classId;
+	}
+	public void setClassId(Integer classId) {
+		this.classId = classId;
+	}
+	public String getClassName() {
+		return className;
+	}
+	public void setClassName(String className) {
+		this.className = className;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+}
 }

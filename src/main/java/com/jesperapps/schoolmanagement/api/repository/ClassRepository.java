@@ -16,7 +16,7 @@ public interface ClassRepository extends JpaRepository<Class, Integer>
 
 	Class findByClassName(String className);
 	
-	List<ClassListResponse> findByStatusIsNot(String status);
+	List<Class> findByStatusIsNot(String status);
 
 }
 

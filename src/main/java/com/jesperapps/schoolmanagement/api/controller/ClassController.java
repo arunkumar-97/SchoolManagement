@@ -13,10 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.jesperapps.schoolmanagement.api.message.ClassBaseResponse;
 import com.jesperapps.schoolmanagement.api.message.ClassListResponse;
 import com.jesperapps.schoolmanagement.api.message.ClassRequest;
 import com.jesperapps.schoolmanagement.api.message.ClassResponse;
 import com.jesperapps.schoolmanagement.api.message.SubjectListResponse;
+import com.jesperapps.schoolmanagement.api.message.SubjectResponse;
 import com.jesperapps.schoolmanagement.api.message.SubjectRequest;
 import com.jesperapps.schoolmanagement.api.model.Class;
 import com.jesperapps.schoolmanagement.api.model.Subject;
@@ -39,31 +42,40 @@ public class ClassController {
 
 	
 	@PostMapping("/class")
-	public ClassResponse checkclass(@RequestBody ClassRequest classRequest ) 
+	public ClassBaseResponse checkclass(@RequestBody ClassRequest classRequest ) 
 	{
-		ClassResponse response1= new ClassResponse(200,"Class created Successfully");		
+		ClassBaseResponse response= new ClassBaseResponse(409,"Class Already Exists");
+		ClassResponse classResponse=new ClassResponse();
+		response.setCls(classResponse);
 		//		for(ClassRequest eachclass:classRequest) 
 		//		{
 		Class classOfName=classService.checkclass( classRequest.getClassName());
-		ClassResponse response= new ClassResponse(409,"Class Exists");
+		
 
-		if(classOfName != null) 
+		if(classOfName != null)
 		{
-			return response;
+			classResponse.setClassName(classRequest.getClassName());
+			classResponse.setClassId(classOfName.getClassId());
+			classResponse.setStatus(classRequest.getStatus());
 		}
 		else
 		{
 			@SuppressWarnings("unused")
 			Class newClass =classService.createnewclass(classRequest.getClassName(),classRequest.getClassId(),StatusClass.getStatus(classRequest.getStatus()));
+			classResponse.setClassId(newClass.getClassId());
+			classResponse.setClassName(newClass.getClassName());
+			classResponse.setStatus(newClass.getStatus());
+			response.setStatuscode(200);
+			response.setDescription("Class Created Successfully");
 		}
 
 
-		return response1;
+		return response;
 	}
 	
 	@PostMapping("/addSubject/{classId}")
-	public ClassResponse addSubjectToClass(@PathVariable int classId, @RequestBody List<SubjectRequest> subjectRequestList) {
-		ClassResponse response = new ClassResponse(409, "No such ClassId Found");
+	public ClassBaseResponse addSubjectToClass(@PathVariable int classId, @RequestBody List<SubjectRequest> subjectRequestList) {
+		ClassBaseResponse response = new ClassBaseResponse(409, "No such ClassId Found");
 		Class requestClass = classService.findById(classId);
 		if(requestClass != null) {
 			List<Subject> classListOfSubject = new ArrayList<>();
@@ -85,7 +97,7 @@ public class ClassController {
 			}
 			requestClass.setSubject(classListOfSubject);
 			classService.saveClass(requestClass);
-			response.setDescription("Success");
+			response.setDescription("Subjects added Successfully");
 			response.setStatuscode(200);
 		}
 		return response;
@@ -93,9 +105,11 @@ public class ClassController {
 
 	
 	@PutMapping("/class")
-	public ClassResponse updateClassName(@RequestBody ClassRequest classRequest)
+	public ClassBaseResponse updateClassName(@RequestBody ClassRequest classRequest)
 	{
-		ClassResponse response = new ClassResponse(409,"No such Id found");
+		ClassBaseResponse response = new ClassBaseResponse(409,"No such Id found");
+		ClassResponse classResponse=new ClassResponse();
+		response.setCls(classResponse);
 		if(classRequest.getClassId() != null) 
 		{
 			Class classFromDatabase = classService.fromClassId(classRequest.getClassId());
@@ -107,7 +121,9 @@ public class ClassController {
 				classService.saveClass(classFromDatabase) ;
 				response.setDescription("Successfully updated");
 				response.setStatuscode(200);
-
+				classResponse.setClassId(classRequest.getClassId());
+				classResponse.setClassName(classRequest.getClassName());
+				classResponse.setStatus(classFromDatabase.getStatus());
 			}
 		}
 
@@ -118,13 +134,21 @@ public class ClassController {
 
 	
 	@GetMapping("/class")
-	public List<ClassListResponse>  listAllclasses()
+	public ClassListResponse  listAllclasses()
 	{
-		List<ClassListResponse> res=new ArrayList<ClassListResponse>();
+		ClassListResponse res=new ClassListResponse(200, "Success");
+		
+//		ClassResponse cls= new ClassResponse();
+	
 
-		classService.findAll().forEach(cls->{
-			res.add(new ClassListResponse(cls.getClassId(),cls.getClassName(),cls.getStatus()));
-		});;
+		classService.findAll().forEach(clss->{
+			res.addclss(new ClassResponse(clss.getClassId(),clss.getClassName(),clss.getStatus()));
+		});; 
+		if(res.getClasses().size() <= 0) {
+			 res.setStatuscode(409);
+			 res.setDescription("No subjects found");
+		 }
+		
 		return res;
 	}
 
@@ -134,27 +158,33 @@ public class ClassController {
 
 
 	@GetMapping("/class/{classId}")
-	public ClassListResponse viewClass(@PathVariable int classId)
+	public ClassBaseResponse viewClass(@PathVariable int classId)
 	{
 		Class cls = classService.findById(classId);
-
+		ClassBaseResponse response = new ClassBaseResponse(200, "Success");
+		ClassResponse classResponse= new ClassResponse();
+		response.setCls(classResponse);
 		if(cls != null)
 		{
-			return(new ClassListResponse(cls.getClassId(),cls.getClassName(),cls.getStatus()));
+			classResponse.setClassId(cls.getClassId());
+			classResponse.setClassName(cls.getClassName());
+			classResponse.setStatus(cls.getStatus());
 		}else
 		{
-			cls = new Class();
-
+			response.setStatuscode(400);
+			response.setDescription("Failure");
+			
 		}
-		return new ClassListResponse(cls.getClassId(),cls.getClassName(),cls.getStatus()) ;
+		response.setCls(classResponse);
+		return response;
 
 	}
 
 	
 	@DeleteMapping("/class/{classId}")
-	public ClassResponse deleteClassById(@PathVariable int classId)
+	public ClassBaseResponse deleteClassById(@PathVariable int classId)
 	{
-		ClassResponse response = new ClassResponse(409, "No such Id found");
+		ClassBaseResponse response = new ClassBaseResponse(409, "No such Id found");
 
 		Class classFromId = classService.fromClassId(classId);
 		if(classFromId != null)
@@ -169,15 +199,15 @@ public class ClassController {
 
 	
 	@GetMapping("/subjects/{classId}")
-	public List<SubjectListResponse> getClassSubjects(@PathVariable int classId){
+	public List<SubjectResponse> getClassSubjects(@PathVariable int classId){
 		
-		List<SubjectListResponse> subjectList= new ArrayList<>();
+		List<SubjectResponse> subjectList= new ArrayList<>();
 	
 		Class requestClass = classService.findById(classId);
 		if(requestClass != null) {
 			requestClass.getSubject().forEach(subject -> {
 				if(!subject.getStatus().equalsIgnoreCase(StatusSubject.DELETED)) {
-					subjectList.add(new SubjectListResponse(
+					subjectList.add(new SubjectResponse(
 							subject.getSubjectId(),
 							subject.getSubjectName(),
 							subject.getStatus()

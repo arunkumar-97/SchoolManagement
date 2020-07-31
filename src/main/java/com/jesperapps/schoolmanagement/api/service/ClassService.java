@@ -17,7 +17,7 @@ public interface ClassService {
 
 	boolean saveClass(Class classFromDatabase);
 
-	List<ClassListResponse> findAll();
+	List<Class> findAll();
 
 	Class findById(int classId);
 

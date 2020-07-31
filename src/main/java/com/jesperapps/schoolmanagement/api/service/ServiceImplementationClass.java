@@ -23,7 +23,7 @@ public class ServiceImplementationClass implements ClassService {
 
 	
 
-	public List<ClassListResponse> findAll()
+	public List<Class> findAll()
 	{
 		
 		

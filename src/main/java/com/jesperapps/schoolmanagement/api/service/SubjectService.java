@@ -2,7 +2,6 @@ package com.jesperapps.schoolmanagement.api.service;
 
 import java.util.List;
 
-import com.jesperapps.schoolmanagement.api.message.SubjectListResponse;
 import com.jesperapps.schoolmanagement.api.model.Subject;
 
 public interface SubjectService {
@@ -19,7 +18,7 @@ public interface SubjectService {
 
 	void deleteSubject(Subject subjectFromId);
 
-	List<SubjectListResponse> findAll();
+	List<Subject> findAll();
 
 
 }

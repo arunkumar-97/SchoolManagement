@@ -2,7 +2,6 @@ package com.jesperapps.schoolmanagement.api.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import com.jesperapps.schoolmanagement.api.message.BaseResponse;
+import com.jesperapps.schoolmanagement.api.message.SubjectBaseResponse;
 import com.jesperapps.schoolmanagement.api.message.SubjectListResponse;
 import com.jesperapps.schoolmanagement.api.message.SubjectRequest;
 import com.jesperapps.schoolmanagement.api.message.SubjectResponse;
@@ -28,75 +29,99 @@ public class SubjectController {
 	
 	
 	@PostMapping("/subject")
-	public SubjectResponse checksubject(@RequestBody SubjectRequest subjectRequest) {
-		SubjectResponse response1=new SubjectResponse(200,"Subject Created Successfully");
+	public SubjectBaseResponse checksubject(@RequestBody SubjectRequest subjectRequest) {
+		SubjectBaseResponse response=new SubjectBaseResponse(409,"Subject already exists");
+		SubjectResponse subjectResponse = new SubjectResponse();
+		response.setSubject(subjectResponse);
+		
 		Subject subjectName=subjectService.checksubject(subjectRequest.getSubjectName());
 		
-		SubjectResponse response=new SubjectResponse(409,"Subject already exists");
+//		SubjectListResponse subjectListResponse = new SubjectListResponse();
+	
 		
 		if(subjectName!=null) {
-			return response;
+			subjectResponse.setSubjectId(subjectName.getSubjectId());
+			subjectResponse.setSubjectName(subjectRequest.getSubjectName());
+			subjectResponse.setStatus(subjectRequest.getStatus());
 		}
 		else {
 		@SuppressWarnings("unused")
 		Subject newsubject=	subjectService.createnewSubject(subjectRequest.getSubjectName(),subjectRequest.getSubjectId(),StatusSubject.getStatus(subjectRequest.getStatus()));
+		subjectResponse.setSubjectId(newsubject.getSubjectId());
+		subjectResponse.setSubjectName(newsubject.getSubjectName());
+		subjectResponse.setStatus(newsubject.getStatus());
+		response.setStatuscode(200);
+		response.setDescription("subject Created successfully");
 		}
 		
-		return response1;
+		return response;
 		
 	}
 	
 	
 	@PutMapping("/subject")
-	public SubjectResponse updateSubjectName(@RequestBody SubjectRequest subjectRequest){
-		SubjectResponse response=new SubjectResponse(409,"No Such Id Found");
+	public SubjectBaseResponse updateSubjectName(@RequestBody SubjectRequest subjectRequest){
+		SubjectBaseResponse response=new SubjectBaseResponse(409, "no such id found");
+		SubjectResponse subjectResponse = new SubjectResponse();
+		response.setSubject(subjectResponse);
 		 Subject subjectFromDatabase=subjectService.fromSubjectId(subjectRequest.getSubjectId());
 		 if(subjectFromDatabase!=null) {
 			subjectFromDatabase.setSubjectName(subjectRequest.getSubjectName());
 			subjectService.savesubject(subjectFromDatabase);
 			response.setStatuscode(200);
 			response.setDescription("successfully updated");
-			
+			subjectResponse.setSubjectId(subjectRequest.getSubjectId());
+			subjectResponse.setSubjectName(subjectRequest.getSubjectName());
+			subjectResponse.setStatus(subjectFromDatabase.getStatus());
 		 }
 		return response;
+		
 		
 	}
 	
 	
 	@GetMapping("/subject")
-	public List<SubjectListResponse>  listAllclasses()
+	public SubjectListResponse listAllclasses()
 	{
-		List<SubjectListResponse> res=new ArrayList<SubjectListResponse>();
- 
+		SubjectListResponse res=new SubjectListResponse(200, "Success");
 		 subjectService.findAll().forEach(sub->{
-			 res.add(new SubjectListResponse(sub.getSubjectId(),sub.getSubjectName(),sub.getStatus()));
-		 });;
+			 res.addSubject(new SubjectResponse(sub.getSubjectId(), sub.getSubjectName(), sub.getStatus()));
+		 });
+		 if(res.getSubjects().size() <= 0) {
+			 res.setStatuscode(409);
+			 res.setDescription("No subjects found");
+		 }
 		 return res;
 	}
 	
 	
 	
 	@GetMapping("/subject/{subjectId}")
-	public Subject viewSubject(@PathVariable int subjectId)
+	public SubjectBaseResponse viewSubject(@PathVariable int subjectId)
 	{
 		Subject sub = subjectService.findById(subjectId);
-		
+		SubjectBaseResponse response = new SubjectBaseResponse(200, "Success");
+		SubjectResponse subjectResponse = new SubjectResponse();
 		if(sub != null)
 		{
-			return(sub) ;
+			subjectResponse.setSubjectId(sub.getSubjectId());
+			subjectResponse.setSubjectName(sub.getSubjectName());
+			subjectResponse.setStatus(sub.getStatus());
 		}else
 		{
-			sub = new Subject();
+			response.setStatuscode(400);
+			response.setDescription("Failure");
 			
 		}
-		return sub;
+		response.setSubject(subjectResponse);
+		return response;
 	}
 	
 	
 	@DeleteMapping("/subject/{subjectId}")
-	public SubjectResponse deleteClassById(@PathVariable int subjectId)
+	public SubjectBaseResponse deleteClassById(@PathVariable int subjectId)
 	{
-		SubjectResponse response = new SubjectResponse(409, "No such Id found");
+		SubjectBaseResponse response = new SubjectBaseResponse(400,"Failure");
 		
 		Subject subjectFromId = subjectService.fromSubjectId(subjectId);
 			if(subjectFromId != null)

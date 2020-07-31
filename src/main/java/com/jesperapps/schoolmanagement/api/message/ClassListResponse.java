@@ -1,40 +1,32 @@
 package com.jesperapps.schoolmanagement.api.message;
 
-public class ClassListResponse {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ClassListResponse extends BaseResponse{
 	
-	private Integer classId;
-	private String className;
-	private String status;
+	public ClassListResponse(int statusCode,String description) {
+		super();
+		classes= new ArrayList<ClassResponse>();
+	}
 	
+	private List<ClassResponse> classes;
 	
-	
-	public ClassListResponse(Integer classId, String className, String status) {
+
+	public List<ClassResponse> getClasses() {
+		return classes;
+	}
+
+	public void setClasses(List<ClassResponse> classes) {
+		this.classes = classes;
+	}
+
+	public void addclss(ClassResponse classListResponse) {
+		this.classes.add(classListResponse);
 		
-		this.classId = classId;
-		this.className = className;
-		this.status = status;
 	}
-	
-	public Integer getClassId() {
-		return classId;
-	}
-	public void setClassId(Integer classId) {
-		this.classId = classId;
-	}
-	public String getClassName() {
-		return className;
-	}
-	public void setClassName(String className) {
-		this.className = className;
-	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	
-	
+
+
 
 
 }
