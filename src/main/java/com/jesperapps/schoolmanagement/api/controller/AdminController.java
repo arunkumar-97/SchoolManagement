@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jesperapps.schoolmanagement.api.message.AdminRequest;
 import com.jesperapps.schoolmanagement.api.message.AdminResponse;
-import com.jesperapps.schoolmanagement.api.model.Admin;
+import com.jesperapps.schoolmanagement.api.model.User;
 import com.jesperapps.schoolmanagement.api.service.AdminService;
 
 @RestController
@@ -19,14 +19,14 @@ public class AdminController {
 	private AdminService adminService;
 	
 	@PostMapping("/admin")
-	public List<Admin>  addadmin(@RequestBody List<Admin> admin){
+	public List<User>  addadmin(@RequestBody List<User> admin){
 		adminService.addadmin(admin);
 		return (admin);
 	}
 	
 	@PostMapping("/admin_login")
 	public AdminResponse loginadmin(@RequestBody AdminRequest adminRequest) {
-		Admin emailFromDb=adminService.getAdminByeMail(adminRequest.geteMail());
+		User emailFromDb=adminService.getAdminByeMail(adminRequest.geteMail());
 		if(emailFromDb!=null) {
 			if(adminService.checkPasswordIsSame(adminRequest.getPassword(), emailFromDb.getPassword())) {
 				return new AdminResponse(emailFromDb);

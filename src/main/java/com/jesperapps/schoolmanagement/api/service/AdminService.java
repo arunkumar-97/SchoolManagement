@@ -2,16 +2,16 @@ package com.jesperapps.schoolmanagement.api.service;
 
 import java.util.List;
 
-import com.jesperapps.schoolmanagement.api.message.AdminResponse;
-import com.jesperapps.schoolmanagement.api.model.Admin;
+
+import com.jesperapps.schoolmanagement.api.model.User;
 
 public interface AdminService {
 
-	void addadmin(List<Admin> admin);
+	void addadmin(List<User> admin);
 
-	Admin findByeMail(String geteMail);
+	User findByeMail(String geteMail);
 
-	Admin getAdminByeMail(String geteMail);
+	User getAdminByeMail(String geteMail);
 
 	boolean checkPasswordIsSame(String password, String password2);
 

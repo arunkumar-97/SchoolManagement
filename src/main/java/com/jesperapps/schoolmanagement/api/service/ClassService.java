@@ -2,7 +2,7 @@ package com.jesperapps.schoolmanagement.api.service;
 
 
 import java.util.List;
-import com.jesperapps.schoolmanagement.api.message.ClassListResponse;
+
 import com.jesperapps.schoolmanagement.api.model.Class;
 
 

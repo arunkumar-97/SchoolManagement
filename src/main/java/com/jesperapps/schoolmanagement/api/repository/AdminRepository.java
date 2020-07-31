@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.jesperapps.schoolmanagement.api.model.Admin;
+import com.jesperapps.schoolmanagement.api.model.User;
 
-public interface AdminRepository extends JpaRepository<Admin, Integer> {
+public interface AdminRepository extends JpaRepository<User, Integer> {
 
-	List<Admin> save(List<Admin> admin);
+	List<User> save(List<User> admin);
 
-	Admin findByeMail(String geteMail);
+	User findByeMail(String geteMail);
 
 }

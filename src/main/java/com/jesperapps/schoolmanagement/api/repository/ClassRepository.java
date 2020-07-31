@@ -4,7 +4,7 @@
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.jesperapps.schoolmanagement.api.message.ClassListResponse;
+
 import com.jesperapps.schoolmanagement.api.model.Class;
 
 public interface ClassRepository extends JpaRepository<Class, Integer> 

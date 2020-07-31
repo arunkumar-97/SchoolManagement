@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-import com.jesperapps.schoolmanagement.api.model.Admin;
+import com.jesperapps.schoolmanagement.api.model.User;
 import com.jesperapps.schoolmanagement.api.repository.AdminRepository;
 
 @Service
@@ -16,8 +16,8 @@ public class AdminImplementationClass implements AdminService{
 	private AdminRepository adminRepository;
 
 	@Override
-	public void addadmin(List<Admin> admin){
-		for( Admin eachadmin:admin) {
+	public void addadmin(List<User> admin){
+		for( User eachadmin:admin) {
 			eachadmin.setPassword(this.createsafepassword(eachadmin.getPassword()));
 		}
 		
@@ -36,13 +36,13 @@ public class AdminImplementationClass implements AdminService{
 	}
 
 	@Override
-	public Admin findByeMail(String geteMail) {
+	public User findByeMail(String geteMail) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Admin getAdminByeMail(String geteMail) {
+	public User getAdminByeMail(String geteMail) {
 		
 		return adminRepository.findByeMail(geteMail);
 	}

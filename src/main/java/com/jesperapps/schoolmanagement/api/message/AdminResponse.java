@@ -1,6 +1,6 @@
 package com.jesperapps.schoolmanagement.api.message;
 
-import com.jesperapps.schoolmanagement.api.model.Admin;
+import com.jesperapps.schoolmanagement.api.model.User;
 
 public class AdminResponse {
 
@@ -15,9 +15,9 @@ public class AdminResponse {
 		
 	}
 	
-	public AdminResponse(Admin admin) {
-		this.adminId = admin.getAdminId();
-		this.adminName = admin.getAdminName();
+	public AdminResponse(User admin) {
+		this.adminId = admin.getUserId();
+		this.adminName = admin.getUserName();
 		this.eMail = admin.geteMail();
 		this.password = admin.getPassword();
 		this.phoneNumber = admin.getPhoneNumber();
