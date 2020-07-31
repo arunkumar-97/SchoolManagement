@@ -1,6 +1,7 @@
 package com.jesperapps.schoolmanagement.api.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,14 +20,14 @@ public class AdminController {
 	private AdminService adminService;
 	
 	@PostMapping("/admin")
-	public List<User>  addadmin(@RequestBody List<User> admin){
+	public List<AdminResponse>  addadmin(@RequestBody List<User> admin){
 		adminService.addadmin(admin);
-		return (admin);
+		return admin.stream().map(eachadmin -> new AdminResponse(eachadmin)).collect(Collectors.toList());
 	}
 	
 	@PostMapping("/admin_login")
 	public AdminResponse loginadmin(@RequestBody AdminRequest adminRequest) {
-		User emailFromDb=adminService.getAdminByeMail(adminRequest.geteMail());
+		User emailFromDb=adminService.findByEmail(adminRequest.getEmail());
 		if(emailFromDb!=null) {
 			if(adminService.checkPasswordIsSame(adminRequest.getPassword(), emailFromDb.getPassword())) {
 				return new AdminResponse(emailFromDb);

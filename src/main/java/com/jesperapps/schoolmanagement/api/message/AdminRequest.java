@@ -4,18 +4,19 @@ package com.jesperapps.schoolmanagement.api.message;
 
 public class AdminRequest {
 	
-	private String eMail;
+	private String email;
 	private String password;
 	
 	
 	
 	
 	
-	public String geteMail() {
-		return eMail;
+	
+	public String getEmail() {
+		return email;
 	}
-	public void seteMail(String eMail) {
-		this.eMail = eMail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getPassword() {
 		return password;
@@ -23,6 +24,7 @@ public class AdminRequest {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
 	
 	
 	

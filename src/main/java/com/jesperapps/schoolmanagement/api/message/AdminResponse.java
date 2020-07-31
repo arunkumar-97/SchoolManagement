@@ -7,10 +7,11 @@ public class AdminResponse {
 	
 	private int adminId;
 	private String adminName;
-	private String eMail;
+	private String email;
 	private String password;
 	private int phoneNumber;
-	
+	private String userRole;
+
 	public AdminResponse() {
 		
 	}
@@ -18,9 +19,10 @@ public class AdminResponse {
 	public AdminResponse(User admin) {
 		this.adminId = admin.getUserId();
 		this.adminName = admin.getUserName();
-		this.eMail = admin.geteMail();
+		this.email = admin.getEmail();
 		this.password = admin.getPassword();
 		this.phoneNumber = admin.getPhoneNumber();
+		this.userRole = admin.getUserType() != null? admin.getUserType().getUserTypeRole() : null;
 	}
 	
 	public int getAdminId() {
@@ -35,12 +37,15 @@ public class AdminResponse {
 	public void setAdminName(String adminName) {
 		this.adminName = adminName;
 	}
-	public String geteMail() {
-		return eMail;
+	
+	public String getEmail() {
+		return email;
 	}
-	public void seteMail(String eMail) {
-		this.eMail = eMail;
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
+
 	public String getPassword() {
 		return password;
 	}
@@ -53,6 +58,14 @@ public class AdminResponse {
 	public void setPhoneNumber(int phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
+
 	
+	public String getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(String userRole) {
+		this.userRole = userRole;
+	}
 	
 }

@@ -9,9 +9,7 @@ public interface AdminService {
 
 	void addadmin(List<User> admin);
 
-	User findByeMail(String geteMail);
-
-	User getAdminByeMail(String geteMail);
+	User findByEmail(String geteMail);
 
 	boolean checkPasswordIsSame(String password, String password2);
 

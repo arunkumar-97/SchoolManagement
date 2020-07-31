@@ -10,6 +10,6 @@ public interface AdminRepository extends JpaRepository<User, Integer> {
 
 	List<User> save(List<User> admin);
 
-	User findByeMail(String geteMail);
+	User findByEmail(String geteMail);
 
 }

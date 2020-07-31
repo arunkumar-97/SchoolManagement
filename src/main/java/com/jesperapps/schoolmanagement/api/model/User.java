@@ -12,11 +12,18 @@ import com.jesperapps.schoolmanagement.api.message.AdminRequest;
 @Entity
 public class User {
 	
+	public UserType getUserType() {
+		return userType;
+	}
+
+	public void setUserType(UserType userType) {
+		this.userType = userType;
+	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int userId;
 	private String userName;
-	private String eMail;
+	private String email;
 	private String password;
 	private int phoneNumber;
 	
@@ -26,7 +33,7 @@ public class User {
 	}
 	
 	public User(AdminRequest adminRequest) {
-		this.eMail=adminRequest.geteMail();
+		this.email=adminRequest.getEmail();
 		this.password=adminRequest.getPassword();
 		
 	}
@@ -51,12 +58,15 @@ public class User {
 		this.userName = userName;
 	}
 
-	public String geteMail() {
-		return eMail;
+	
+	public String getEmail() {
+		return email;
 	}
-	public void seteMail(String eMail) {
-		this.eMail = eMail;
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
+
 	public String getPassword() {
 		return password;
 	}
