@@ -2,40 +2,43 @@ package com.jesperapps.schoolmanagement.api.message;
 
 import com.jesperapps.schoolmanagement.api.model.User;
 
-public class AdminResponse {
+public class UserResponse {
 
 	
-	private int adminId;
-	private String adminName;
+	private Integer userId;
+	private String userName;
 	private String email;
 	private String password;
 	private int phoneNumber;
 	private String userRole;
 
-	public AdminResponse() {
+	public UserResponse() {
 		
 	}
 	
-	public AdminResponse(User admin) {
-		this.adminId = admin.getUserId();
-		this.adminName = admin.getUserName();
+	public UserResponse(User admin) {
+		this.userId = admin.getUserId();
+		this.userName = admin.getUserName();
 		this.email = admin.getEmail();
 		this.password = admin.getPassword();
 		this.phoneNumber = admin.getPhoneNumber();
 		this.userRole = admin.getUserType() != null? admin.getUserType().getUserTypeRole() : null;
 	}
 	
-	public int getAdminId() {
-		return adminId;
+	
+	public Integer getAdminId() {
+		return userId;
 	}
-	public void setAdminId(int adminId) {
-		this.adminId = adminId;
+
+	public void setAdminId(Integer userId) {
+		this.userId = userId;
 	}
+
 	public String getAdminName() {
-		return adminName;
+		return userName;
 	}
-	public void setAdminName(String adminName) {
-		this.adminName = adminName;
+	public void setAdminName(String userName) {
+		this.userName = userName;
 	}
 	
 	public String getEmail() {

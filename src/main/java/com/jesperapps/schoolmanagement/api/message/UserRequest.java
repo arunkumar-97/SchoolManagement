@@ -2,7 +2,7 @@ package com.jesperapps.schoolmanagement.api.message;
 
 
 
-public class AdminRequest {
+public class UserRequest {
 	
 	private String email;
 	private String password;

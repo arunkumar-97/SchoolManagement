@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.jesperapps.schoolmanagement.api.model.User;
 
-public interface AdminService {
+public interface UserService {
 
 	void addadmin(List<User> admin);
 

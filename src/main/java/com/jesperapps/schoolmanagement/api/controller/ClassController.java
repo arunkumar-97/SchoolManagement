@@ -146,7 +146,7 @@ public class ClassController {
 		});; 
 		if(res.getClasses().size() <= 0) {
 			 res.setStatuscode(409);
-			 res.setDescription("No subjects found");
+			 res.setDescription(" No classes found");
 		 }
 		
 		return res;

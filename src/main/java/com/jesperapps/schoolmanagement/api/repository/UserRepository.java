@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.jesperapps.schoolmanagement.api.model.User;
 
-public interface AdminRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<User, Integer> {
 
 	List<User> save(List<User> admin);
 

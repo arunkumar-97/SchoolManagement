@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.jesperapps.schoolmanagement.api.message.AdminRequest;
+import com.jesperapps.schoolmanagement.api.message.UserRequest;
 
 @Entity
 public class User {
@@ -32,7 +32,7 @@ public class User {
 		
 	}
 	
-	public User(AdminRequest adminRequest) {
+	public User(UserRequest adminRequest) {
 		this.email=adminRequest.getEmail();
 		this.password=adminRequest.getPassword();
 		

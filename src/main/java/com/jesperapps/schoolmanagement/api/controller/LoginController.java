@@ -1,31 +1,35 @@
 package com.jesperapps.schoolmanagement.api.controller;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-//import com.jesperapps.schoolmanagement.api.message.UserRequest;
+
+import com.jesperapps.schoolmanagement.api.message.UserRequest;
 import com.jesperapps.schoolmanagement.api.message.UserResponse;
 import com.jesperapps.schoolmanagement.api.model.User;
 import com.jesperapps.schoolmanagement.api.service.UserService;
 
 @CrossOrigin(origins="*",allowedHeaders="*")
 @RestController
-public class UserController {
-	
+public class LoginController {
+
 	@Autowired
 	private UserService userService;
 	
-	@PostMapping("/user")
-	public List<UserResponse> addadmin(@RequestBody List<User> admin){
-		userService.addadmin(admin);
-		return  admin.stream().map(eachadmin -> new UserResponse(eachadmin)).collect(Collectors.toList());
-	}
 	
+	@PostMapping("/login")
+	public UserResponse loginuser(@RequestBody UserRequest adminRequest) {
+		User emailFromDb=userService.findByEmail(adminRequest.getEmail());
+		if(emailFromDb!=null) {
+			System.out.println(emailFromDb.getEmail()+","+adminRequest.getEmail());
+			if(userService.checkPasswordIsSame(adminRequest.getPassword(), emailFromDb.getPassword())) {
+				return new UserResponse(emailFromDb);
+			}
+			
+			}
+		return new UserResponse();
 
+	}	
 }
-
