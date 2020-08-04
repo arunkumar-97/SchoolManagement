@@ -1,11 +1,13 @@
 package com.jesperapps.schoolmanagement.api.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import com.jesperapps.schoolmanagement.api.message.UserRequest;
 
@@ -40,6 +42,9 @@ public class User {
 	@ManyToOne
 	@JoinColumn(name="userTypeId", referencedColumnName ="userTypeId")
 	private UserType userType;
+	
+	@OneToOne(mappedBy="user", cascade=CascadeType.ALL)
+	private ConfirmationToken otpToken;
 	
 	
 	public int getUserId() {
@@ -78,6 +83,14 @@ public class User {
 	}
 	public void setPhoneNumber(int phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+
+	public ConfirmationToken getOtpToken() {
+		return otpToken;
+	}
+
+	public void setOtpToken(ConfirmationToken otpToken) {
+		this.otpToken = otpToken;
 	}
 
 	
