@@ -39,7 +39,6 @@ public class ClassController {
 	@Autowired
 	private SubjectService subjectService;
 
-
 	
 	@PostMapping("/class")
 	public ClassBaseResponse checkclass(@RequestBody ClassRequest classRequest ) 
@@ -57,14 +56,18 @@ public class ClassController {
 			classResponse.setClassName(classRequest.getClassName());
 			classResponse.setClassId(classOfName.getClassId());
 			classResponse.setStatus(classRequest.getStatus());
+			classResponse.setMedium(classRequest.getMedium());
+			classResponse.setEducationBoard(classRequest.getEducationBoard());
 		}
 		else
 		{
 			@SuppressWarnings("unused")
-			Class newClass =classService.createnewclass(classRequest.getClassName(),classRequest.getClassId(),StatusClass.getStatus(classRequest.getStatus()));
+			Class newClass =classService.createnewclass(classRequest.getClassName(),classRequest.getClassId(),StatusClass.getStatus(classRequest.getStatus()),classRequest.getMedium(),classRequest.getEducationBoard());
 			classResponse.setClassId(newClass.getClassId());
 			classResponse.setClassName(newClass.getClassName());
 			classResponse.setStatus(newClass.getStatus());
+			classResponse.setMedium(newClass.getMedium().getMediumLanguage());
+			classResponse.setEducationBoard(newClass.getEducationBoard().getEducationBoardName());
 			response.setStatuscode(200);
 			response.setDescription("Class Created Successfully");
 		}
@@ -124,6 +127,7 @@ public class ClassController {
 				classResponse.setClassId(classRequest.getClassId());
 				classResponse.setClassName(classRequest.getClassName());
 				classResponse.setStatus(classFromDatabase.getStatus());
+				classResponse.setMedium(classFromDatabase.getMedium().getMediumLanguage());
 			}
 		}
 
@@ -142,7 +146,7 @@ public class ClassController {
 	
 
 		classService.findAll().forEach(clss->{
-			res.addclss(new ClassResponse(clss.getClassId(),clss.getClassName(),clss.getStatus()));
+			res.addclss(new ClassResponse(clss.getClassId(),clss.getClassName(),clss.getStatus(), clss.getMedium().getMediumLanguage(),clss.getEducationBoard().getEducationBoardName()));
 		});; 
 		if(res.getClasses().size() <= 0) {
 			 res.setStatuscode(409);
@@ -169,6 +173,7 @@ public class ClassController {
 			classResponse.setClassId(cls.getClassId());
 			classResponse.setClassName(cls.getClassName());
 			classResponse.setStatus(cls.getStatus());
+			classResponse.setMedium(cls.getMedium().getMediumLanguage());
 		}else
 		{
 			response.setStatuscode(400);

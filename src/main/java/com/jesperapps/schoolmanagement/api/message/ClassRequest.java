@@ -7,10 +7,23 @@ public class ClassRequest {
 	private Integer classId;
 	private String className;
 	private String status;
-
+	private String medium;
+	private String educationBoard;
 	
 	
 	
+	public String getEducationBoard() {
+		return educationBoard;
+	}
+	public void setEducationBoard(String educationBoard) {
+		this.educationBoard = educationBoard;
+	}
+	public String getMedium() {
+		return medium;
+	}
+	public void setMedium(String medium) {
+		this.medium = medium;
+	}
 	public Integer getClassId() 
 	{
 		return classId;

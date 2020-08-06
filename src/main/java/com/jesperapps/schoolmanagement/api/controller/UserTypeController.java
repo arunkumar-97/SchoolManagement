@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jesperapps.schoolmanagement.api.message.BaseResponse;
 import com.jesperapps.schoolmanagement.api.model.UserType;
 import com.jesperapps.schoolmanagement.api.repository.UserTypeRepository;
 import com.jesperapps.schoolmanagement.api.utils.UserTypes;
@@ -19,8 +20,9 @@ public class UserTypeController {
 
 
 	@GetMapping("/userType")
-	public String createUserType() {
-		
+	public BaseResponse createUserType() {
+		BaseResponse response=new BaseResponse(200,"UserType Created Successfully") {
+		};
 		UserType user1=new UserType(1,UserTypes.ADMIN);
 		UserType user2=new UserType(2,UserTypes.SUPERADMIN);
 		UserType user3=new UserType(3,UserTypes.USER);
@@ -32,7 +34,7 @@ public class UserTypeController {
 		
 	
 		
-		return "created";
+		return response  ;
 		
 	}
 }

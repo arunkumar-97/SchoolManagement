@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.jesperapps.schoolmanagement.api.message.ClassRequest;
@@ -24,7 +26,13 @@ public class Class {
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "cls")
 	private List<Subject> subject;
 	
-	
+	@ManyToOne
+	@JoinColumn(name="mediumId", referencedColumnName="mediumId")
+	private Medium medium;
+
+	@ManyToOne
+	@JoinColumn(name="educationBoardId", referencedColumnName="educationBoardId")
+	private EducationBoard educationBoard;
 
 	public List<Subject> getSubject() {
 		return subject;
@@ -69,8 +77,33 @@ public class Class {
 	}
 
 
+	public EducationBoard getEducationBoard() {
+		return educationBoard;
+	}
+
+
+	public void setEducationBoard(EducationBoard educationBoard) {
+		this.educationBoard = educationBoard;
+	}
+
+
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	public Medium getMedium() {
+		return medium;
+	}
+
+
+	public void setMedium(Medium medium2) {
+		this.medium = medium2;
+	}
+
+
+	public void setMedium(String medium2) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

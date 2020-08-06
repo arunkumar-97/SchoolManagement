@@ -5,6 +5,10 @@ import java.util.List;
 
 public class ClassListResponse extends BaseResponse{
 	
+	public ClassListResponse() {
+		super();
+	}
+	
 	public ClassListResponse(int statusCode,String description) {
 		super();
 		classes= new ArrayList<ClassResponse>();
