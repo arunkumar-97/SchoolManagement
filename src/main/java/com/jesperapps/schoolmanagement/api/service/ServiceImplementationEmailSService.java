@@ -25,6 +25,9 @@ public class ServiceImplementationEmailSService implements EmailSenderService {
 	
 	@Autowired
 	private ConfirmationTokenRepository confirmationTokenRepository;
+	
+
+	
 
 	public ServiceImplementationEmailSService() {
 		

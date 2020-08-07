@@ -21,6 +21,7 @@ public class User {
 	public void setUserType(UserType userType) {
 		this.userType = userType;
 	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int userId;
