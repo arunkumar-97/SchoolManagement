@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.web.multipart.MultipartFile;
 import com.jesperapps.schoolmanagement.api.message.OtpRequest;
 import com.jesperapps.schoolmanagement.api.message.OtpResponse;
 import com.jesperapps.schoolmanagement.api.model.User;
@@ -25,8 +25,12 @@ public class ServiceImplementationUser implements UserService{
 	@Autowired
 	private EmailSenderService emailService;
 	
+	@Autowired
+	private UserProfilePictureService userProfilePictureService;
+
 	@Override
-	public void addadmin(List<User> admin){
+	public void addadmin(MultipartFile[] profilePictureList,List<User> admin){
+		int index=0;
 		for( User eachadmin:admin) {
 			eachadmin.setPassword(this.createsafepassword(eachadmin.getPassword()));
 			if(eachadmin.getUserType() != null) {
@@ -40,6 +44,13 @@ public class ServiceImplementationUser implements UserService{
 				}
 			}
 			emailService.sendOTPMail(eachadmin);
+			//save profilePIcuter
+			if(index < profilePictureList.length){
+				UserProfilePicture profilePicture = userProfilePictureService.saveFile(profilePictureList.[index]);
+				profilePicture.setUser(eachadmin);
+				eachadmin.setUserProfile(profilePicture);
+			}
+			index++;
 		}
 		
 		 userRepository.saveAll(admin);

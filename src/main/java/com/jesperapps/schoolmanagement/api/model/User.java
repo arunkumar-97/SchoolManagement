@@ -29,7 +29,17 @@ public class User {
 	private String email;
 	private String password;
 	private int phoneNumber;
+
+	@ManyToOne
+	@JoinColumn(name="userTypeId", referencedColumnName ="userTypeId")
+	private UserType userType;
 	
+	@OneToOne(mappedBy="user", cascade=CascadeType.ALL)
+	private ConfirmationToken otpToken;
+
+	@OneToOne
+	@JoinColumn(name="userProfilePicture")
+	private UserProfilePicture userProfile;
 	
 	public User() {
 		
@@ -38,14 +48,7 @@ public class User {
 	public User(UserRequest adminRequest) {
 		this.email=adminRequest.getEmail();
 		this.password=adminRequest.getPassword();
-		
 	}
-	@ManyToOne
-	@JoinColumn(name="userTypeId", referencedColumnName ="userTypeId")
-	private UserType userType;
-	
-	@OneToOne(mappedBy="user", cascade=CascadeType.ALL)
-	private ConfirmationToken otpToken;
 	
 	
 	public int getUserId() {
@@ -94,8 +97,12 @@ public class User {
 		this.otpToken = otpToken;
 	}
 
+	public UserProfilePicture getUserProfile(){
+		return this.userProfile;
+	}
 	
-	
-	
+	public void setUserProfile(UserProfilePicture userProfile){
+		this.userProfile = userProfile;
+	}
 
 }
