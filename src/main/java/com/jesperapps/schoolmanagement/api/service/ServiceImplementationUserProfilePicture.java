@@ -1,8 +1,9 @@
 package com.jesperapps.schoolmanagement.api.service;
 
 import org.springframework.stereotype.Service;
-import com.jesperapps.api.model.UserProfilePicture;
+import com.jesperapps.schoolmanagement.api.model.UserProfilePicture;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.io.File;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,7 +14,7 @@ public class ServiceImplementationUserProfilePicture implements UserProfilePictu
 
     private boolean saveRequestFile(MultipartFile file){
         try{
-            if(Files.notExists(LOCATION)){
+            if(Files.notExists(Paths.get(LOCATION))){
                 File directoryFile = new File(LOCATION);
                 if(directoryFile.mkdir()){
                     //directory created successfully;
@@ -22,7 +23,7 @@ public class ServiceImplementationUserProfilePicture implements UserProfilePictu
                 }
             }
             if(file.getOriginalFilename() != ""){
-                file.transferTo(LOCATION + "\\"+ file.getOriginalFilename());
+                file.transferTo(Paths.get(LOCATION + "\\"+ file.getOriginalFilename()));
             }
             else{
                 return false;

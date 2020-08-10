@@ -1,7 +1,6 @@
 package com.jesperapps.schoolmanagement.api.model;
 
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,7 +15,7 @@ public class UserProfilePicture{
     private Integer pictureId;
     private String pictureName;
     private String pictureLocation;
-    @OneToOne(mappedBy="userProfile", cascade=CascadeType.ALL)
+    @OneToOne(mappedBy="userProfile")
     private User user;
 
     public Integer getPictureId(){

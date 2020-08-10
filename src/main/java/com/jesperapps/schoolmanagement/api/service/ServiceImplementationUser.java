@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 import com.jesperapps.schoolmanagement.api.message.OtpRequest;
 import com.jesperapps.schoolmanagement.api.message.OtpResponse;
+import com.jesperapps.schoolmanagement.api.message.UserRequest;
+import com.jesperapps.schoolmanagement.api.message.UserTypeRequest;
 import com.jesperapps.schoolmanagement.api.model.User;
+import com.jesperapps.schoolmanagement.api.model.UserProfilePicture;
 import com.jesperapps.schoolmanagement.api.model.UserType;
 import com.jesperapps.schoolmanagement.api.repository.UserRepository;
 import com.jesperapps.schoolmanagement.api.repository.UserTypeRepository;
@@ -29,32 +32,36 @@ public class ServiceImplementationUser implements UserService{
 	private UserProfilePictureService userProfilePictureService;
 
 	@Override
-	public void addadmin(MultipartFile[] profilePictureList,List<User> admin){
+	public List<User> addadmin(MultipartFile[] profilePictureList,List<UserRequest> admin){
 		int index=0;
-		for( User eachadmin:admin) {
-			eachadmin.setPassword(this.createsafepassword(eachadmin.getPassword()));
+		List<User> newUsersList = new ArrayList<>();
+		for( UserRequest eachadmin:admin) {
+			User newUser = new User(eachadmin);
+			newUser.setPassword(this.createsafepassword(eachadmin.getPassword()));
 			if(eachadmin.getUserType() != null) {
-				UserType requestUserType = eachadmin.getUserType();
+				UserTypeRequest requestUserType = eachadmin.getUserType();
 				if(requestUserType.getUserTypeId() != null) {
-					eachadmin.setUserType(userTypeRepository.findByUserTypeId(requestUserType.getUserTypeId()));
+					newUser.setUserType(userTypeRepository.findByUserTypeId(requestUserType.getUserTypeId()));
 				}else if(requestUserType.getUserTypeRole() != null) {
-					eachadmin.setUserType(userTypeRepository.findByUserTypeRole(requestUserType.getUserTypeRole()));
+					newUser.setUserType(userTypeRepository.findByUserTypeRole(requestUserType.getUserTypeRole()));
 				}else {
-					eachadmin.setUserType(userTypeRepository.findByUserTypeId(1));
+					newUser.setUserType(userTypeRepository.findByUserTypeId(1));
 				}
 			}
-			emailService.sendOTPMail(eachadmin);
+			emailService.sendOTPMail(newUser);
 			//save profilePIcuter
 			if(index < profilePictureList.length){
-				UserProfilePicture profilePicture = userProfilePictureService.saveFile(profilePictureList.[index]);
-				profilePicture.setUser(eachadmin);
-				eachadmin.setUserProfile(profilePicture);
+				MultipartFile newProfilePicture = profilePictureList[index];
+				UserProfilePicture profilePicture = userProfilePictureService.saveFile(newProfilePicture);
+				profilePicture.setUser(newUser);
+				newUser.setUserProfile(profilePicture);
 			}
 			index++;
+			newUsersList.add(newUser);
+			userRepository.save(newUser);
 		}
 		
-		 userRepository.saveAll(admin);
-
+		return newUsersList;
 	}
 
 	private String createsafepassword(String unsafepassword) {

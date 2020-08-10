@@ -37,7 +37,7 @@ public class User {
 	@OneToOne(mappedBy="user", cascade=CascadeType.ALL)
 	private ConfirmationToken otpToken;
 
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="userProfilePicture")
 	private UserProfilePicture userProfile;
 	
@@ -48,6 +48,8 @@ public class User {
 	public User(UserRequest adminRequest) {
 		this.email=adminRequest.getEmail();
 		this.password=adminRequest.getPassword();
+		this.phoneNumber = adminRequest.getPhoneNumber();
+		this.userName = adminRequest.getUserName();
 	}
 	
 	

@@ -1,6 +1,7 @@
 package com.jesperapps.schoolmanagement.api.service;
 
-import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.jesperapps.schoolmanagement.api.model.UserProfilePicture;
 

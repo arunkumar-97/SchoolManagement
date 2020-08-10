@@ -4,11 +4,12 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 import com.jesperapps.schoolmanagement.api.message.OtpRequest;
 import com.jesperapps.schoolmanagement.api.message.OtpResponse;
+import com.jesperapps.schoolmanagement.api.message.UserRequest;
 import com.jesperapps.schoolmanagement.api.model.User;
 
 public interface UserService {
 
-	void addadmin(MultipartFile[] profilePictureList,List<User> admin);
+	List<User> addadmin(MultipartFile[] profilePictureList,List<UserRequest> admin);
 
 	User findByEmail(String geteMail);
 

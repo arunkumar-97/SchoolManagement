@@ -21,7 +21,6 @@ public class UserType {
 	public UserType() {
 		
 	}
-	
 
 	public UserType(int id, String admin) {
 		this.userTypeId=id;
