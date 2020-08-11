@@ -1,6 +1,7 @@
 package com.jesperapps.schoolmanagement.api.message;
 
 import com.jesperapps.schoolmanagement.api.model.User;
+//import com.jesperapps.schoolmanagement.api.model.UserProfilePicture;
 
 public class UserResponse {
 
@@ -10,37 +11,53 @@ public class UserResponse {
 	private String email;
 	private String password;
 	private int phoneNumber;
-	private String userRole;
+	private String userType;
+	private String userProfilePicture;
+	private String confirmPassword;
+	private String authenticationType;
 
 	public UserResponse() {
 		
 	}
 	
-	public UserResponse(User admin) {
-		this.userId = admin.getUserId();
-		this.userName = admin.getUserName();
-		this.email = admin.getEmail();
-		this.password = admin.getPassword();
-		this.phoneNumber = admin.getPhoneNumber();
-		this.userRole = admin.getUserType() != null? admin.getUserType().getUserTypeRole() : null;
+	public UserResponse(User user) {
+		this.userId = user.getUserId();
+		this.userName = user.getUserName();
+		this.email = user.getEmail();
+		this.password = user.getPassword();
+		this.phoneNumber = user.getPhoneNumber();
+		this.userType = user.getUserType() != null? user.getUserType().getUserTypeRole() : null;
+		this.userProfilePicture=user.getUserProfile().getPictureName();
 	}
 	
 	
-	public Integer getAdminId() {
+	
+	public String getUserProfilePicture() {
+		return userProfilePicture;
+	}
+
+	public void setUserProfilePicture(String userProfilePicture) {
+		this.userProfilePicture = userProfilePicture;
+	}
+
+	
+	
+	public Integer getUserId() {
 		return userId;
 	}
 
-	public void setAdminId(Integer userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 
-	public String getAdminName() {
+	public String getUserName() {
 		return userName;
 	}
-	public void setAdminName(String userName) {
+
+	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
@@ -63,12 +80,31 @@ public class UserResponse {
 	}
 
 	
-	public String getUserRole() {
-		return userRole;
+	
+	public String getUserType() {
+		return userType;
 	}
 
-	public void setUserRole(String userRole) {
-		this.userRole = userRole;
+	public void setUserType(String userType) {
+		this.userType = userType;
 	}
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
+
+	public String getAuthenticationType() {
+		return authenticationType;
+	}
+
+	public void setAuthenticationType(String authenticationType) {
+		this.authenticationType = authenticationType;
+	}
+
+	
 	
 }

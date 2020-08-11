@@ -32,14 +32,14 @@ public class ServiceImplementationUser implements UserService{
 	private UserProfilePictureService userProfilePictureService;
 
 	@Override
-	public List<User> addadmin(MultipartFile[] profilePictureList,List<UserRequest> admin){
+	public List<User> addadmin(MultipartFile[] profilePictureList,List<UserRequest> user){
 		int index=0;
 		List<User> newUsersList = new ArrayList<>();
-		for( UserRequest eachadmin:admin) {
-			User newUser = new User(eachadmin);
-			newUser.setPassword(this.createsafepassword(eachadmin.getPassword()));
-			if(eachadmin.getUserType() != null) {
-				UserTypeRequest requestUserType = eachadmin.getUserType();
+		for( UserRequest eachuser:user) {
+			User newUser = new User(eachuser);
+			newUser.setPassword(this.createsafepassword(eachuser.getPassword()));
+			if(eachuser.getUserType() != null) {
+				UserTypeRequest requestUserType = eachuser.getUserType();
 				if(requestUserType.getUserTypeId() != null) {
 					newUser.setUserType(userTypeRepository.findByUserTypeId(requestUserType.getUserTypeId()));
 				}else if(requestUserType.getUserTypeRole() != null) {
@@ -80,30 +80,7 @@ public class ServiceImplementationUser implements UserService{
 		return userRepository.findByEmail(geteMail);
 	}
 
-	@Override
-	public List<OtpResponse> validateOTP(List<OtpRequest> emailOtpRequest) {
-		List<OtpResponse> responseList = new ArrayList<>();
-		
-		for(OtpRequest request : emailOtpRequest) {
-			OtpResponse response = new OtpResponse(400, "Bad request");
-			User requestUser = this.findByEmail(request.getEmail());
-			if(requestUser != null) {
-				if(emailService.checkOTP(requestUser, request.getOtp())) {
-					response.setStatuscode(200);
-					response.setDescription("Otp Matched");
-				}else {
-					response.setStatuscode(400);
-					response.setDescription("Otp Mismatch");
-				}
-			}else {
-				response.setStatuscode(409);
-				response.setDescription("No user found");
-			}
-			responseList.add(response);
-		}
-		
-		return responseList;
-	}
+	
 
 
 	

@@ -29,6 +29,24 @@ public class User {
 	private String email;
 	private String password;
 	private int phoneNumber;
+	private String confirmPassword;
+	private String authentication;
+	
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
+
+	public String getAuthentication() {
+		return authentication;
+	}
+
+	public void setAuthentication(String authentication) {
+		this.authentication = authentication;
+	}
 
 	@ManyToOne
 	@JoinColumn(name="userTypeId", referencedColumnName ="userTypeId")
@@ -45,11 +63,11 @@ public class User {
 		
 	}
 	
-	public User(UserRequest adminRequest) {
-		this.email=adminRequest.getEmail();
-		this.password=adminRequest.getPassword();
-		this.phoneNumber = adminRequest.getPhoneNumber();
-		this.userName = adminRequest.getUserName();
+	public User(UserRequest userRequest) {
+		this.email=userRequest.getEmail();
+		this.password=userRequest.getPassword();
+		this.phoneNumber = userRequest.getPhoneNumber();
+		this.userName = userRequest.getUserName();
 	}
 	
 	
