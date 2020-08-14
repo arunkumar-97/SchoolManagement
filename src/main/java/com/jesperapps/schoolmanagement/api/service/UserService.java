@@ -15,6 +15,6 @@ public interface UserService {
 
 	boolean checkPasswordIsSame(String password, String password2);
 	
-//	List<OtpResponse> validateOTP(List<OtpRequest> emailOtpRequest);
+	List<OtpResponse> validateOTP(List<OtpRequest> emailOtpRequest);
 
 }

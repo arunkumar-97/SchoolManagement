@@ -31,6 +31,11 @@ public class UserController {
 	}
 	
 	
+	@PostMapping("/check-otp")
+	public List<OtpResponse> checkOTP(@RequestBody List<OtpRequest> emailOtpRequest){
+		List<OtpResponse> responseList = userService.validateOTP(emailOtpRequest);
+		return responseList;
+	}
 	
 
 }

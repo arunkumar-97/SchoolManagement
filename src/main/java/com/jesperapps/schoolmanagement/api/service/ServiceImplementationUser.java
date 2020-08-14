@@ -81,6 +81,30 @@ public class ServiceImplementationUser implements UserService{
 	}
 
 	
+	@Override
+	public List<OtpResponse> validateOTP(List<OtpRequest> emailOtpRequest) {
+		List<OtpResponse> responseList = new ArrayList<>();
+		
+		for(OtpRequest request : emailOtpRequest) {
+			OtpResponse response = new OtpResponse(400, "Bad request");
+			User requestUser = this.findByEmail(request.getEmail());
+			if(requestUser != null) {
+				if(emailService.checkOTP(requestUser, request.getOtp())) {
+					response.setStatuscode(200);
+					response.setDescription("Otp Matched");
+				}else {
+					response.setStatuscode(400);
+					response.setDescription("Otp Mismatch");
+				}
+			}else {
+				response.setStatuscode(409);
+				response.setDescription("No user found");
+			}
+			responseList.add(response);
+		}
+		
+		return responseList;
+	}
 
 
 	
