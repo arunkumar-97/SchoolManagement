@@ -19,9 +19,9 @@ public class Medium {
 	@OneToMany(cascade=CascadeType.ALL,mappedBy="medium")
 	private List<Class> clas;
 	
-	@ManyToOne
-	@JoinColumn(name="EducationBoardId",referencedColumnName = "educationBoardId")
-	private EducationBoard educationBoard;
+//	@ManyToOne(cascade = CascadeType.ALL)
+//	@JoinColumn(name="EducationBoardId",referencedColumnName = "educationBoardId")
+//	private EducationBoard educationBoard;
 	
 	
 	public Medium() {

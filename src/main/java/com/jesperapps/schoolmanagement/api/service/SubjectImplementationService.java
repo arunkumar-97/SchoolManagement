@@ -10,7 +10,7 @@ import com.jesperapps.schoolmanagement.api.utils.StatusClass;
 import com.jesperapps.schoolmanagement.api.utils.StatusSubject;
 
 @Service
-public class ServiceImplementationSubject implements SubjectService {
+public class SubjectImplementationService implements SubjectService {
 	
 	@Autowired
 	private SubjectRepository subjectRepository;

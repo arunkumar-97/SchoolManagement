@@ -11,7 +11,7 @@ import com.jesperapps.schoolmanagement.api.model.Medium;
 import com.jesperapps.schoolmanagement.api.repository.ClassRepository;
 
 @Service
-public class ServiceImplementationClass implements ClassService {
+public class ClassImplementationService implements ClassService {
 	
 	@Autowired
 	private ClassRepository classRepository;

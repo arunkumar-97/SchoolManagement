@@ -13,7 +13,7 @@ import com.jesperapps.schoolmanagement.api.repository.ConfirmationTokenRepositor
 import com.jesperapps.schoolmanagement.api.repository.UserRepository;
 
 @Service
-public class ServiceImplementationEmailSService implements EmailSenderService {
+public class EmailSServiceImplementationService implements EmailSenderService {
 	
 	
 	private JavaMailSender javaMailSender;
@@ -29,12 +29,12 @@ public class ServiceImplementationEmailSService implements EmailSenderService {
 
 	
 
-	public ServiceImplementationEmailSService() {
+	public EmailSServiceImplementationService() {
 		
 	}
 
 	@Autowired
-	public ServiceImplementationEmailSService(JavaMailSender javaMailSender) {
+	public EmailSServiceImplementationService(JavaMailSender javaMailSender) {
 		this.javaMailSender = javaMailSender;
 	}
 	

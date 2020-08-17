@@ -16,7 +16,7 @@ public class EducationBoard {
 	private Integer educationBoardId;
 	private String educationBoardName;
 	
-	@OneToMany(cascade=CascadeType.ALL,mappedBy="educationBoard")
+	@OneToMany(cascade=CascadeType.ALL)
 	private List<Medium> medium;
 	public EducationBoard() {
 		

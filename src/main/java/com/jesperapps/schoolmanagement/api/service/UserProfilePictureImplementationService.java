@@ -8,7 +8,7 @@ import java.io.File;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-public class ServiceImplementationUserProfilePicture implements UserProfilePictureService{
+public class UserProfilePictureImplementationService implements UserProfilePictureService{
 
     private final String LOCATION = "E:\\SchoolManagementUserProfilePicture";
 

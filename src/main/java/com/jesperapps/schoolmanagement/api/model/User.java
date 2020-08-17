@@ -14,13 +14,6 @@ import com.jesperapps.schoolmanagement.api.message.UserRequest;
 @Entity
 public class User {
 	
-	public UserType getUserType() {
-		return userType;
-	}
-
-	public void setUserType(UserType userType) {
-		this.userType = userType;
-	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -124,5 +117,13 @@ public class User {
 	public void setUserProfile(UserProfilePicture userProfile){
 		this.userProfile = userProfile;
 	}
+	public UserType getUserType() {
+		return userType;
+	}
+
+	public void setUserType(UserType userType) {
+		this.userType = userType;
+	}
+	
 
 }

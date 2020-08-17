@@ -17,7 +17,7 @@ import com.jesperapps.schoolmanagement.api.repository.UserRepository;
 import com.jesperapps.schoolmanagement.api.repository.UserTypeRepository;
 
 @Service
-public class ServiceImplementationUser implements UserService{
+public class UserImplementationService implements UserService{
 	
 	@Autowired
 	private UserRepository userRepository;

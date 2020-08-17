@@ -14,7 +14,7 @@ import com.jesperapps.schoolmanagement.api.model.Medium;
 import com.jesperapps.schoolmanagement.api.repository.EducationBoardRepository;
 
 @Service
-public class ServiceImplementationEducationBoard implements EducationBoardService{
+public class EducationBoardImplementationService implements EducationBoardService{
 	
 	@Autowired
 	private EducationBoardRepository educationBoardRepository;
