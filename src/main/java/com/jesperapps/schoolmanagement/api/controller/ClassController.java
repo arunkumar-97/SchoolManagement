@@ -45,7 +45,6 @@ public class ClassController {
 	{
 		ClassBaseResponse response= new ClassBaseResponse(409,"Class Already Exists");
 		ClassResponse classResponse=new ClassResponse();
-		response.setCls(classResponse);
 		//		for(ClassRequest eachclass:classRequest) 
 		//		{
 		Class classOfName=classService.checkclass( classRequest.getClassName());
@@ -53,11 +52,13 @@ public class ClassController {
 
 		if(classOfName != null)
 		{
-			classResponse.setClassName(classRequest.getClassName());
-			classResponse.setClassId(classOfName.getClassId());
-			classResponse.setStatus(classRequest.getStatus());
-			classResponse.setMedium(classRequest.getMedium());
-			classResponse.setEducationBoard(classRequest.getEducationBoard());
+			/*
+			 * classResponse.setClassName(classRequest.getClassName());
+			 * classResponse.setClassId(classOfName.getClassId());
+			 * classResponse.setStatus(classRequest.getStatus());
+			 * classResponse.setMedium(classRequest.getMedium());
+			 * classResponse.setEducationBoard(classRequest.getEducationBoard());
+			 */
 		}
 		else
 		{
@@ -68,6 +69,7 @@ public class ClassController {
 			classResponse.setStatus(newClass.getStatus());
 			classResponse.setMedium(newClass.getMedium().getMediumLanguage());
 			classResponse.setEducationBoard(newClass.getEducationBoard().getEducationBoardName());
+			response.setCls(classResponse);
 			response.setStatuscode(200);
 			response.setDescription("Class Created Successfully");
 		}
@@ -128,6 +130,7 @@ public class ClassController {
 				classResponse.setClassName(classRequest.getClassName());
 				classResponse.setStatus(classFromDatabase.getStatus());
 				classResponse.setMedium(classFromDatabase.getMedium().getMediumLanguage());
+				classResponse.setEducationBoard(classFromDatabase.getEducationBoard().getEducationBoardName());
 			}
 		}
 
