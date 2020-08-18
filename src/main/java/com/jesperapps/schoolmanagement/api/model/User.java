@@ -52,16 +52,10 @@ public class User {
 	@JoinColumn(name="userProfilePicture")
 	private UserProfilePicture userProfile;
 	
-	public User() {
-		
-	}
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="subscriptionId", referencedColumnName="subscriptionId")
+	private SubscriptionForm subscriptionForm;
 	
-	public User(UserRequest userRequest) {
-		this.email=userRequest.getEmail();
-		this.password=userRequest.getPassword();
-		this.phoneNumber = userRequest.getPhoneNumber();
-		this.userName = userRequest.getUserName();
-	}
 	
 	
 	public int getUserId() {
@@ -123,6 +117,26 @@ public class User {
 
 	public void setUserType(UserType userType) {
 		this.userType = userType;
+	}
+	
+	
+	public SubscriptionForm getSubscriptionForm() {
+		return subscriptionForm;
+	}
+
+	public void setSubscriptionForm(SubscriptionForm subscriptionForm) {
+		this.subscriptionForm = subscriptionForm;
+	}
+
+	public User() {
+		
+	}
+	
+	public User(UserRequest userRequest) {
+		this.email=userRequest.getEmail();
+		this.password=userRequest.getPassword();
+		this.phoneNumber = userRequest.getPhoneNumber();
+		this.userName = userRequest.getUserName();
 	}
 	
 

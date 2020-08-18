@@ -23,13 +23,13 @@ public class LoginController {
 	public UserResponse loginuser(@RequestBody UserRequest adminRequest) {
 		User emailFromDb=userService.findByEmail(adminRequest.getEmail());
 		if(emailFromDb!=null) {
-			System.out.println(emailFromDb.getEmail()+","+adminRequest.getEmail());
+//			System.out.println(emailFromDb.getEmail()+","+adminRequest.getEmail());
 			if(userService.checkPasswordIsSame(adminRequest.getPassword(), emailFromDb.getPassword())) {
 				return new UserResponse(emailFromDb);
 			}
 			
 			}
-		return new UserResponse();
+		return new UserResponse(409,"No such User Found");
 
 	}	
 }

@@ -18,9 +18,6 @@ public class EducationBoard {
 	
 	@OneToMany(cascade=CascadeType.ALL)
 	private List<Medium> medium;
-	public EducationBoard() {
-		
-	}
 	
 	public List<Medium> getMedium() {
 		return medium;
@@ -30,10 +27,7 @@ public class EducationBoard {
 		this.medium = medium;
 	}
 
-	public EducationBoard(int id, String stateboard) {
-		this.educationBoardId=id;
-		this.educationBoardName=stateboard;
-	}
+	
 	public Integer getEducationBoardId() {
 		return educationBoardId;
 	}
@@ -46,7 +40,14 @@ public class EducationBoard {
 	public void setEducationBoardName(String educationBoardName) {
 		this.educationBoardName = educationBoardName;
 	}
+	public EducationBoard() {
+		
+	}
 	
 	
+	public EducationBoard(int id, String stateboard) {
+		this.educationBoardId=id;
+		this.educationBoardName=stateboard;
+	}
 
 }

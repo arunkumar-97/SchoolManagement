@@ -18,14 +18,7 @@ public class UserType {
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "userType")
 	private List<User> user;
 	
-	public UserType() {
-		
-	}
-
-	public UserType(int id, String admin) {
-		this.userTypeId=id;
-		this.userTypeRole=admin;
-	}
+	
 
 	public Integer getUserTypeId() {
 		return userTypeId;
@@ -55,7 +48,14 @@ public class UserType {
 		this.user = user;
 	}
 
-	
+public UserType() {
+		
+	}
+
+	public UserType(int id, String admin) {
+		this.userTypeId=id;
+		this.userTypeRole=admin;
+	}
 
 	
 

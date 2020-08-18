@@ -20,15 +20,7 @@ public class ConfirmationToken {
 	@JoinColumn(name="user_id", referencedColumnName="userId")
 	private User user;
 
-	public ConfirmationToken() {
-		super();
-	}
-
-	public ConfirmationToken(String confirmationToken, User user) {
 	
-		this.confirmationToken = confirmationToken;
-		this.user = user;
-	}
 
 	public int getTokenId() {
 		return tokenId;
@@ -54,7 +46,15 @@ public class ConfirmationToken {
 		this.user = user;
 	}
 
+	public ConfirmationToken() {
+		super();
+	}
+
+	public ConfirmationToken(String confirmationToken, User user) {
 	
+		this.confirmationToken = confirmationToken;
+		this.user = user;
+	}
 	
 
 }

@@ -24,15 +24,6 @@ public class Medium {
 //	private EducationBoard educationBoard;
 	
 	
-	public Medium() {
-		
-	}
-
-	public Medium(int id, String medium) {
-		this.mediumId=id;
-		this.mediumLanguage=medium;
-	}
-
 	public int getMediumId() {
 		return mediumId;
 	}
@@ -61,6 +52,16 @@ public class Medium {
 		if(clas != null) {
 			this.clas.add(clas);	
 		}
+	}
+
+
+	public Medium() {
+		
+	}
+
+	public Medium(int id, String medium) {
+		this.mediumId=id;
+		this.mediumLanguage=medium;
 	}
 
 }

@@ -3,7 +3,7 @@ package com.jesperapps.schoolmanagement.api.message;
 import com.jesperapps.schoolmanagement.api.model.User;
 //import com.jesperapps.schoolmanagement.api.model.UserProfilePicture;
 
-public class UserResponse {
+public class UserResponse extends BaseResponse {
 
 	
 	private Integer userId;
@@ -17,6 +17,11 @@ public class UserResponse {
 	private String authenticationType;
 
 	public UserResponse() {
+		
+	}
+	public UserResponse(int statuscode,String decription) {
+		this.statuscode=statuscode;
+		this.description=decription;
 		
 	}
 	

@@ -24,17 +24,7 @@ public class Subject  {
 	private String status= StatusSubject.INACTIVE;
 	
 	
-	public Subject() {
-		
-	}
 	
-	public Subject(SubjectRequest subjectRequest) {
-		this.subjectId=subjectRequest.getSubjectId();
-		this.subjectName=subjectRequest.getSubjectName();
-		this.status = subjectRequest.getStatus() != null ? subjectRequest.getStatus() : this.status;
-	}
-	
-
 	@ManyToOne
 	@JoinTable(name="classSubject",joinColumns=@JoinColumn(name="subjectId", referencedColumnName="subjectId"), inverseJoinColumns=@JoinColumn(name="classId", referencedColumnName="classId"))
 	private Class cls;
@@ -67,7 +57,17 @@ public class Subject  {
 		this.status = status;
 	}
 	
+	public Subject() {
+		
+	}
 	
+	public Subject(SubjectRequest subjectRequest) {
+		this.subjectId=subjectRequest.getSubjectId();
+		this.subjectName=subjectRequest.getSubjectName();
+		this.status = subjectRequest.getStatus() != null ? subjectRequest.getStatus() : this.status;
+	}
+	
+
 	
 
 }

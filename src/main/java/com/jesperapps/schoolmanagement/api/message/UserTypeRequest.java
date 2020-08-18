@@ -1,5 +1,7 @@
 package com.jesperapps.schoolmanagement.api.message;
 
+import com.jesperapps.schoolmanagement.api.model.UserType;
+
 public class UserTypeRequest {
 	
 	private Integer userTypeId;
@@ -19,6 +21,16 @@ public class UserTypeRequest {
 
 	public void setUserTypeRole(String userTypeRole) {
 		this.userTypeRole = userTypeRole;
+	}
+	
+	public UserTypeRequest() {
+		
+	}
+	
+	//constructor
+	public UserTypeRequest(UserType userType) {
+		this.userTypeId = userType.getUserTypeId();
+		this.userTypeRole = userType.getUserTypeRole();
 	}
 	
 	

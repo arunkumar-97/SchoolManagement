@@ -44,19 +44,10 @@ public class Class {
 	}
 
 
-	public Class() {
-	
-	}
 	
 	
-	public Class(ClassRequest requestClass) {
-		
-		this.classId=requestClass.getClassId();
-		this.className=requestClass.getClassName();
-		this.status = requestClass.getStatus() != null ? requestClass.getStatus() : this.status;
-		
-		
-	}
+	
+	
 	
 	public Integer getClassId() {
 		return classId;
@@ -106,11 +97,20 @@ public class Class {
 		
 	}
 
-
+	public Class() {
+		
+	}
 	
 
 
-
+	public Class(ClassRequest requestClass) {
+		
+		this.classId=requestClass.getClassId();
+		this.className=requestClass.getClassName();
+		this.status = requestClass.getStatus() != null ? requestClass.getStatus() : this.status;
+		
+		
+	}
 	
 
 
