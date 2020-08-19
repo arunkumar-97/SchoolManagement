@@ -9,7 +9,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.jesperapps.schoolmanagement.api.message.ClassResponse;
 import com.jesperapps.schoolmanagement.api.message.UserRequest;
+import com.jesperapps.schoolmanagement.api.message.UserResponse;
 
 @Entity
 public class User {
@@ -138,6 +140,12 @@ public class User {
 		this.phoneNumber = userRequest.getPhoneNumber();
 		this.userName = userRequest.getUserName();
 	}
+
+
+	
+	
+
+	
 	
 
 }

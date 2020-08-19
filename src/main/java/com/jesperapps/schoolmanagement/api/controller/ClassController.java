@@ -168,7 +168,7 @@ public class ClassController {
 	public ClassBaseResponse viewClass(@PathVariable int classId)
 	{
 		Class cls = classService.findById(classId);
-		ClassBaseResponse response = new ClassBaseResponse(200, "Success");
+		ClassBaseResponse response = new ClassBaseResponse();
 		ClassResponse classResponse= new ClassResponse();
 		response.setCls(classResponse);
 		if(cls != null)

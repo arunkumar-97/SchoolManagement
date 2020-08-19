@@ -1,9 +1,11 @@
 package com.jesperapps.schoolmanagement.api.message;
 
+import com.jesperapps.schoolmanagement.api.model.SubscriptionForm;
 import com.jesperapps.schoolmanagement.api.model.User;
 //import com.jesperapps.schoolmanagement.api.model.UserProfilePicture;
+import com.jesperapps.schoolmanagement.api.model.UserType;
 
-public class UserResponse extends BaseResponse {
+public class UserResponse {
 
 	
 	private Integer userId;
@@ -15,13 +17,13 @@ public class UserResponse extends BaseResponse {
 	private String userProfilePicture;
 	private String confirmPassword;
 	private String authenticationType;
+	private Integer subscriptionForm;
 
+	
 	public UserResponse() {
 		
 	}
 	public UserResponse(int statuscode,String decription) {
-		this.statuscode=statuscode;
-		this.description=decription;
 		
 	}
 	
@@ -37,6 +39,19 @@ public class UserResponse extends BaseResponse {
 	
 	
 	
+	public UserResponse(int userId2, String userName2, String email2, String password2, String confirmPassword2,
+			String pictureName, String authentication, UserType userType2, int subscriptionId) {
+		this.userId=userId2;
+		this.userName=userName2;
+		this.email=email2;
+		this.confirmPassword=confirmPassword2;
+		this.userProfilePicture=pictureName;
+		this.authenticationType=authentication;
+		this.userType=userType2.getUserTypeRole();
+		this.subscriptionForm=subscriptionId;
+		
+		
+	}
 	public String getUserProfilePicture() {
 		return userProfilePicture;
 	}
@@ -109,6 +124,13 @@ public class UserResponse extends BaseResponse {
 	public void setAuthenticationType(String authenticationType) {
 		this.authenticationType = authenticationType;
 	}
+	public Integer getSubscriptionForm() {
+		return subscriptionForm;
+	}
+	public void setSubscriptionForm(Integer subscriptionForm) {
+		this.subscriptionForm = subscriptionForm;
+	}
+	
 
 	
 	

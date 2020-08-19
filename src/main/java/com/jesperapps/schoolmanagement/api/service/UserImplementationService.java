@@ -106,6 +106,18 @@ public class UserImplementationService implements UserService{
 		return responseList;
 	}
 
+	@Override
+	public User findById(int userId) {
+		// TODO Auto-generated method stub
+		return userRepository.findByUserId(userId);
+	}
+
+	@Override
+	public List<User> findAll() {
+		
+		return userRepository.findAll();
+	}
+
 
 	
 	
