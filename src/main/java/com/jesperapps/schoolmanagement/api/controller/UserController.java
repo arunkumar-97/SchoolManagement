@@ -8,13 +8,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jesperapps.schoolmanagement.api.message.ClassBaseResponse;
-import com.jesperapps.schoolmanagement.api.message.ClassListResponse;
-import com.jesperapps.schoolmanagement.api.message.ClassResponse;
+//import com.jesperapps.schoolmanagement.api.message.ClassBaseResponse;
+//import com.jesperapps.schoolmanagement.api.message.ClassListResponse;
+//import com.jesperapps.schoolmanagement.api.message.ClassResponse;
 import com.jesperapps.schoolmanagement.api.message.OtpRequest;
 import com.jesperapps.schoolmanagement.api.message.OtpResponse;
 import com.jesperapps.schoolmanagement.api.message.SubscriptionResponse;
@@ -23,7 +22,7 @@ import com.jesperapps.schoolmanagement.api.message.UserListResponse;
 import com.jesperapps.schoolmanagement.api.message.UserRequestWithProfilePicture;
 //import com.jesperapps.schoolmanagement.api.message.UserRequest;
 import com.jesperapps.schoolmanagement.api.message.UserResponse;
-import com.jesperapps.schoolmanagement.api.model.Class;
+//import com.jesperapps.schoolmanagement.api.model.Class;
 import com.jesperapps.schoolmanagement.api.model.SubscriptionForm;
 import com.jesperapps.schoolmanagement.api.model.User;
 import com.jesperapps.schoolmanagement.api.service.SubscriptionFormService;
@@ -40,8 +39,8 @@ public class UserController {
 	private SubscriptionFormService subscriptionFormService;
 	
 	@PostMapping("/user")
-	public List<UserResponse> addadmin(@ModelAttribute UserRequestWithProfilePicture userRequestWithProfilePicture){
-		List<User> createdUsersList = userService.addadmin(userRequestWithProfilePicture.getProfilePicture(), userRequestWithProfilePicture.getUsers());
+	public List<UserResponse> addadmin(@RequestBody List<UserRequestWithProfilePicture> userRequestWithProfilePicture){
+		List<User> createdUsersList = userService.addadmin(userRequestWithProfilePicture);
 		return  createdUsersList.stream().map(eachadmin -> new UserResponse(eachadmin)).collect(Collectors.toList());
 	}
 	

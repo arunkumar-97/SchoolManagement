@@ -1,38 +1,61 @@
 package com.jesperapps.schoolmanagement.api.message;
 
-import java.util.Arrays;
-import java.util.List;
-
-import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class UserRequestWithProfilePicture {
-	private MultipartFile[] profilePicture;
-	private String users;
 
+	private String userName;
+	private String email;
+	private String password;
+	private int phoneNumber;
+	private String authenticationType;
+	private UserTypeRequest userType;
+	private Attachment attachment;
 	
-	public MultipartFile[] getProfilePicture() {
-		return profilePicture;
+	public String getUserName() {
+		return userName;
 	}
-	public void setProfilePicture(MultipartFile[] profilePicture) {
-		this.profilePicture = profilePicture;
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public int getPhoneNumber() {
+		return phoneNumber;
+	}
+	public void setPhoneNumber(int phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+	public Attachment getAttachment() {
+		return attachment;
+	}
+	public void setAttachment(Attachment attachment) {
+		this.attachment = attachment;
+	}
+	public UserTypeRequest getUserType() {
+		return userType;
+	}
+	public void setUserType(UserTypeRequest userType) {
+		this.userType = userType;
+	}
+	public String getAuthenticationType() {
+		return authenticationType;
+	}
+	public void setAuthentication(String authentication) {
+		this.authenticationType = authentication;
 	}
 	
-	public void setUsers(String users) {
-		this.users = users;
-	}
-
-	public List<UserRequest> getUsers() {
-		try {
-			ObjectMapper jsonConverter = new ObjectMapper();
-			JsonNode jsonData =  jsonConverter.readTree(this.users);
-			UserRequest[] arrayOfUserRequest = jsonConverter.convertValue(jsonData, UserRequest[].class);
-			return Arrays.asList(arrayOfUserRequest);
-		}catch(Exception e) {
-			return null;
-		}
-	}
 	
 }

@@ -5,14 +5,15 @@ import java.util.List;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.multipart.MultipartFile;
+
+import com.jesperapps.schoolmanagement.api.message.Attachment;
 import com.jesperapps.schoolmanagement.api.message.OtpRequest;
 import com.jesperapps.schoolmanagement.api.message.OtpResponse;
-import com.jesperapps.schoolmanagement.api.message.UserRequest;
+import com.jesperapps.schoolmanagement.api.message.UserRequestWithProfilePicture;
 import com.jesperapps.schoolmanagement.api.message.UserTypeRequest;
 import com.jesperapps.schoolmanagement.api.model.User;
 import com.jesperapps.schoolmanagement.api.model.UserProfilePicture;
-import com.jesperapps.schoolmanagement.api.model.UserType;
+//import com.jesperapps.schoolmanagement.api.model.UserType;
 import com.jesperapps.schoolmanagement.api.repository.UserRepository;
 import com.jesperapps.schoolmanagement.api.repository.UserTypeRepository;
 
@@ -32,10 +33,9 @@ public class UserImplementationService implements UserService{
 	private UserProfilePictureService userProfilePictureService;
 
 	@Override
-	public List<User> addadmin(MultipartFile[] profilePictureList,List<UserRequest> user){
-		int index=0;
+	public List<User> addadmin(List<UserRequestWithProfilePicture> user){
 		List<User> newUsersList = new ArrayList<>();
-		for( UserRequest eachuser:user) {
+		for( UserRequestWithProfilePicture eachuser:user) {
 			User newUser = new User(eachuser);
 			newUser.setPassword(this.createsafepassword(eachuser.getPassword()));
 			if(eachuser.getUserType() != null) {
@@ -50,13 +50,15 @@ public class UserImplementationService implements UserService{
 			}
 			emailService.sendOTPMail(newUser);
 			//save profilePIcuter
-			if(index < profilePictureList.length){
-				MultipartFile newProfilePicture = profilePictureList[index];
-				UserProfilePicture profilePicture = userProfilePictureService.saveFile(newProfilePicture);
+			try {
+				Attachment profileAttachment = eachuser.getAttachment();
+				UserProfilePicture profilePicture = userProfilePictureService.saveFile(profileAttachment);
 				profilePicture.setUser(newUser);
 				newUser.setUserProfile(profilePicture);
 			}
-			index++;
+			catch(Exception e) {
+		System.out.println(e);
+			}
 			newUsersList.add(newUser);
 			userRepository.save(newUser);
 		}
@@ -95,7 +97,7 @@ public class UserImplementationService implements UserService{
 				}else {
 					response.setStatuscode(400);
 					response.setDescription("Otp Mismatch");
-				}
+				} 
 			}else {
 				response.setStatuscode(409);
 				response.setDescription("No user found");
@@ -116,7 +118,7 @@ public class UserImplementationService implements UserService{
 	public List<User> findAll() {
 		
 		return userRepository.findAll();
-	}
+ 	}
 
 
 	

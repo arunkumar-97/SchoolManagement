@@ -9,9 +9,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-import com.jesperapps.schoolmanagement.api.message.ClassResponse;
+//import com.jesperapps.schoolmanagement.api.message.ClassResponse;
 import com.jesperapps.schoolmanagement.api.message.UserRequest;
-import com.jesperapps.schoolmanagement.api.message.UserResponse;
+import com.jesperapps.schoolmanagement.api.message.UserRequestWithProfilePicture;
+//import com.jesperapps.schoolmanagement.api.message.UserResponse;
 
 @Entity
 public class User {
@@ -141,6 +142,13 @@ public class User {
 		this.userName = userRequest.getUserName();
 	}
 
+	public User(UserRequestWithProfilePicture userRequest) {
+		this.email=userRequest.getEmail();
+		this.password=userRequest.getPassword();
+		this.phoneNumber = userRequest.getPhoneNumber();
+		this.userName = userRequest.getUserName();	
+		this.authentication=userRequest.getAuthenticationType();
+	}
 
 	
 	

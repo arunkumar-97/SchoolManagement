@@ -35,6 +35,7 @@ public class UserResponse {
 		this.phoneNumber = user.getPhoneNumber();
 		this.userType = user.getUserType() != null? user.getUserType().getUserTypeRole() : null;
 		this.userProfilePicture=user.getUserProfile().getPictureName();
+		this.authenticationType=user.getAuthentication();
 	}
 	
 	
