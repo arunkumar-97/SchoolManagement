@@ -1,5 +1,8 @@
 package com.jesperapps.schoolmanagement.api.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 //import com.jesperapps.schoolmanagement.api.message.ClassResponse;
@@ -55,9 +59,8 @@ public class User {
 	@JoinColumn(name="userProfilePicture")
 	private UserProfilePicture userProfile;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="subscriptionId", referencedColumnName="subscriptionId")
-	private SubscriptionForm subscriptionForm;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="user")
+	private Set<SubscriptionForm> subscriptionForm;
 	
 	
 	
@@ -122,12 +125,22 @@ public class User {
 		this.userType = userType;
 	}
 	
+	public void addSubscription(SubscriptionForm newSubscription) {
+		if(subscriptionForm == null) {
+			subscriptionForm =new HashSet<>();
+		}
+		this.subscriptionForm.add(newSubscription);
+	}
 	
-	public SubscriptionForm getSubscriptionForm() {
+
+	public Set<SubscriptionForm> getSubscriptionForm() {
 		return subscriptionForm;
 	}
 
-	public void setSubscriptionForm(SubscriptionForm subscriptionForm) {
+	/**
+	 * @param subscriptionForm
+	 */
+	public void setSubscriptionForm(Set<SubscriptionForm> subscriptionForm) {
 		this.subscriptionForm = subscriptionForm;
 	}
 
@@ -147,8 +160,10 @@ public class User {
 		this.password=userRequest.getPassword();
 		this.phoneNumber = userRequest.getPhoneNumber();
 		this.userName = userRequest.getUserName();	
+//		this.userType=userRequest.getUserType().getUserTypeId();
 		this.authentication=userRequest.getAuthenticationType();
 	}
+
 
 	
 	

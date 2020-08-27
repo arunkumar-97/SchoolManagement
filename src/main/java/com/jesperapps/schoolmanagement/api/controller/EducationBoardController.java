@@ -1,12 +1,17 @@
 package com.jesperapps.schoolmanagement.api.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jesperapps.schoolmanagement.api.message.BaseResponse;
-import com.jesperapps.schoolmanagement.api.message.ClassListResponse;
+import com.jesperapps.schoolmanagement.api.message.EducationBoardJson;
 import com.jesperapps.schoolmanagement.api.message.MediumListResponse;
 import com.jesperapps.schoolmanagement.api.model.EducationBoard;
 //import com.jesperapps.schoolmanagement.api.model.Medium;
@@ -24,8 +29,10 @@ public class EducationBoardController {
 	@Autowired
 	private EducationBoardRepository educationBoardRepository;
 	
-	@GetMapping("/educationBoard")
-	public BaseResponse createMedium(){
+	
+	@CrossOrigin(origins="*",allowedHeaders="*")
+	@PostMapping("/educationBoard")
+	public BaseResponse createEducationBoard(){
 		BaseResponse response=new BaseResponse(200,"EducationBoards Created Successfully") {
 		};
 		EducationBoard eb1=new EducationBoard(1,EducationBoards.STATEBOARD);
@@ -47,10 +54,16 @@ public class EducationBoardController {
 	}
 
 	
-	@GetMapping("/educationBoard/{educationBoardId}")
+	@GetMapping("/medium/educationBoard/{educationBoardId}")
 	public MediumListResponse getAllmediums(@PathVariable int educationBoardId) {
 	      MediumListResponse response = new MediumListResponse();
 		response.setMediums(educationBoardService.findeducationBoardMediums(educationBoardId));
 		return response;
+	}
+	
+	//list
+	@GetMapping("/educationBoard")
+	public List<EducationBoardJson> getAllEductionBoardDetails(){
+		return educationBoardService.findAll().stream().map(educationBoard -> new EducationBoardJson(educationBoard)).collect(Collectors.toList());
 	}
 }

@@ -3,11 +3,11 @@ package com.jesperapps.schoolmanagement.api.message;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SubjectListResponse extends BaseResponse {
+public class SubjectListResponse  {
 	
 	private List<SubjectResponse> subjects;
 	
-	public SubjectListResponse(int statusCode, String description) {
+	public SubjectListResponse() {
 		super();
 		subjects = new ArrayList<SubjectResponse>();
 	}

@@ -4,12 +4,13 @@ import com.jesperapps.schoolmanagement.api.model.SubscriptionForm;
 import com.jesperapps.schoolmanagement.api.model.User;
 
 
-public class SubscriptionResponse extends BaseResponse{
+public class SubscriptionResponse {
 	
 	private int subscriptionId;
 	private int subscriptionClass;
 	private String medium;
 	private String educationBoard;
+	private SubscriptionStatusJson subscriptionStatus;
 	private UserSubscriptionResponse user;
 	
 	
@@ -46,23 +47,27 @@ public class SubscriptionResponse extends BaseResponse{
 	public void setEducationBoard(String educationBoard) {
 		this.educationBoard = educationBoard;
 	}
+	
+	public SubscriptionStatusJson getSubscriptionStatus() {
+		return subscriptionStatus;
+	}
+	public void setSubscriptionStatus(SubscriptionStatusJson subscriptionStatus) {
+		this.subscriptionStatus = subscriptionStatus;
+	}
 	public SubscriptionResponse() {
 		
 	}
 	public SubscriptionResponse(SubscriptionForm subscriptionForm) {
 		subscriptionId=subscriptionForm.getSubscriptionId();
-		subscriptionClass=subscriptionForm.getSubscriptionClass();
-		medium=subscriptionForm.getMedium();
-		educationBoard=subscriptionForm.getEducationBoard();
+		subscriptionClass=subscriptionForm.getSubscriptionClass().getClassId();
+		medium=subscriptionForm.getMedium().getMediumLanguage();
+		educationBoard=subscriptionForm.getEducationBoard().getEducationBoardName();
+//		subscriptionStatus=subscriptionForm.getSubscriptionStatus().getStatus();
 	
 		
 		
 	}
-	public SubscriptionResponse(int statuscode, String description) {
-		this.statuscode=statuscode;
-		this.description=description;
-		// TODO Auto-generated constructor stub
-	}
+	
 	
 	
 	

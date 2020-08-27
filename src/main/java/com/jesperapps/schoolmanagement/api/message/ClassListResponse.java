@@ -3,15 +3,9 @@ package com.jesperapps.schoolmanagement.api.message;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClassListResponse extends BaseResponse{
+public class ClassListResponse {
 	
 	public ClassListResponse() {
-		super();
-	}
-	
-	public ClassListResponse(int statusCode,String description) {
-		super();
-		classes= new ArrayList<ClassResponse>();
 	}
 	
 	private List<ClassResponse> classes;
@@ -26,6 +20,9 @@ public class ClassListResponse extends BaseResponse{
 	}
 
 	public void addclss(ClassResponse classListResponse) {
+		if(this.classes == null) {
+			this.classes = new ArrayList<>();
+		}
 		this.classes.add(classListResponse);
 		
 	}

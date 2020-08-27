@@ -14,4 +14,5 @@ public interface EducationBoardService {
 
 	List<MediumResponse> findeducationBoardMediums(Integer educationBoardId);
 
+	List<EducationBoard> findAll();
 }

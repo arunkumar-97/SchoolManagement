@@ -1,48 +1,82 @@
 package com.jesperapps.schoolmanagement.api.message;
 
+import com.jesperapps.schoolmanagement.api.model.EducationBoard;
+import com.jesperapps.schoolmanagement.api.model.Medium;
+import com.jesperapps.schoolmanagement.api.model.User;
+import com.jesperapps.schoolmanagement.api.model.Class;
+
 public class SubscriptionRequest {
 	
 	
 	private int subscriptionId;
-	private int subscriptionClass;
-	private String medium;
-	private String educationBoard;
+	private Class subscriptionClass;
+	private Medium medium;
+	private EducationBoard educationBoard;
+	private SubscriptionStatusJson subscriptionStatus;
 	
-	private Integer user;
 	
-	
+	private UserRequest user;
+
+
 	public int getSubscriptionId() {
 		return subscriptionId;
 	}
+
+
 	public void setSubscriptionId(int subscriptionId) {
 		this.subscriptionId = subscriptionId;
 	}
-	public int getSubscriptionClass() {
+
+
+	public Class getSubscriptionClass() {
 		return subscriptionClass;
 	}
-	public void setSubscriptionClass(int subscriptionClass) {
+
+
+	public void setSubscriptionClass(Class subscriptionClass) {
 		this.subscriptionClass = subscriptionClass;
 	}
-	public String getMedium() {
+
+
+	public Medium getMedium() {
 		return medium;
 	}
-	public void setMedium(String medium) {
+
+
+	public void setMedium(Medium medium) {
 		this.medium = medium;
 	}
-	public String getEducationBoard() {
+
+
+	public EducationBoard getEducationBoard() {
 		return educationBoard;
 	}
-	public void setEducationBoard(String educationBoard) {
+
+
+	public void setEducationBoard(EducationBoard educationBoard) {
 		this.educationBoard = educationBoard;
 	}
-	public Integer getUser() {
+
+
+	public UserRequest getUser() {
 		return user;
 	}
-	public void setUser(Integer user) {
+
+
+	public void setUser(UserRequest user) {
 		this.user = user;
 	}
-	
-	
-	
 
+
+	public SubscriptionStatusJson getSubscriptionStatus() {
+		return subscriptionStatus;
+	}
+
+
+	public void setSubscriptionStatus(SubscriptionStatusJson subscriptionStatus) {
+		this.subscriptionStatus = subscriptionStatus;
+	}
+
+	
+	
 }

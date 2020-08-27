@@ -1,17 +1,24 @@
 package com.jesperapps.schoolmanagement.api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jesperapps.schoolmanagement.api.message.BaseResponse;
 import com.jesperapps.schoolmanagement.api.message.ClassListResponse;
+import com.jesperapps.schoolmanagement.api.message.ClassResponse;
+import com.jesperapps.schoolmanagement.api.message.MediumListResponse;
+import com.jesperapps.schoolmanagement.api.message.MediumResponse;
 import com.jesperapps.schoolmanagement.api.model.Medium;
 import com.jesperapps.schoolmanagement.api.repository.MediumRepository;
 import com.jesperapps.schoolmanagement.api.service.MediumService;
 import com.jesperapps.schoolmanagement.api.utils.Mediums;
 
+
+@CrossOrigin(origins="*",allowedHeaders="*")
 @RestController
 public class MediumController {
 	
@@ -20,8 +27,8 @@ public class MediumController {
 	
 	@Autowired
 	private MediumService mediumService;
-	
-	@GetMapping("/medium")
+
+	@PostMapping("/medium")
 	public BaseResponse createMedium(){
 		BaseResponse response=new BaseResponse(200,"Mediums Created Successfully") {
 		};
@@ -33,12 +40,31 @@ public class MediumController {
 		
 	}
 	
-	@GetMapping("/medium/{mediumId}")
+	//
+	@GetMapping("/class/medium/{mediumId}")
 	public ClassListResponse getAllClasses(@PathVariable int mediumId) {
 		ClassListResponse response = new ClassListResponse();
 		response.setClasses(mediumService.findMediumClasses(mediumId));
 		return response;
 	}
+	
+	
+	@GetMapping("/medium")
+	public MediumListResponse  listAllclasses()
+	{
+		MediumListResponse res=new MediumListResponse();
+		
+		mediumService.findAll().forEach(medium->{
+			res.addclass(new MediumResponse(medium));
+		});
+		
+		return res;
+	}
+
+	//post, GET, DELETE ;/ medium
+	//put, GETBYID, DELETEBYID; /medium/{mediumId}
+	
+	//total medium listing required
 	
 
 }

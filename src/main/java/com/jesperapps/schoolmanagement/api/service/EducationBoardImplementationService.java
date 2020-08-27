@@ -43,4 +43,10 @@ public class EducationBoardImplementationService implements EducationBoardServic
 		return response;
 	}
 
+	@Override
+	public List<EducationBoard> findAll() {
+		// TODO Auto-generated method stub
+		return educationBoardRepository.findAll();
+	}
+
 }

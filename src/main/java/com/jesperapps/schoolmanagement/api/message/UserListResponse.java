@@ -3,7 +3,7 @@ package com.jesperapps.schoolmanagement.api.message;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserListResponse extends BaseResponse {
+public class UserListResponse {
 	
 	public UserListResponse() {
 		super();
@@ -11,7 +11,6 @@ public class UserListResponse extends BaseResponse {
 	
 	public UserListResponse(int statusCode,String description) {
 		super();
-		users= new ArrayList<UserResponse>();
 	}
 	private List<UserResponse> users;
 	
@@ -24,6 +23,9 @@ public class UserListResponse extends BaseResponse {
 	}
 
 	public void addusers(UserResponse userListResponse) {
+		if(users == null) {
+			users= new ArrayList<UserResponse>();
+		}
 		this.users.add(userListResponse);
 		
 	}

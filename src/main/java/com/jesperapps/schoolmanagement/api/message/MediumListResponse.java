@@ -6,6 +6,7 @@ import java.util.List;
 public class MediumListResponse extends BaseResponse{
 	
 	public MediumListResponse() {
+		mediums=new ArrayList<MediumResponse>();
 		
 	}
 	public MediumListResponse(int statuscode,String description) {
@@ -22,7 +23,7 @@ public class MediumListResponse extends BaseResponse{
 		public void setMediums(List<MediumResponse> mediums) {
 			this.mediums = mediums;
 		}
-		public void addclss(MediumResponse mediumListResponse) {
+		public void addclass(MediumResponse mediumListResponse) {
 			this.mediums.add(mediumListResponse);
 			
 		}

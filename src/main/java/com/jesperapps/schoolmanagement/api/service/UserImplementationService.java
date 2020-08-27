@@ -11,6 +11,7 @@ import com.jesperapps.schoolmanagement.api.message.OtpRequest;
 import com.jesperapps.schoolmanagement.api.message.OtpResponse;
 import com.jesperapps.schoolmanagement.api.message.UserRequestWithProfilePicture;
 import com.jesperapps.schoolmanagement.api.message.UserTypeRequest;
+import com.jesperapps.schoolmanagement.api.model.SubscriptionForm;
 import com.jesperapps.schoolmanagement.api.model.User;
 import com.jesperapps.schoolmanagement.api.model.UserProfilePicture;
 //import com.jesperapps.schoolmanagement.api.model.UserType;
@@ -32,39 +33,48 @@ public class UserImplementationService implements UserService{
 	@Autowired
 	private UserProfilePictureService userProfilePictureService;
 
-	@Override
-	public List<User> addadmin(List<UserRequestWithProfilePicture> user){
-		List<User> newUsersList = new ArrayList<>();
-		for( UserRequestWithProfilePicture eachuser:user) {
-			User newUser = new User(eachuser);
-			newUser.setPassword(this.createsafepassword(eachuser.getPassword()));
-			if(eachuser.getUserType() != null) {
-				UserTypeRequest requestUserType = eachuser.getUserType();
+	public User addadmin( UserRequestWithProfilePicture user){
+		User newUsersList = new User();
+
+		newUsersList.setUserName(user.getUserName());
+		newUsersList.setEmail(user.getEmail());
+		newUsersList.setPhoneNumber(user.getPhoneNumber());
+		newUsersList.setAuthentication(user.getAuthenticationType());
+//		newUsersList.setConfirmPassword(user.);
+//		for( UserRequestWithProfilePicture eachuser:user) {
+//	User newUser = new User(eachuser);
+			newUsersList.setPassword(this.createsafepassword(user.getPassword()));
+			if(user.getUserType() != null) {
+				UserTypeRequest requestUserType = user.getUserType();
 				if(requestUserType.getUserTypeId() != null) {
-					newUser.setUserType(userTypeRepository.findByUserTypeId(requestUserType.getUserTypeId()));
+					newUsersList.setUserType(userTypeRepository.findByUserTypeId(requestUserType.getUserTypeId()));
 				}else if(requestUserType.getUserTypeRole() != null) {
-					newUser.setUserType(userTypeRepository.findByUserTypeRole(requestUserType.getUserTypeRole()));
+					newUsersList.setUserType(userTypeRepository.findByUserTypeRole(requestUserType.getUserTypeRole()));
 				}else {
-					newUser.setUserType(userTypeRepository.findByUserTypeId(1));
+					newUsersList.setUserType(userTypeRepository.findByUserTypeId(1));
 				}
 			}
-			emailService.sendOTPMail(newUser);
+			emailService.sendOTPMail(newUsersList);
 			//save profilePIcuter
 			try {
-				Attachment profileAttachment = eachuser.getAttachment();
+				Attachment profileAttachment = user.getAttachment();
 				UserProfilePicture profilePicture = userProfilePictureService.saveFile(profileAttachment);
-				profilePicture.setUser(newUser);
-				newUser.setUserProfile(profilePicture);
+				profilePicture.setUser(newUsersList);
+				newUsersList.setUserProfile(profilePicture);
+				userRepository.save(newUsersList);
 			}
 			catch(Exception e) {
 		System.out.println(e);
+			return new User();
 			}
-			newUsersList.add(newUser);
-			userRepository.save(newUser);
+//			newUsersList.add();
+			return newUsersList;
 		}
 		
-		return newUsersList;
-	}
+		
+	
+
+
 
 	private String createsafepassword(String unsafepassword) {
 		

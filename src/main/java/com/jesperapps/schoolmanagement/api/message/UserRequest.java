@@ -1,7 +1,7 @@
 package com.jesperapps.schoolmanagement.api.message;
 
 public class UserRequest {
-	
+	private Integer userId;
 	private String userName;
 	private String email;
 	private String password;
@@ -11,6 +11,14 @@ public class UserRequest {
 	
 	
 	
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
 	public String getUserName() {
 		return userName;
 	}

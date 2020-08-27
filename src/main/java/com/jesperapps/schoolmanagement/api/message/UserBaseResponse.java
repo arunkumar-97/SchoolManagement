@@ -1,26 +1,23 @@
 package com.jesperapps.schoolmanagement.api.message;
 
-public class UserBaseResponse extends BaseResponse {
+public class UserBaseResponse {
 	
-	private UserResponse users;
+	private UserResponse user;
 	
 	
-	public UserBaseResponse(int statuscode,String description) {
-		this.statuscode=statuscode;
-		this.description=description;
-		
-	}
-
 	public UserBaseResponse() {
 		
+		
 	}
 
+	
+
 	public UserResponse getUsers() {
-		return users;
+		return user;
 	}
 
 	public void setUsers(UserResponse users) {
-		this.users = users;
+		this.user = users;
 	}
 	
 	

@@ -1,5 +1,10 @@
 package com.jesperapps.schoolmanagement.api.message;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import com.jesperapps.schoolmanagement.api.model.SubscriptionForm;
 import com.jesperapps.schoolmanagement.api.model.User;
 //import com.jesperapps.schoolmanagement.api.model.UserProfilePicture;
@@ -17,7 +22,7 @@ public class UserResponse {
 	private String userProfilePicture;
 	private String confirmPassword;
 	private String authenticationType;
-	private Integer subscriptionForm;
+	private List<SubscriptionResponse> subscriptionForm;
 
 	
 	public UserResponse() {
@@ -36,12 +41,13 @@ public class UserResponse {
 		this.userType = user.getUserType() != null? user.getUserType().getUserTypeRole() : null;
 		this.userProfilePicture=user.getUserProfile().getPictureName();
 		this.authenticationType=user.getAuthentication();
+		this.setSubscriptionFormFromUser(user.getSubscriptionForm());
 	}
 	
 	
 	
 	public UserResponse(int userId2, String userName2, String email2, String password2, String confirmPassword2,
-			String pictureName, String authentication, UserType userType2, int subscriptionId) {
+			String pictureName, String authentication, UserType userType2, Set<SubscriptionForm> subscriptionList) {
 		this.userId=userId2;
 		this.userName=userName2;
 		this.email=email2;
@@ -49,8 +55,7 @@ public class UserResponse {
 		this.userProfilePicture=pictureName;
 		this.authenticationType=authentication;
 		this.userType=userType2.getUserTypeRole();
-		this.subscriptionForm=subscriptionId;
-		
+		this.setSubscriptionFormFromUser(subscriptionList);
 		
 	}
 	public String getUserProfilePicture() {
@@ -125,13 +130,19 @@ public class UserResponse {
 	public void setAuthenticationType(String authenticationType) {
 		this.authenticationType = authenticationType;
 	}
-	public Integer getSubscriptionForm() {
+	public List<SubscriptionResponse> getSubscriptionForm() {
 		return subscriptionForm;
 	}
-	public void setSubscriptionForm(Integer subscriptionForm) {
+	public void setSubscriptionForm(List<SubscriptionResponse> subscriptionForm) {
 		this.subscriptionForm = subscriptionForm;
 	}
-	
+	public void setSubscriptionFormFromUser(Set<SubscriptionForm> subscriptionFormList) {
+		if(subscriptionFormList == null) {
+			this.subscriptionForm = null;
+		}else {
+		this.subscriptionForm = subscriptionFormList.stream().map((subscription) -> new SubscriptionResponse(subscription)).collect(Collectors.toList());
+		}
+		}
 
 	
 	

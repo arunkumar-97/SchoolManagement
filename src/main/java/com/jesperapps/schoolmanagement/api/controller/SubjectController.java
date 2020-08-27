@@ -58,37 +58,42 @@ public class SubjectController {
 	}
 	
 	
-	@PutMapping("/subject")
-	public SubjectBaseResponse updateSubjectName(@RequestBody SubjectRequest subjectRequest){
+	@PutMapping("/subject/{subjectId}")
+	public SubjectBaseResponse updateSubjectName(@PathVariable Integer subjectId,@RequestBody SubjectRequest subjectRequest)
+	{
 		SubjectBaseResponse response=new SubjectBaseResponse(409, "no such id found");
 		SubjectResponse subjectResponse = new SubjectResponse();
-		response.setSubject(subjectResponse);
-		 Subject subjectFromDatabase=subjectService.fromSubjectId(subjectRequest.getSubjectId());
+		 response.setSubject(subjectResponse);
+		if(subjectId != null)
+		{
+	
+		
+		 Subject subjectFromDatabase=subjectService.fromSubjectId(subjectId);
 		 if(subjectFromDatabase!=null) {
 			subjectFromDatabase.setSubjectName(subjectRequest.getSubjectName());
 			subjectService.savesubject(subjectFromDatabase);
 			response.setStatuscode(200);
 			response.setDescription("successfully updated");
-			subjectResponse.setSubjectId(subjectRequest.getSubjectId());
+			subjectResponse.setSubjectId(subjectFromDatabase.getSubjectId());
 			subjectResponse.setSubjectName(subjectRequest.getSubjectName());
 			subjectResponse.setStatus(subjectFromDatabase.getStatus());
+			
 		 }
+		
+		}
 		return response;
-		
-		
 	}
 	
 	
 	@GetMapping("/subject")
 	public SubjectListResponse listAllclasses()
 	{
-		SubjectListResponse res=new SubjectListResponse(200, "Success");
+		SubjectListResponse res=new SubjectListResponse();
 		 subjectService.findAll().forEach(sub->{
 			 res.addSubject(new SubjectResponse(sub.getSubjectId(), sub.getSubjectName(), sub.getStatus()));
 		 });
 		 if(res.getSubjects().size() <= 0) {
-			 res.setStatuscode(409);
-			 res.setDescription("No subjects found");
+			
 		 }
 		 return res;
 	}
@@ -96,24 +101,18 @@ public class SubjectController {
 	
 	
 	@GetMapping("/subject/{subjectId}")
-	public SubjectBaseResponse viewSubject(@PathVariable int subjectId)
+	public SubjectResponse viewSubject(@PathVariable int subjectId)
 	{
 		Subject sub = subjectService.findById(subjectId);
-		SubjectBaseResponse response = new SubjectBaseResponse(200, "Success");
+//		SubjectBaseResponse response = new SubjectBaseResponse();
 		SubjectResponse subjectResponse = new SubjectResponse();
 		if(sub != null)
 		{
 			subjectResponse.setSubjectId(sub.getSubjectId());
 			subjectResponse.setSubjectName(sub.getSubjectName());
 			subjectResponse.setStatus(sub.getStatus());
-		}else
-		{
-			response.setStatuscode(400);
-			response.setDescription("Failure");
-			
 		}
-		response.setSubject(subjectResponse);
-		return response;
+		return subjectResponse;
 	}
 	
 	

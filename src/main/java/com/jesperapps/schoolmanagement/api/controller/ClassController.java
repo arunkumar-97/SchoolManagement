@@ -63,7 +63,7 @@ public class ClassController {
 		else
 		{
 			@SuppressWarnings("unused")
-			Class newClass =classService.createnewclass(classRequest.getClassName(),classRequest.getClassId(),StatusClass.getStatus(classRequest.getStatus()),classRequest.getMedium(),classRequest.getEducationBoard());
+			Class newClass =classService.createnewclass(classRequest.getClassName(),classRequest.getClassId(),StatusClass.getStatus(classRequest.getStatus()),classRequest.getMedium().getMediumId().toString(),classRequest.getEducationBoard().getEducationBoardId().toString());
 			classResponse.setClassId(newClass.getClassId());
 			classResponse.setClassName(newClass.getClassName());
 			classResponse.setStatus(newClass.getStatus());
@@ -78,7 +78,7 @@ public class ClassController {
 		return response;
 	}
 	
-	@PostMapping("/addSubject/{classId}")
+	@PostMapping("/class/subject/{classId}")
 	public ClassBaseResponse addSubjectToClass(@PathVariable int classId, @RequestBody List<SubjectRequest> subjectRequestList) {
 		ClassBaseResponse response = new ClassBaseResponse(409, "No such ClassId Found");
 		Class requestClass = classService.findById(classId);
@@ -109,15 +109,15 @@ public class ClassController {
 	}
 
 	
-	@PutMapping("/class")
-	public ClassBaseResponse updateClassName(@RequestBody ClassRequest classRequest)
+	@PutMapping("/class/{classId}")
+	public ClassBaseResponse updateClassName(@PathVariable Integer classId, @RequestBody ClassRequest classRequest)
 	{
 		ClassBaseResponse response = new ClassBaseResponse(409,"No such Id found");
 		ClassResponse classResponse=new ClassResponse();
 		response.setCls(classResponse);
-		if(classRequest.getClassId() != null) 
+		if(classId != null) 
 		{
-			Class classFromDatabase = classService.fromClassId(classRequest.getClassId());
+			Class classFromDatabase = classService.fromClassId(classId);
 			if(classFromDatabase != null) 
 			{
 
@@ -126,7 +126,7 @@ public class ClassController {
 				classService.saveClass(classFromDatabase) ;
 				response.setDescription("Successfully updated");
 				response.setStatuscode(200);
-				classResponse.setClassId(classRequest.getClassId());
+				classResponse.setClassId(classFromDatabase.getClassId());
 				classResponse.setClassName(classRequest.getClassName());
 				classResponse.setStatus(classFromDatabase.getStatus());
 				classResponse.setMedium(classFromDatabase.getMedium().getMediumLanguage());
@@ -143,17 +143,14 @@ public class ClassController {
 	@GetMapping("/class")
 	public ClassListResponse  listAllclasses()
 	{
-		ClassListResponse res=new ClassListResponse(200, "Success");
+		ClassListResponse res=new ClassListResponse();
 		
 //		ClassResponse cls= new ClassResponse();
-	
-
 		classService.findAll().forEach(clss->{
 			res.addclss(new ClassResponse(clss.getClassId(),clss.getClassName(),clss.getStatus(), clss.getMedium().getMediumLanguage(),clss.getEducationBoard().getEducationBoardName()));
 		});; 
 		if(res.getClasses().size() <= 0) {
-			 res.setStatuscode(409);
-			 res.setDescription(" No classes found");
+			 
 		 }
 		
 		return res;
@@ -165,26 +162,19 @@ public class ClassController {
 
 
 	@GetMapping("/class/{classId}")
-	public ClassBaseResponse viewClass(@PathVariable int classId)
+	public ClassResponse viewClass(@PathVariable int classId)
 	{
 		Class cls = classService.findById(classId);
-		ClassBaseResponse response = new ClassBaseResponse();
 		ClassResponse classResponse= new ClassResponse();
-		response.setCls(classResponse);
 		if(cls != null)
 		{
 			classResponse.setClassId(cls.getClassId());
 			classResponse.setClassName(cls.getClassName());
 			classResponse.setStatus(cls.getStatus());
 			classResponse.setMedium(cls.getMedium().getMediumLanguage());
-		}else
-		{
-			response.setStatuscode(400);
-			response.setDescription("Failure");
-			
+			classResponse.setEducationBoard(cls.getEducationBoard().getEducationBoardName());
 		}
-		response.setCls(classResponse);
-		return response;
+		return classResponse;
 
 	}
 

@@ -3,6 +3,7 @@ package com.jesperapps.schoolmanagement.api.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.hibernate.internal.CriteriaImpl.Subcriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jesperapps.schoolmanagement.api.message.OtpRequest;
 import com.jesperapps.schoolmanagement.api.message.OtpResponse;
 import com.jesperapps.schoolmanagement.api.message.SubscriptionResponse;
+import com.jesperapps.schoolmanagement.api.message.SubscriptionStatusJson;
 import com.jesperapps.schoolmanagement.api.message.UserBaseResponse;
 import com.jesperapps.schoolmanagement.api.message.UserListResponse;
 import com.jesperapps.schoolmanagement.api.message.UserRequestWithProfilePicture;
@@ -39,9 +41,11 @@ public class UserController {
 	private SubscriptionFormService subscriptionFormService;
 	
 	@PostMapping("/user")
-	public List<UserResponse> addadmin(@RequestBody List<UserRequestWithProfilePicture> userRequestWithProfilePicture){
-		List<User> createdUsersList = userService.addadmin(userRequestWithProfilePicture);
-		return  createdUsersList.stream().map(eachadmin -> new UserResponse(eachadmin)).collect(Collectors.toList());
+	public UserResponse addadmin(@RequestBody UserRequestWithProfilePicture userRequestWithProfilePicture){
+//		UserResponse response=new UserResponse(userRequestWithProfilePicture);
+		User createdUsersList = userService.addadmin(userRequestWithProfilePicture);
+		System.out.println(createdUsersList);
+		return  new UserResponse(createdUsersList);
 	}
 	
 	
@@ -55,20 +59,18 @@ public class UserController {
 	@GetMapping("/user")
 	public UserListResponse  listAllusers()
 	{
-		UserListResponse response=new UserListResponse(200,"Listed Successfully");
+		UserListResponse response=new UserListResponse();
 		
 //		ClassResponse cls= new ClassResponse();
 	
-
 		userService.findAll().forEach(user->{
-			UserResponse userResponse = new UserResponse(user.getUserId(),user.getUserName(),user.getEmail(),user.getPassword(),user.getConfirmPassword(),user.getUserProfile().getPictureName(),user.getAuthentication(),user.getUserType(),user.getSubscriptionForm().getSubscriptionId());
+			UserResponse userResponse = new UserResponse(user.getUserId(),user.getUserName(),user.getEmail(),user.getPassword(),user.getConfirmPassword(),user.getUserProfile().getPictureName(),user.getAuthentication(),user.getUserType(),user.getSubscriptionForm());
 			userResponse.setPhoneNumber(user.getPhoneNumber());
 			userResponse.setPassword(user.getPassword());
 			response.addusers(userResponse);
 		});; 
 		if(response.getUsers().size() <= 0) {
-			 response.setStatuscode(409);
-			 response.setDescription(" No users found");
+			 
 		 }
 		
 		return response;
@@ -79,7 +81,7 @@ public class UserController {
 	public UserBaseResponse viewUser(@PathVariable int userId)
 	{
 		User user = userService.findById(userId);
-		UserBaseResponse response = new UserBaseResponse(200, "Success");
+		UserBaseResponse response = new UserBaseResponse();
 		UserResponse userResponse= new UserResponse();
 		response.setUsers(userResponse);
 		if(user != null)
@@ -93,17 +95,12 @@ public class UserController {
 			userResponse.setUserType(user.getUserType().getUserTypeRole());
 			userResponse.setUserProfilePicture(user.getUserProfile().getPictureName());
 			userResponse.setAuthenticationType(user.getAuthentication());
-			userResponse.setSubscriptionForm(user.getSubscriptionForm().getSubscriptionId());
+			userResponse.setSubscriptionFormFromUser(user.getSubscriptionForm());
 			
 //			Response.setClassId(cls.getClassId());
 //			classResponse.setClassName(cls.getClassName());
 //			classResponse.setStatus(cls.getStatus());
 //			classResponse.setMedium(cls.getMedium().getMediumLanguage());
-		}else
-		{
-			response.setStatuscode(400);
-			response.setDescription("Failure");
-			
 		}
 		response.setUsers(userResponse);
 		return response;
@@ -112,23 +109,22 @@ public class UserController {
 	
 	@GetMapping("/user/{userId}/{subscriptionId}")
 	public SubscriptionResponse getUserSubscriptions(@PathVariable Integer userId, @PathVariable Integer subscriptionId) {
-		SubscriptionResponse response = new SubscriptionResponse(200,"Success");
+		SubscriptionResponse response = new SubscriptionResponse();
 		User requestUser = userService.findById(userId);
 		if(requestUser != null) {
 			SubscriptionForm userSubscription = subscriptionFormService.findBySubscriptionId(subscriptionId);
 			if(userSubscription != null) {
-				response.setSubscriptionClass(userSubscription.getSubscriptionClass());
+				response.setSubscriptionClass(userSubscription.getSubscriptionClass().getClassId());
 				response.setSubscriptionId(userSubscription.getSubscriptionId());
-				response.setEducationBoard(userSubscription.getEducationBoard());
-				response.setMedium(userSubscription.getMedium());
+				response.setEducationBoard(userSubscription.getEducationBoard().getEducationBoardName());
+				response.setMedium(userSubscription.getMedium().getMediumLanguage());
+				
+				SubscriptionStatusJson json=new SubscriptionStatusJson();
+				json.setSubscriptionStatusid(userSubscription.getSubscriptionId());
+				json.setSubscriptionStatus(userSubscription.getSubscriptionStatus().getStatus());
+				response.setSubscriptionStatus(json);
 				response.setUser(requestUser);
-			}else {
-				response.setDescription("No subscription found");
-				response.setStatuscode(409);
 			}
-		}else {
-			response.setDescription("No user found");
-			response.setStatuscode(409);
 		}
 		return response;		
 				

@@ -18,7 +18,7 @@ public class LoginController {
 	@Autowired
 	private UserService userService;
 	
-	
+
 	@PostMapping("/login")
 	public UserResponse loginuser(@RequestBody UserRequest adminRequest) {
 		User emailFromDb=userService.findByEmail(adminRequest.getEmail());

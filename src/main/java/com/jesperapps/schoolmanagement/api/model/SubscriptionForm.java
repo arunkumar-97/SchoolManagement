@@ -3,6 +3,8 @@ package com.jesperapps.schoolmanagement.api.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -10,12 +12,26 @@ public class SubscriptionForm {
 
 	@Id
 	private int subscriptionId;
-	private int subscriptionClass;
-	private String medium;
-	private String educationBoard;
 	
-	@OneToOne(cascade = CascadeType.ALL, mappedBy="subscriptionForm")
+	@OneToOne
+	@JoinColumn(name="subscriptionStatusId")
+	private SubscriptionStatus subscriptionStatus;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="userId")
 	private User user;
+	
+	@OneToOne
+	@JoinColumn(name="subscriptionClassId" ,referencedColumnName = "classId")
+	private Class subscriptionClass;
+	
+	@OneToOne
+	@JoinColumn(name="mediumId" ,referencedColumnName ="mediumId")
+	private Medium medium;
+	
+	@OneToOne
+	@JoinColumn(name="educationBoardId" ,referencedColumnName ="educationBoardId")
+	private EducationBoard educationBoard;
 	
 	
 	public User getUser() {
@@ -30,24 +46,32 @@ public class SubscriptionForm {
 	public void setSubscriptionId(int subscriptionId) {
 		this.subscriptionId = subscriptionId;
 	}
-	public int getSubscriptionClass() {
+	public Class getSubscriptionClass() {
 		return subscriptionClass;
 	}
-	public void setSubscriptionClass(int subscriptionClass) {
+	public void setSubscriptionClass(Class subscriptionClass) {
 		this.subscriptionClass = subscriptionClass;
 	}
-	public String getMedium() {
+	public Medium getMedium() {
 		return medium;
 	}
-	public void setMedium(String medium) {
+	public void setMedium(Medium medium) {
 		this.medium = medium;
 	}
-	public String getEducationBoard() {
+	public EducationBoard getEducationBoard() {
 		return educationBoard;
 	}
-	public void setEducationBoard(String educationBoard) {
+	public void setEducationBoard(EducationBoard educationBoard) {
 		this.educationBoard = educationBoard;
 	}
+	public SubscriptionStatus getSubscriptionStatus() {
+		return subscriptionStatus;
+	}
+	public void setSubscriptionStatus(SubscriptionStatus subscriptionStatus) {
+		this.subscriptionStatus = subscriptionStatus;
+	}
+	
+	
 	
 	
 	

@@ -4,7 +4,7 @@ import com.jesperapps.schoolmanagement.api.model.Medium;
 
 public class MediumResponse {
 	
-	private int mediumId;
+	private Integer mediumId;
 	private String mediumLanguage;
 	
 	public MediumResponse() {
@@ -22,7 +22,7 @@ public class MediumResponse {
 		this.mediumLanguage = mediumLanguage;
 	}
 	
-	public int getMediumId() {
+	public Integer getMediumId() {
 		return mediumId;
 	}
 	public void setMediumId(int mediumId) {

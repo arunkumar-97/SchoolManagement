@@ -10,7 +10,7 @@ import com.jesperapps.schoolmanagement.api.model.User;
 
 public interface UserService {
 
-	List<User> addadmin(List<UserRequestWithProfilePicture> user);
+	User addadmin(UserRequestWithProfilePicture user);
 
 	User findByEmail(String geteMail);
 

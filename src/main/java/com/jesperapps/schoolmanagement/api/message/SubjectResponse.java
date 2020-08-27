@@ -1,5 +1,8 @@
 package com.jesperapps.schoolmanagement.api.message;
 
+import com.jesperapps.schoolmanagement.api.model.Class;
+import com.jesperapps.schoolmanagement.api.model.Subject;
+
 public class SubjectResponse {
 
 	
@@ -8,6 +11,11 @@ public class SubjectResponse {
 	private String status;
 	
 	public SubjectResponse() {
+	}
+	public SubjectResponse(Subject sub) {
+		this.subjectId=sub.getSubjectId();
+		this.subjectName=sub.getSubjectName();
+		this.status=sub.getStatus();
 	}
 	
 	public SubjectResponse(Integer subjectId, String subjectName, String status) {
