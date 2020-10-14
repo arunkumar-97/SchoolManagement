@@ -1,11 +1,17 @@
 package com.jesperapps.schoolmanagement.api.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jesperapps.schoolmanagement.api.message.BaseResponse;
+
+import com.jesperapps.schoolmanagement.api.message.SubscriptionStatusJson;
 import com.jesperapps.schoolmanagement.api.model.SubscriptionStatus;
 import com.jesperapps.schoolmanagement.api.repository.SubscriptionStatusRepository;
 import com.jesperapps.schoolmanagement.api.utils.SubscriptionStatusTag;
@@ -17,7 +23,7 @@ public class SubscriptionStatusController {
 	@Autowired
 	private SubscriptionStatusRepository subscriptionStatusRepository;
 
-	@GetMapping("/subscriptionStatus")
+	@PostMapping("/subscription-status")
 	public BaseResponse createsubscriptionStatus(){
 		BaseResponse response=new BaseResponse(200,"subscriptionStatus Created Successfully") {
 		};
@@ -29,5 +35,11 @@ public class SubscriptionStatusController {
 		
 	}
 	
+	@GetMapping("/subscription-status")
+	public List<SubscriptionStatusJson>  listAllsubscriptionStatus()
+	{
+		return subscriptionStatusRepository.findAll().stream().map(subscriptionStatus -> new SubscriptionStatusJson(subscriptionStatus)).collect(Collectors.toList());
+
+	}
 	
 }

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jesperapps.schoolmanagement.api.message.ClassBaseResponse;
-import com.jesperapps.schoolmanagement.api.message.ClassListResponse;
+
 import com.jesperapps.schoolmanagement.api.message.ClassRequest;
 import com.jesperapps.schoolmanagement.api.message.ClassResponse;
 
@@ -66,7 +66,7 @@ public class ClassController {
 			Class newClass =classService.createnewclass(classRequest.getClassName(),classRequest.getClassId(),StatusClass.getStatus(classRequest.getStatus()),classRequest.getMedium().getMediumId().toString(),classRequest.getEducationBoard().getEducationBoardId().toString());
 			classResponse.setClassId(newClass.getClassId());
 			classResponse.setClassName(newClass.getClassName());
-			classResponse.setStatus(newClass.getStatus());
+			classResponse.setStatus(StatusClass.getStatus(newClass.getStatus()));
 			classResponse.setMedium(newClass.getMedium().getMediumLanguage());
 			classResponse.setEducationBoard(newClass.getEducationBoard().getEducationBoardName());
 			response.setCls(classResponse);
@@ -141,18 +141,14 @@ public class ClassController {
 
 	
 	@GetMapping("/class")
-	public ClassListResponse  listAllclasses()
+	public List<ClassResponse>  listAllclasses()
 	{
-		ClassListResponse res=new ClassListResponse();
+		List<ClassResponse> res=new ArrayList<>();
 		
 //		ClassResponse cls= new ClassResponse();
 		classService.findAll().forEach(clss->{
-			res.addclss(new ClassResponse(clss.getClassId(),clss.getClassName(),clss.getStatus(), clss.getMedium().getMediumLanguage(),clss.getEducationBoard().getEducationBoardName()));
-		});; 
-		if(res.getClasses().size() <= 0) {
-			 
-		 }
-		
+			res.add(new ClassResponse(clss.getClassId(),clss.getClassName(),clss.getStatus(), clss.getMedium().getMediumLanguage(),clss.getEducationBoard().getEducationBoardName()));
+		});
 		return res;
 	}
 

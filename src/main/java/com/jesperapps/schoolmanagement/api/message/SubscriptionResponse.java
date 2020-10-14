@@ -62,8 +62,8 @@ public class SubscriptionResponse {
 		subscriptionClass=subscriptionForm.getSubscriptionClass().getClassId();
 		medium=subscriptionForm.getMedium().getMediumLanguage();
 		educationBoard=subscriptionForm.getEducationBoard().getEducationBoardName();
-//		subscriptionStatus=subscriptionForm.getSubscriptionStatus().getStatus();
-	
+		subscriptionStatus=new SubscriptionStatusJson(subscriptionForm.getSubscriptionStatus());
+		this.user = new UserSubscriptionResponse(subscriptionForm.getUser());
 		
 		
 	}

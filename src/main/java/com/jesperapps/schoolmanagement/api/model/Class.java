@@ -12,7 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.jesperapps.schoolmanagement.api.message.ClassRequest;
-import com.jesperapps.schoolmanagement.api.utils.StatusClass;
 
 @Entity
 public class Class {
@@ -21,7 +20,7 @@ public class Class {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer classId;
 	private String className;
-	private String status=StatusClass.INACTIVE;
+	private String status;
 	
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "cls")
 	private List<Subject> subject;

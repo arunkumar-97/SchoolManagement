@@ -21,7 +21,7 @@ public class SubscriptionFormController {
 	private SubscriptionFormService subscriptionFormService;
 	
 	
-	@PostMapping("/subscriptionForm")
+	@PostMapping("/subscription-form")
 	public SubscriptionResponse createSubscription(@RequestBody SubscriptionRequest subscriptionRequest) {
 		return subscriptionFormService.createSubscription(subscriptionRequest);
 }

@@ -2,7 +2,6 @@ package com.jesperapps.schoolmanagement.api.message;
 
 import com.jesperapps.schoolmanagement.api.model.EducationBoard;
 import com.jesperapps.schoolmanagement.api.model.Medium;
-import com.jesperapps.schoolmanagement.api.model.User;
 import com.jesperapps.schoolmanagement.api.model.Class;
 
 public class SubscriptionRequest {

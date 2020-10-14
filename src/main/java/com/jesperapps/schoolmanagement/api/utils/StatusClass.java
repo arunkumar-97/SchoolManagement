@@ -7,6 +7,9 @@ public class StatusClass
 	public static String INACTIVE = "InActive";
 	
 	public static String getStatus(String status) {
+		if(status == null) {
+			return StatusClass.ACTIVE;
+		}
 		if(StatusClass.INACTIVE.toLowerCase().equalsIgnoreCase(status.toLowerCase())) {
 			return StatusClass.INACTIVE;
 		}else {

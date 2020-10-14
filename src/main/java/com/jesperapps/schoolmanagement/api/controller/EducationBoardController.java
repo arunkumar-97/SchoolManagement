@@ -31,7 +31,7 @@ public class EducationBoardController {
 	
 	
 	@CrossOrigin(origins="*",allowedHeaders="*")
-	@PostMapping("/educationBoard")
+	@PostMapping("/education-board")
 	public BaseResponse createEducationBoard(){
 		BaseResponse response=new BaseResponse(200,"EducationBoards Created Successfully") {
 		};
@@ -54,7 +54,7 @@ public class EducationBoardController {
 	}
 
 	
-	@GetMapping("/medium/educationBoard/{educationBoardId}")
+	@GetMapping("/medium/education-board/{educationBoardId}")
 	public MediumListResponse getAllmediums(@PathVariable int educationBoardId) {
 	      MediumListResponse response = new MediumListResponse();
 		response.setMediums(educationBoardService.findeducationBoardMediums(educationBoardId));
@@ -62,7 +62,7 @@ public class EducationBoardController {
 	}
 	
 	//list
-	@GetMapping("/educationBoard")
+	@GetMapping("/education-board")
 	public List<EducationBoardJson> getAllEductionBoardDetails(){
 		return educationBoardService.findAll().stream().map(educationBoard -> new EducationBoardJson(educationBoard)).collect(Collectors.toList());
 	}

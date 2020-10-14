@@ -3,7 +3,7 @@ package com.jesperapps.schoolmanagement.api.service;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Service;
 
-import com.jesperapps.schoolmanagement.api.message.Attachment;
+import com.jesperapps.schoolmanagement.api.model.Attachment;
 import com.jesperapps.schoolmanagement.api.model.UserProfilePicture;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -15,7 +15,7 @@ import java.io.OutputStream;
 @Service
 public class UserProfilePictureImplementationService implements UserProfilePictureService{
 
-    private final String LOCATION = "C:\\Users\\Admin\\SchoolManagementUserProfilePicture";
+    private final String LOCATION = "C:\\Users\\Admin\\OrganizationProfilePicture";
 
     private boolean saveRequestFile(String name, String bytes){
         try{
@@ -46,9 +46,9 @@ public class UserProfilePictureImplementationService implements UserProfilePictu
     @Override
     public UserProfilePicture saveFile(Attachment profilePicture){
         UserProfilePicture userProfilePicture = new UserProfilePicture();
-        if(this.saveRequestFile(profilePicture.getName(), profilePicture.getFileByte())){
-            userProfilePicture.setPictureName(profilePicture.getName());
-            userProfilePicture.setPictureLocation(LOCATION+"\\"+profilePicture.getName());
+        if(this.saveRequestFile(profilePicture.getAttachmentName(), profilePicture.getFileByte())){
+            userProfilePicture.setPictureName(profilePicture.getAttachmentName());
+            userProfilePicture.setPictureLocation(LOCATION+"\\"+profilePicture.getAttachmentName());
             return userProfilePicture;
         }
         return null;

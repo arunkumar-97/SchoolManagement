@@ -1,6 +1,9 @@
 package com.jesperapps.schoolmanagement.api.controller;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -86,15 +89,13 @@ public class SubjectController {
 	
 	
 	@GetMapping("/subject")
-	public SubjectListResponse listAllclasses()
+	public List<SubjectResponse> listAllclasses()
 	{
-		SubjectListResponse res=new SubjectListResponse();
+		List<SubjectResponse> res=new ArrayList<>();
 		 subjectService.findAll().forEach(sub->{
-			 res.addSubject(new SubjectResponse(sub.getSubjectId(), sub.getSubjectName(), sub.getStatus()));
+			 res.add(new SubjectResponse(sub.getSubjectId(), sub.getSubjectName(), sub.getStatus()));
 		 });
-		 if(res.getSubjects().size() <= 0) {
-			
-		 }
+		 
 		 return res;
 	}
 	

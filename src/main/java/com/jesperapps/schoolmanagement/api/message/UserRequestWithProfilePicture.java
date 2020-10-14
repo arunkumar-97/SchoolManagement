@@ -1,8 +1,7 @@
 package com.jesperapps.schoolmanagement.api.message;
 
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jesperapps.schoolmanagement.api.model.Attachment;
 
 public class UserRequestWithProfilePicture {
 

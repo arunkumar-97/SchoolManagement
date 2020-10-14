@@ -1,11 +1,16 @@
 package com.jesperapps.schoolmanagement.api.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jesperapps.schoolmanagement.api.message.BaseResponse;
+import com.jesperapps.schoolmanagement.api.message.UserTypeResponse;
 import com.jesperapps.schoolmanagement.api.model.UserType;
 import com.jesperapps.schoolmanagement.api.repository.UserTypeRepository;
 import com.jesperapps.schoolmanagement.api.utils.UserTypes;
@@ -19,7 +24,7 @@ public class UserTypeController {
 	private UserTypeRepository userRepository;
 
 
-	@GetMapping("/userType")
+	@PostMapping("/user-type")
 	public BaseResponse createUserType() {
 		BaseResponse response=new BaseResponse(200,"UserType Created Successfully") {
 		};
@@ -37,4 +42,13 @@ public class UserTypeController {
 		return response  ;
 		
 	}
+	
+	@GetMapping("/user-type")
+	public List<UserTypeResponse> getAllUserTypeDetails(){
+		
+		return userRepository.findAll().stream().map(userType -> new UserTypeResponse(userType)).collect(Collectors.toList());
+
+		
+		
+}
 }

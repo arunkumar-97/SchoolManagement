@@ -3,7 +3,7 @@ package com.jesperapps.schoolmanagement.api.message;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MediumListResponse extends BaseResponse{
+public class MediumListResponse {
 	
 	public MediumListResponse() {
 		mediums=new ArrayList<MediumResponse>();

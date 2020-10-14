@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,6 +17,7 @@ import javax.persistence.OneToOne;
 //import com.jesperapps.schoolmanagement.api.message.ClassResponse;
 import com.jesperapps.schoolmanagement.api.message.UserRequest;
 import com.jesperapps.schoolmanagement.api.message.UserRequestWithProfilePicture;
+
 //import com.jesperapps.schoolmanagement.api.message.UserResponse;
 
 @Entity
@@ -26,6 +28,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int userId;
 	private String userName;
+	@Column(unique=true)
 	private String email;
 	private String password;
 	private int phoneNumber;

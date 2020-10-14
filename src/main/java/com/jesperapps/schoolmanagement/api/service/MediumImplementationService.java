@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.jesperapps.schoolmanagement.api.model.Class;
 import com.jesperapps.schoolmanagement.api.message.ClassResponse;
-import com.jesperapps.schoolmanagement.api.message.MediumResponse;
 import com.jesperapps.schoolmanagement.api.model.Medium;
 import com.jesperapps.schoolmanagement.api.repository.MediumRepository;
 

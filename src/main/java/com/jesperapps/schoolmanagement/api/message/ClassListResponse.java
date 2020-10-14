@@ -8,7 +8,7 @@ public class ClassListResponse {
 	public ClassListResponse() {
 	}
 	
-	private List<ClassResponse> classes;
+ private List<ClassResponse> classes;
 	
 
 	public List<ClassResponse> getClasses() {

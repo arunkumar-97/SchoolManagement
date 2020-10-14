@@ -5,7 +5,7 @@ import com.jesperapps.schoolmanagement.api.model.User;
 public class UserSubscriptionResponse {
 	private String userName;
 	private String email;
-	private String password;
+//	private String password;
 	private int phoneNumber;
 	private UserTypeRequest userType;
 	public String getUserName() {
@@ -20,12 +20,12 @@ public class UserSubscriptionResponse {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
+//	public String getPassword() {
+//		return password;
+//	}
+//	public void setPassword(String password) {
+//		this.password = password;
+//	}
 	public int getPhoneNumber() {
 		return phoneNumber;
 	}
@@ -41,7 +41,7 @@ public class UserSubscriptionResponse {
 	
 	public UserSubscriptionResponse(User user) {
 		this.email = user.getEmail();
-		this.password = user.getPassword();
+//		this.password = user.getPassword();
 		this.phoneNumber = user.getPhoneNumber();
 		this.userName = user.getUserName();
 		this.userType = new UserTypeRequest(user.getUserType());

@@ -1,5 +1,8 @@
 package com.jesperapps.schoolmanagement.api.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,9 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jesperapps.schoolmanagement.api.message.BaseResponse;
-import com.jesperapps.schoolmanagement.api.message.ClassListResponse;
 import com.jesperapps.schoolmanagement.api.message.ClassResponse;
-import com.jesperapps.schoolmanagement.api.message.MediumListResponse;
 import com.jesperapps.schoolmanagement.api.message.MediumResponse;
 import com.jesperapps.schoolmanagement.api.model.Medium;
 import com.jesperapps.schoolmanagement.api.repository.MediumRepository;
@@ -42,20 +43,21 @@ public class MediumController {
 	
 	//
 	@GetMapping("/class/medium/{mediumId}")
-	public ClassListResponse getAllClasses(@PathVariable int mediumId) {
-		ClassListResponse response = new ClassListResponse();
-		response.setClasses(mediumService.findMediumClasses(mediumId));
+	public List<ClassResponse> getAllClasses(@PathVariable int mediumId) {
+		List<ClassResponse> response=new ArrayList<>();
+
+		response.addAll(mediumService.findMediumClasses(mediumId));
 		return response;
 	}
 	
 	
 	@GetMapping("/medium")
-	public MediumListResponse  listAllclasses()
+	public List<MediumResponse>  listAllclasses()
 	{
-		MediumListResponse res=new MediumListResponse();
+		List<MediumResponse> res=new ArrayList<> ();
 		
 		mediumService.findAll().forEach(medium->{
-			res.addclass(new MediumResponse(medium));
+			res.add(new MediumResponse(medium));
 		});
 		
 		return res;

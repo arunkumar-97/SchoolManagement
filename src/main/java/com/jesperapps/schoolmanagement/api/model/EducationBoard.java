@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.jesperapps.schoolmanagement.api.model.Medium;
 
 @Entity
 public class EducationBoard {

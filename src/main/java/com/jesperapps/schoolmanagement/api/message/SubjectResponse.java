@@ -1,6 +1,5 @@
 package com.jesperapps.schoolmanagement.api.message;
 
-import com.jesperapps.schoolmanagement.api.model.Class;
 import com.jesperapps.schoolmanagement.api.model.Subject;
 
 public class SubjectResponse {

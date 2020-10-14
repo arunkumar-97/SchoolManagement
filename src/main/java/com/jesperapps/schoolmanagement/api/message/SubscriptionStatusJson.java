@@ -11,8 +11,10 @@ public class SubscriptionStatusJson {
 	}
 	
 	public SubscriptionStatusJson(SubscriptionStatus subscriptionStatus) {
+		if(subscriptionStatus != null) {
 		this.subscriptionStatusid = subscriptionStatus.getSubscriptionStatusId();
 		this.subscriptionStatus = subscriptionStatus.getStatus();
+		}
 	}
 
 	public Integer getSubscriptionStatusid() {

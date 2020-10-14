@@ -1,6 +1,5 @@
 package com.jesperapps.schoolmanagement.api.message;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -16,11 +15,11 @@ public class UserResponse {
 	private Integer userId;
 	private String userName;
 	private String email;
-	private String password;
+//	private String password;
 	private int phoneNumber;
 	private String userType;
 	private String userProfilePicture;
-	private String confirmPassword;
+//	private String confirmPassword;
 	private String authenticationType;
 	private List<SubscriptionResponse> subscriptionForm;
 
@@ -36,7 +35,7 @@ public class UserResponse {
 		this.userId = user.getUserId();
 		this.userName = user.getUserName();
 		this.email = user.getEmail();
-		this.password = user.getPassword();
+//		this.password = user.getPassword();
 		this.phoneNumber = user.getPhoneNumber();
 		this.userType = user.getUserType() != null? user.getUserType().getUserTypeRole() : null;
 		this.userProfilePicture=user.getUserProfile().getPictureName();
@@ -51,7 +50,7 @@ public class UserResponse {
 		this.userId=userId2;
 		this.userName=userName2;
 		this.email=email2;
-		this.confirmPassword=confirmPassword2;
+//		this.confirmPassword=confirmPassword2;
 		this.userProfilePicture=pictureName;
 		this.authenticationType=authentication;
 		this.userType=userType2.getUserTypeRole();
@@ -92,12 +91,12 @@ public class UserResponse {
 		this.email = email;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
+//	public String getPassword() {
+//		return password;
+//	}
+//	public void setPassword(String password) {
+//		this.password = password;
+//	}
 	public int getPhoneNumber() {
 		return phoneNumber;
 	}
@@ -115,13 +114,13 @@ public class UserResponse {
 		this.userType = userType;
 	}
 
-	public String getConfirmPassword() {
-		return confirmPassword;
-	}
-
-	public void setConfirmPassword(String confirmPassword) {
-		this.confirmPassword = confirmPassword;
-	}
+//	public String getConfirmPassword() {
+//		return confirmPassword;
+//	}
+//
+//	public void setConfirmPassword(String confirmPassword) {
+//		this.confirmPassword = confirmPassword;
+//	}
 
 	public String getAuthenticationType() {
 		return authenticationType;
