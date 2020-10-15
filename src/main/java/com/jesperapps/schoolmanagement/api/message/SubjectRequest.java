@@ -1,10 +1,14 @@
 package com.jesperapps.schoolmanagement.api.message;
 
+
+
+
 public class SubjectRequest {
 	
 	private Integer subjectId;
 	private String subjectName;
 	private String status;
+	private ClassJSON clas;
 	
 	public Integer getSubjectId() {
 		return subjectId;
@@ -24,6 +28,15 @@ public class SubjectRequest {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	public ClassJSON getClas() {
+		return clas;
+	}
+	public void setClas(ClassJSON Clas) {
+		clas = Clas;
+	}
+
+	
+	
 	
 	
 	

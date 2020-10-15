@@ -19,7 +19,7 @@ import com.jesperapps.schoolmanagement.api.repository.EducationBoardRepository;
 import com.jesperapps.schoolmanagement.api.service.EducationBoardService;
 import com.jesperapps.schoolmanagement.api.utils.EducationBoards;
 //import com.jesperapps.schoolmanagement.api.utils.Mediums;
-
+@CrossOrigin(origins="*",allowedHeaders="*")
 @RestController
 public class EducationBoardController {
 	

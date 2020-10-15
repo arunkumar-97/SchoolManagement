@@ -59,10 +59,14 @@ public class UserImplementationService implements UserService{
 				//save profilePIcuter
 				try {
 					Attachment profileAttachment = user.getAttachment();
+					if(profileAttachment != null) {
 					UserProfilePicture profilePicture = userProfilePictureService.saveFile(profileAttachment);
 					profilePicture.setUser(newUsersList);
 					newUsersList.setUserProfile(profilePicture);
 					userRepository.save(newUsersList);
+					}else {
+						
+					}
 				}
 				catch(Exception e) {
 			System.out.println(e);

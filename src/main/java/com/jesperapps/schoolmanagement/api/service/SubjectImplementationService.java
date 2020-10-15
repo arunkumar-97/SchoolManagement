@@ -15,6 +15,9 @@ public class SubjectImplementationService implements SubjectService {
 	@Autowired
 	private SubjectRepository subjectRepository;
 	
+	@Autowired
+	private ClassService classService;
+	
 	
 	public void addSubject (List<Subject> subjects) {
 		 subjectRepository.saveAll(subjects);
@@ -29,11 +32,12 @@ public class SubjectImplementationService implements SubjectService {
 
 
 	@Override
-	public Subject createnewSubject(String subjectName, Integer subjectId, String status) {
+	public Subject createnewSubject(String subjectName, Integer subjectId, String status,Integer classId) {
 		Subject newsubject=new Subject();
 		newsubject.setSubjectName(subjectName);
 		newsubject.setSubjectId(subjectId);
 		newsubject.setStatus(status);
+		newsubject.setClasses(classService.findById(classId));
 		subjectRepository.save(newsubject);
 		return (newsubject);
 	}

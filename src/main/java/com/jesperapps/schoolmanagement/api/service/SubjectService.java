@@ -8,7 +8,7 @@ public interface SubjectService {
 
 	Subject checksubject(String subjectName);
 
-	Subject createnewSubject(String subjectName, Integer subjectId, String status);
+	Subject createnewSubject(String subjectName, Integer subjectId, String status,Integer classId);
 
 	Subject fromSubjectId(Integer subjectId);
 

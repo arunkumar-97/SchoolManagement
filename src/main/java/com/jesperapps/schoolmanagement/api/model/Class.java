@@ -22,6 +22,10 @@ public class Class {
 	private String className;
 	private String status;
 	
+	
+	@OneToMany(cascade=CascadeType.ALL,mappedBy = "classes")
+	private List<Subject> subjects;
+	
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "cls")
 	private List<Subject> subject;
 	

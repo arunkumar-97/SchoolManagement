@@ -1,5 +1,6 @@
 package com.jesperapps.schoolmanagement.api.message;
 
+
 import com.jesperapps.schoolmanagement.api.model.Subject;
 
 public class SubjectResponse {
@@ -8,6 +9,7 @@ public class SubjectResponse {
 	private Integer subjectId;
 	private String subjectName;
 	private String status;
+	private ClassJSON clas;
 	
 	public SubjectResponse() {
 	}
@@ -15,6 +17,7 @@ public class SubjectResponse {
 		this.subjectId=sub.getSubjectId();
 		this.subjectName=sub.getSubjectName();
 		this.status=sub.getStatus();
+
 	}
 	
 	public SubjectResponse(Integer subjectId, String subjectName, String status) {
@@ -22,6 +25,7 @@ public class SubjectResponse {
 		this.subjectId = subjectId;
 		this.subjectName = subjectName;
 		this.status = status;
+	
 	}
 	
 	public Integer getSubjectId() {
@@ -42,4 +46,12 @@ public class SubjectResponse {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	public ClassJSON getClas() {
+		return clas;
+	}
+	public void setClas(ClassJSON clas) {
+		this.clas = clas;
+	}
+	
+	
 }

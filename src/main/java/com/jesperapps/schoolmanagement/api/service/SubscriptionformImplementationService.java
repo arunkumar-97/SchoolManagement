@@ -65,6 +65,7 @@ public class SubscriptionformImplementationService implements SubscriptionFormSe
 			subscriptionForm.setUser(subscriptionUser);
 			subscriptionUser.addSubscription(subscriptionForm);
 			subscriptionForm.setSubscriptionStatus(subscribedStatusFromDB);
+			subscriptionUser.addSubscription(subscriptionForm);
 			userRepository.save(subscriptionUser);
 			response.setSubscriptionId(subscriptionForm.getSubscriptionId());
 			response.setSubscriptionClass(subscriptionForm.getSubscriptionClass().getClassId());

@@ -38,7 +38,7 @@ public class UserResponse {
 //		this.password = user.getPassword();
 		this.phoneNumber = user.getPhoneNumber();
 		this.userType = user.getUserType() != null? user.getUserType().getUserTypeRole() : null;
-		this.userProfilePicture=user.getUserProfile().getPictureName();
+		this.userProfilePicture=user.getUserProfile() != null ? user.getUserProfile().getPictureName() : null;
 		this.authenticationType=user.getAuthentication();
 		this.setSubscriptionFormFromUser(user.getSubscriptionForm());
 	}

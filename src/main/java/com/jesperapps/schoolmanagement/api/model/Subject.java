@@ -29,6 +29,10 @@ public class Subject  {
 	@JoinTable(name="classSubject",joinColumns=@JoinColumn(name="subjectId", referencedColumnName="subjectId"), inverseJoinColumns=@JoinColumn(name="classId", referencedColumnName="classId"))
 	private Class cls;
 	
+	@ManyToOne
+	@JoinColumn(name="classId", referencedColumnName="classId")
+	private Class classes;
+	
 	
 	public Class getCls() {
 		return cls;
@@ -65,6 +69,14 @@ public class Subject  {
 		this.subjectId=subjectRequest.getSubjectId();
 		this.subjectName=subjectRequest.getSubjectName();
 		this.status = subjectRequest.getStatus() != null ? subjectRequest.getStatus() : this.status;
+	}
+
+	public Class getClasses() {
+		return classes;
+	}
+
+	public void setClasses(Class classes) {
+		this.classes = classes;
 	}
 	
 

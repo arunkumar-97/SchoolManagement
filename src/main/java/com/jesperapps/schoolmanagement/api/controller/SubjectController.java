@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jesperapps.schoolmanagement.api.message.ClassJSON;
 import com.jesperapps.schoolmanagement.api.message.SubjectBaseResponse;
-import com.jesperapps.schoolmanagement.api.message.SubjectListResponse;
+
 import com.jesperapps.schoolmanagement.api.message.SubjectRequest;
 import com.jesperapps.schoolmanagement.api.message.SubjectResponse;
 import com.jesperapps.schoolmanagement.api.model.Subject;
+import com.jesperapps.schoolmanagement.api.service.ClassService;
 import com.jesperapps.schoolmanagement.api.service.SubjectService;
 import com.jesperapps.schoolmanagement.api.utils.StatusSubject;
 
@@ -28,6 +30,10 @@ public class SubjectController {
 	
 	@Autowired
 	private SubjectService subjectService;
+	
+	@SuppressWarnings("unused")
+	@Autowired
+	private ClassService classService;
 	
 	
 	@PostMapping("/subject")
@@ -45,13 +51,16 @@ public class SubjectController {
 			subjectResponse.setSubjectId(subjectName.getSubjectId());
 			subjectResponse.setSubjectName(subjectRequest.getSubjectName());
 			subjectResponse.setStatus(subjectRequest.getStatus());
+			
 		}
 		else {
 		@SuppressWarnings("unused")
-		Subject newsubject=	subjectService.createnewSubject(subjectRequest.getSubjectName(),subjectRequest.getSubjectId(),StatusSubject.getStatus(subjectRequest.getStatus()));
+		Subject newsubject=	subjectService.createnewSubject(subjectRequest.getSubjectName(),subjectRequest.getSubjectId(),StatusSubject.getStatus(subjectRequest.getStatus()),subjectRequest.getClas().getClassId());
+
 		subjectResponse.setSubjectId(newsubject.getSubjectId());
 		subjectResponse.setSubjectName(newsubject.getSubjectName());
 		subjectResponse.setStatus(newsubject.getStatus());
+		subjectResponse.setClas(new ClassJSON(newsubject.getClasses()));
 		response.setStatuscode(200);
 		response.setDescription("subject Created successfully");
 		}
@@ -112,6 +121,7 @@ public class SubjectController {
 			subjectResponse.setSubjectId(sub.getSubjectId());
 			subjectResponse.setSubjectName(sub.getSubjectName());
 			subjectResponse.setStatus(sub.getStatus());
+			subjectResponse.setClas(new ClassJSON(sub.getCls()));
 		}
 		return subjectResponse;
 	}
