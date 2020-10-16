@@ -1,8 +1,9 @@
 package com.jesperapps.schoolmanagement.api.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,10 +24,10 @@ public class Class {
 	private String status;
 	
 	
-	@OneToMany(cascade=CascadeType.ALL,mappedBy = "classes")
+	@OneToMany(mappedBy = "classes")
 	private List<Subject> subjects;
 	
-	@OneToMany(cascade = CascadeType.ALL,mappedBy = "cls")
+	@OneToMany(mappedBy = "cls")
 	private List<Subject> subject;
 	
 	@ManyToOne
@@ -98,6 +99,19 @@ public class Class {
 	public void setMedium(String medium2) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void addSubject(Subject newSubject) {
+		if(this.subject != null) {
+			this.subject = new ArrayList<>();
+		}
+		if(this.subjects != null) {
+			this.subjects = new ArrayList<>();
+		}
+		if(newSubject != null) {
+			this.subject.add(newSubject);
+			this.subjects.add(newSubject);
+		}
 	}
 
 	public Class() {

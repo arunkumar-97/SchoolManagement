@@ -8,7 +8,7 @@ public class UserRequestWithProfilePicture {
 	private String userName;
 	private String email;
 	private String password;
-	private int phoneNumber;
+	private Long phoneNumber;
 	private String authenticationType;
 	private UserTypeRequest userType;
 	private Attachment attachment;
@@ -31,10 +31,10 @@ public class UserRequestWithProfilePicture {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public int getPhoneNumber() {
+	public Long getPhoneNumber() {
 		return phoneNumber;
 	}
-	public void setPhoneNumber(int phoneNumber) {
+	public void setPhoneNumber(Long phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 	public Attachment getAttachment() {

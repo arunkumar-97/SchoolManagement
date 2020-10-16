@@ -31,7 +31,7 @@ public class User {
 	@Column(unique=true)
 	private String email;
 	private String password;
-	private int phoneNumber;
+	private Long phoneNumber;
 	private String confirmPassword;
 	private String authentication;
 	
@@ -98,10 +98,10 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public int getPhoneNumber() {
+	public Long getPhoneNumber() {
 		return phoneNumber;
 	}
-	public void setPhoneNumber(int phoneNumber) {
+	public void setPhoneNumber(Long phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 

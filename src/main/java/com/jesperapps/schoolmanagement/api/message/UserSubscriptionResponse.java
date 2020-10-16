@@ -6,7 +6,7 @@ public class UserSubscriptionResponse {
 	private String userName;
 	private String email;
 //	private String password;
-	private int phoneNumber;
+	private Long phoneNumber;
 	private UserTypeRequest userType;
 	public String getUserName() {
 		return userName;
@@ -26,10 +26,10 @@ public class UserSubscriptionResponse {
 //	public void setPassword(String password) {
 //		this.password = password;
 //	}
-	public int getPhoneNumber() {
+	public Long getPhoneNumber() {
 		return phoneNumber;
 	}
-	public void setPhoneNumber(int phoneNumber) {
+	public void setPhoneNumber(Long phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 	public UserTypeRequest getUserType() {

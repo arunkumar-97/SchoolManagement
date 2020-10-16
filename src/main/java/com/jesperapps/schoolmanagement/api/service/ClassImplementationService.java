@@ -1,5 +1,6 @@
 package com.jesperapps.schoolmanagement.api.service;
 
+
 import java.util.List;
 import com.jesperapps.schoolmanagement.api.utils.StatusClass;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.jesperapps.schoolmanagement.api.model.Class;
 import com.jesperapps.schoolmanagement.api.model.EducationBoard;
 import com.jesperapps.schoolmanagement.api.model.Medium;
+
 import com.jesperapps.schoolmanagement.api.repository.ClassRepository;
 
 @Service
@@ -78,7 +80,8 @@ public class ClassImplementationService implements ClassService {
 
 	@Override
 	public Class checkclass(String className) {
-		return classRepository.findByClassName(className);
+		
+		return classRepository.findByClassNameAndStatusNot(className, StatusClass.DELETED);
 	}
 
 
@@ -102,6 +105,13 @@ public class ClassImplementationService implements ClassService {
 		EducationBoard requesteB=educationBoardService.findEducationBoardFromId(Integer.parseInt(educationBoard));
 		newclass.setEducationBoard(requesteB);
 		requestMedium.addClass(newclass);
+//		List<Subject> classSubjects=newclass.getSubject();
+//		if(classSubjects==null) {
+//			classSubjects=new ArrayList<>();
+//		}
+//		
+//		newclass.setSubject(classSubjects);
+//		classSubjects.add(newSubject);
 		 classRepository.save(newclass);
 		return(newclass);
 	}

@@ -5,10 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+
 import javax.persistence.OneToOne;
 
-import com.jesperapps.schoolmanagement.api.message.UserRequestWithProfilePicture;
+
 
 @Entity
 public class UserProfilePicture{

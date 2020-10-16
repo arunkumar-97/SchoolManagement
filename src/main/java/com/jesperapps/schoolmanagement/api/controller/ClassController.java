@@ -47,10 +47,9 @@ public class ClassController {
 		ClassResponse classResponse=new ClassResponse();
 		//		for(ClassRequest eachclass:classRequest) 
 		//		{
-		Class classOfName=classService.checkclass( classRequest.getClassName());
+		Class classOfName=classService.checkclass(classRequest.getClassName());
 		
-
-		if(classOfName != null)
+		if(classOfName!= null)
 		{
 			/*
 			 * classResponse.setClassName(classRequest.getClassName());
@@ -200,6 +199,7 @@ public class ClassController {
 		Class requestClass = classService.findById(classId);
 		if(requestClass != null) {
 			requestClass.getSubject().forEach(subject -> {
+//				System.out.println(subject.getSubjectName()+","+subject.getStatus());
 				if(!subject.getStatus().equalsIgnoreCase(StatusSubject.DELETED)) {
 					subjectList.add(new SubjectResponse(
 							subject.getSubjectId(),

@@ -1,10 +1,12 @@
 package com.jesperapps.schoolmanagement.api.service;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.jesperapps.schoolmanagement.api.model.Subject;
+import com.jesperapps.schoolmanagement.api.model.Class;
 import com.jesperapps.schoolmanagement.api.repository.SubjectRepository;
 import com.jesperapps.schoolmanagement.api.utils.StatusClass;
 import com.jesperapps.schoolmanagement.api.utils.StatusSubject;
@@ -37,7 +39,10 @@ public class SubjectImplementationService implements SubjectService {
 		newsubject.setSubjectName(subjectName);
 		newsubject.setSubjectId(subjectId);
 		newsubject.setStatus(status);
-		newsubject.setClasses(classService.findById(classId));
+		Class requestedClass = classService.findById(classId);
+		newsubject.setClasses(requestedClass);
+		newsubject.setCls(requestedClass);
+		requestedClass.addSubject(newsubject);
 		subjectRepository.save(newsubject);
 		return (newsubject);
 	}

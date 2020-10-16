@@ -23,6 +23,7 @@ public class EmailSServiceImplementationService implements EmailSenderService {
 	@Autowired
 	private UserRepository userRepository;
 	
+	@SuppressWarnings("unused")
 	@Autowired
 	private ConfirmationTokenRepository confirmationTokenRepository;
 	

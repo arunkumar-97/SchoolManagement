@@ -21,8 +21,7 @@ import com.jesperapps.schoolmanagement.api.message.OtpResponse;
 import com.jesperapps.schoolmanagement.api.message.Response;
 import com.jesperapps.schoolmanagement.api.message.SubscriptionResponse;
 import com.jesperapps.schoolmanagement.api.message.SubscriptionStatusJson;
-import com.jesperapps.schoolmanagement.api.message.UserBaseResponse;
-import com.jesperapps.schoolmanagement.api.message.UserListResponse;
+
 import com.jesperapps.schoolmanagement.api.message.UserRequestWithProfilePicture;
 //import com.jesperapps.schoolmanagement.api.message.UserRequest;
 import com.jesperapps.schoolmanagement.api.message.UserResponse;
@@ -42,6 +41,7 @@ public class UserController {
 	@Autowired
 	private SubscriptionFormService subscriptionFormService;
 	
+	@SuppressWarnings("rawtypes")
 	@PostMapping("/user")
 	public ResponseEntity addadmin(@RequestBody UserRequestWithProfilePicture userRequestWithProfilePicture){
 //		UserResponse response=new UserResponse(userRequestWithProfilePicture);

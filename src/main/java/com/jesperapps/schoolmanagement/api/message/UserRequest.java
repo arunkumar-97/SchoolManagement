@@ -6,7 +6,7 @@ public class UserRequest {
 	private String email;
 	private String password;
 	private String confirmPassword;
-	private int phoneNumber;
+	private Long phoneNumber;
 	private UserTypeRequest userType;
 	
 	
@@ -50,10 +50,10 @@ public class UserRequest {
 		this.confirmPassword = confirmPassword;
 	}
 
-	public int getPhoneNumber() {
+	public Long getPhoneNumber() {
 		return phoneNumber;
 	}
-	public void setPhoneNumber(int phoneNumber) {
+	public void setPhoneNumber(Long phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 

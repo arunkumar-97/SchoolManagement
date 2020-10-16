@@ -25,6 +25,7 @@ public class SubjectResponse {
 		this.subjectId = subjectId;
 		this.subjectName = subjectName;
 		this.status = status;
+		
 	
 	}
 	

@@ -9,14 +9,14 @@ import com.jesperapps.schoolmanagement.api.model.User;
 //import com.jesperapps.schoolmanagement.api.model.UserProfilePicture;
 import com.jesperapps.schoolmanagement.api.model.UserType;
 
-public class UserResponse {
+public class UserResponse extends BaseResponse{
 
 	
 	private Integer userId;
 	private String userName;
 	private String email;
 //	private String password;
-	private int phoneNumber;
+	private Long phoneNumber;
 	private String userType;
 	private String userProfilePicture;
 //	private String confirmPassword;
@@ -97,10 +97,10 @@ public class UserResponse {
 //	public void setPassword(String password) {
 //		this.password = password;
 //	}
-	public int getPhoneNumber() {
+	public Long getPhoneNumber() {
 		return phoneNumber;
 	}
-	public void setPhoneNumber(int phoneNumber) {
+	public void setPhoneNumber(Long phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
