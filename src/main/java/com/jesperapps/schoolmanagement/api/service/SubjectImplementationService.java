@@ -29,7 +29,7 @@ public class SubjectImplementationService implements SubjectService {
 	@Override
 	public Subject checksubject(String subjectName) {
 		
-		return subjectRepository.findBySubjectName(subjectName);
+		return subjectRepository.findBySubjectNameAndStatusNot(subjectName, StatusClass.DELETED);
 	}
 
 

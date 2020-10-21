@@ -59,7 +59,7 @@ public class SubjectController {
 
 		subjectResponse.setSubjectId(newsubject.getSubjectId());
 		subjectResponse.setSubjectName(newsubject.getSubjectName());
-		subjectResponse.setStatus(newsubject.getStatus());
+		subjectResponse.setStatus(StatusSubject.getStatus(newsubject.getStatus()));
 		subjectResponse.setClas(new ClassJSON(newsubject.getClasses()));
 		response.setStatuscode(200);
 		response.setDescription("subject Created successfully");
