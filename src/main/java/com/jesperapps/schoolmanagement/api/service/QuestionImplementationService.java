@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.jesperapps.schoolmanagement.api.model.Answers;
 import com.jesperapps.schoolmanagement.api.model.Question;
+import com.jesperapps.schoolmanagement.api.model.Subject;
+import com.jesperapps.schoolmanagement.api.model.Class;
+import com.jesperapps.schoolmanagement.api.model.Year;
 import com.jesperapps.schoolmanagement.api.modelmessage.AnswerJson;
 import com.jesperapps.schoolmanagement.api.modelmessage.QuestionJson;
 import com.jesperapps.schoolmanagement.api.repository.QuestionRepository;
@@ -23,9 +26,8 @@ public class QuestionImplementationService implements QuestionService{
 	
 	@Autowired
 	private AnswerService answerService;
-
-	@Override
-	public void saveQuestion(QuestionJson newQuestion) {
+	
+	public Question createQuestionFromRequest(QuestionJson newQuestion) {
 		Question newQuestionSaveToDB = new Question(newQuestion);
 		List<Answers> answersListSaveToDB = new ArrayList<>(); 
 		for(AnswerJson eachRequestAnswer : newQuestion.getAnswer()) {
@@ -36,7 +38,13 @@ public class QuestionImplementationService implements QuestionService{
 			}
 			
 		}
-		newQuestionSaveToDB.setAnswers(answersListSaveToDB);	
+		newQuestionSaveToDB.setAnswers(answersListSaveToDB);
+		return newQuestionSaveToDB;
+	}
+
+	@Override
+	public void saveQuestion(QuestionJson newQuestion) {
+		Question newQuestionSaveToDB = this.createQuestionFromRequest(newQuestion);
 		questionRepository.save(newQuestionSaveToDB);
 	}
 
@@ -84,6 +92,43 @@ public class QuestionImplementationService implements QuestionService{
 			{
 			return false;
 			}
+	}
+
+	@Override
+	public void saveQuestionWithSubjectAndYear(Question newQuestion, Subject subject, Year year,Class clas) {
+		if(subject != null) {
+		newQuestion.setSubject(subject);
+		subject.addQuestion(newQuestion);
+		}
+		if(year != null) {
+		newQuestion.setYear(year);
+		year.addQuestion(newQuestion);
+		}
+		if(clas !=null) {
+			newQuestion.setClas(clas);
+			clas.addQuestion(newQuestion);
+		}
+		this.questionRepository.save(newQuestion);
+	}
+
+	@Override
+	public List<Question> findBySubjectAndYearAndClass(Subject subject,Class clas, Year year) {
+		return this.questionRepository.findBySubjectAndYearAndClas(subject, year,clas);
+	}
+
+	@Override
+	public void saveQuestionWithSubject(Question newQuestionCreated, Subject subjectFromDb) {
+		if(subjectFromDb !=null) {
+			newQuestionCreated.setSubject(subjectFromDb);
+			subjectFromDb.addQuestion(newQuestionCreated);
+		}
+		this.questionRepository.save(newQuestionCreated);
+	}
+
+	@Override
+	public List<Question> findBySubject(Subject subjectFromDb) {
+	
+		return this.questionRepository.findBySubject(subjectFromDb);
 	}
 	
 	

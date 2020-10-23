@@ -63,6 +63,15 @@ public class QuestionJson {
 	public QuestionJson(Question question) {
 		this.questionId=question.getQuestionId();
 		this.question=question.getQuestion();
+		List<Answers> answers=question.getAnswers();
+		if(this.answer==null) {
+			this.answer=new ArrayList<>();
+		}
+		if(answers != null) {
+			for(Answers eachAnswer:answers) {
+				this.answer.add(new AnswerJson(eachAnswer));
+			}
+		}
 	}
 
 

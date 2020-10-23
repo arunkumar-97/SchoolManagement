@@ -9,7 +9,7 @@ public class SubjectBaseResponse extends BaseResponse {
 	}
 	
 	public SubjectBaseResponse(int statusCode, String description) {
-		super();
+		super(statusCode, description);
 	}
 
 	public void setSubject(SubjectResponse subject) {

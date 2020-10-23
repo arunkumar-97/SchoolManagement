@@ -81,12 +81,12 @@ public class YearController {
 	
 	@GetMapping("/year/{yearId}")
 		private YearResponse getYearById(@PathVariable Integer yearId) {
-	Year YearFromDb=yearService.findById(yearId);
-		YearResponse response =new YearResponse();
-		if(YearFromDb != null) {
-			response.setYearId(YearFromDb.getYearId());
-			response.setYear(YearFromDb.getYear());
-		}
+			Year YearFromDb=yearService.findById(yearId);
+			YearResponse response =new YearResponse();
+			if(YearFromDb != null) {
+				response.setYearId(YearFromDb.getYearId());
+				response.setYear(YearFromDb.getYear());
+				}
 		return response;
 	}
 	

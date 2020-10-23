@@ -7,7 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
 
 import com.jesperapps.schoolmanagement.api.modelmessage.QuestionJson;
 import com.jesperapps.schoolmanagement.api.utils.StatusQuestion;
@@ -26,7 +29,19 @@ public class Question {
 		@OneToMany(cascade = CascadeType.ALL,mappedBy = "question")
 		private List<Answers> answers;
 		
-		//Constructor
+		
+		@ManyToOne
+		@JoinColumn(name="subjectId")
+		private Subject subject;
+	
+		@ManyToOne
+		@JoinColumn(name="classId")
+		private Class clas;
+		
+		@ManyToOne
+		@JoinColumn(name="yearId")
+		private Year year;
+	
 		public Question() {
 			super();
 		}
@@ -66,6 +81,30 @@ public class Question {
 
 		public void setStatus(String status) {
 			this.status = status;
+		}
+
+		public Subject getSubject() {
+			return subject;
+		}
+
+		public void setSubject(Subject subject) {
+			this.subject = subject;
+		}
+
+		public Year getYear() {
+			return year;
+		}
+
+		public void setYear(Year year) {
+			this.year = year;
+		}
+
+		public Class getClas() {
+			return clas;
+		}
+
+		public void setClas(Class clas) {
+			this.clas = clas;
 		}
 		
 		

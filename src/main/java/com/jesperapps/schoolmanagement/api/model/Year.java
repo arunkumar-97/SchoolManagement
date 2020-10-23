@@ -3,11 +3,16 @@ package com.jesperapps.schoolmanagement.api.model;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 
 
@@ -21,8 +26,11 @@ public class Year {
 	private Integer year;
 	
 	
+	@OneToMany(cascade = CascadeType.ALL,mappedBy ="year")
+	private List<Question> questionsList;
+	
 	public Year() {
-		
+		super();
 	}
 	
 	
@@ -34,6 +42,20 @@ public class Year {
 		this.year = year;
 	}
 
+	
+
+
+
+	public List<Question> getQuestionsList() {
+		return questionsList;
+	}
+
+
+
+
+	public void setQuestionsList(List<Question> questionsList) {
+		this.questionsList = questionsList;
+	}
 
 
 
@@ -51,6 +73,15 @@ public class Year {
 		this.year = year;
 	}
 	
+
 	
+	public void addQuestion(Question question) {
+		if(this.questionsList == null) {
+			this.questionsList = new ArrayList<>();
+		}
+		if(question != null) {
+			this.questionsList.add(question);	
+		}
+	}
 
 }

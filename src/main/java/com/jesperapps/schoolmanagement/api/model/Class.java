@@ -3,7 +3,7 @@ package com.jesperapps.schoolmanagement.api.model;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -38,6 +38,10 @@ public class Class {
 	@JoinColumn(name="educationBoardId", referencedColumnName="educationBoardId")
 	private EducationBoard educationBoard;
 
+	
+	@OneToMany(cascade = CascadeType.ALL,mappedBy ="clas")
+	private List<Question> questionsList;
+	
 	public List<Subject> getSubject() {
 		return subject;
 	}
@@ -101,6 +105,28 @@ public class Class {
 		
 	}
 	
+	
+	
+	public List<Subject> getSubjects() {
+		return subjects;
+	}
+
+
+	public void setSubjects(List<Subject> subjects) {
+		this.subjects = subjects;
+	}
+
+
+	public List<Question> getQuestionsList() {
+		return questionsList;
+	}
+
+
+	public void setQuestionsList(List<Question> questionsList) {
+		this.questionsList = questionsList;
+	}
+
+
 	public void addSubject(Subject newSubject) {
 		if(this.subject != null) {
 			this.subject = new ArrayList<>();
@@ -111,6 +137,15 @@ public class Class {
 		if(newSubject != null) {
 			this.subject.add(newSubject);
 			this.subjects.add(newSubject);
+		}
+	}
+	
+	public void addQuestion(Question question) {
+		if(this.questionsList == null) {
+			this.questionsList = new ArrayList<>();
+		}
+		if(question != null) {
+			this.questionsList.add(question);	
 		}
 	}
 

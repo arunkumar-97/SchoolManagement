@@ -20,6 +20,7 @@ import com.jesperapps.schoolmanagement.api.message.SubjectBaseResponse;
 import com.jesperapps.schoolmanagement.api.message.SubjectRequest;
 import com.jesperapps.schoolmanagement.api.message.SubjectResponse;
 import com.jesperapps.schoolmanagement.api.model.Subject;
+import com.jesperapps.schoolmanagement.api.model.Class;
 import com.jesperapps.schoolmanagement.api.service.ClassService;
 import com.jesperapps.schoolmanagement.api.service.SubjectService;
 import com.jesperapps.schoolmanagement.api.utils.StatusSubject;
@@ -41,29 +42,33 @@ public class SubjectController {
 		SubjectBaseResponse response=new SubjectBaseResponse(409,"Subject already exists");
 		SubjectResponse subjectResponse = new SubjectResponse();
 		response.setSubject(subjectResponse);
-		
-		Subject subjectName=subjectService.checksubject(subjectRequest.getSubjectName());
-		
-//		SubjectListResponse subjectListResponse = new SubjectListResponse();
-	
-		
-		if(subjectName!=null) {
-			subjectResponse.setSubjectId(subjectName.getSubjectId());
-			subjectResponse.setSubjectName(subjectRequest.getSubjectName());
-			subjectResponse.setStatus(subjectRequest.getStatus());
+		Class classFromDb=classService.findById(subjectRequest.getClas().getClassId());
+		if(classFromDb !=null) {
 			
-		}
-		else {
-		@SuppressWarnings("unused")
-		Subject newsubject=	subjectService.createnewSubject(subjectRequest.getSubjectName(),subjectRequest.getSubjectId(),StatusSubject.getStatus(subjectRequest.getStatus()),subjectRequest.getClas().getClassId());
+			Subject subjectName=subjectService.checksubject(subjectRequest.getSubjectName(),classFromDb);
+			
+//			SubjectListResponse subjectListResponse = new SubjectListResponse();
+		
+			
+			if(subjectName!=null) {
+				subjectResponse.setSubjectId(subjectName.getSubjectId());
+				subjectResponse.setSubjectName(subjectRequest.getSubjectName());
+				subjectResponse.setStatus(subjectRequest.getStatus());
+				
+			}
+			else {
+			@SuppressWarnings("unused")
+			Subject newsubject=	subjectService.createnewSubject(subjectRequest.getSubjectName(),subjectRequest.getSubjectId(),StatusSubject.getStatus(subjectRequest.getStatus()),subjectRequest.getClas().getClassId());
 
-		subjectResponse.setSubjectId(newsubject.getSubjectId());
-		subjectResponse.setSubjectName(newsubject.getSubjectName());
-		subjectResponse.setStatus(StatusSubject.getStatus(newsubject.getStatus()));
-		subjectResponse.setClas(new ClassJSON(newsubject.getClasses()));
-		response.setStatuscode(200);
-		response.setDescription("subject Created successfully");
+			subjectResponse.setSubjectId(newsubject.getSubjectId());
+			subjectResponse.setSubjectName(newsubject.getSubjectName());
+			subjectResponse.setStatus(StatusSubject.getStatus(newsubject.getStatus()));
+			subjectResponse.setClas(new ClassJSON(newsubject.getClasses()));
+			response.setStatuscode(200);
+			response.setDescription("subject Created successfully");
+			}
 		}
+		
 		
 		return response;
 		
@@ -142,6 +147,8 @@ public class SubjectController {
 		return response;
 		
 	}
+	
+	
 	
 	
 }

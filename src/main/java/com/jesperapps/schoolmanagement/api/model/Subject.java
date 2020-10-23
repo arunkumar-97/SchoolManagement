@@ -2,6 +2,10 @@ package com.jesperapps.schoolmanagement.api.model;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.jesperapps.schoolmanagement.api.message.SubjectRequest;
 import com.jesperapps.schoolmanagement.api.utils.StatusSubject;
@@ -33,6 +38,10 @@ public class Subject  {
 	@JoinColumn(name="classId", referencedColumnName="classId")
 	private Class classes;
 	
+	
+	@OneToMany(cascade = CascadeType.ALL,mappedBy="subject")
+	private List<Question> questionsList;
+ 	
 	
 	public Class getCls() {
 		return cls;
@@ -78,8 +87,23 @@ public class Subject  {
 	public void setClasses(Class classes) {
 		this.classes = classes;
 	}
-	
 
+	public List<Question> getQuestionsList() {
+		return questionsList;
+	}
+
+	public void setQuestionsList(List<Question> questionsList) {
+		this.questionsList = questionsList;
+	}
+	
+	public void addQuestion(Question question) {
+		if(this.questionsList == null) {
+			this.questionsList = new ArrayList<>();
+		}
+		if(question != null) {
+			this.questionsList.add(question);	
+		}
+	}
 	
 
 }

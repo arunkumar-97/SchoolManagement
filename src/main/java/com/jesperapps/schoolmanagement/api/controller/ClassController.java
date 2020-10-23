@@ -86,7 +86,7 @@ public class ClassController {
 			for(SubjectRequest subject : subjectRequestList) {
 				Subject subjectFromDB=null;
 				if(subject.getSubjectId() == null) {
-					subjectFromDB = subjectService.checksubject(subject.getSubjectName());	
+//					subjectFromDB = subjectService.checksubject(subject.getSubjectName());	
 				}else {
 					subjectFromDB = subjectService.findById(subject.getSubjectId());
 				}

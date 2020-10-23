@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.jesperapps.schoolmanagement.api.model.Subject;
+
 import com.jesperapps.schoolmanagement.api.model.Class;
 import com.jesperapps.schoolmanagement.api.repository.SubjectRepository;
 import com.jesperapps.schoolmanagement.api.utils.StatusClass;
@@ -27,9 +28,9 @@ public class SubjectImplementationService implements SubjectService {
 
 
 	@Override
-	public Subject checksubject(String subjectName) {
+	public Subject checksubject(String subjectName,Class clas) {
 		
-		return subjectRepository.findBySubjectNameAndStatusNot(subjectName, StatusClass.DELETED);
+		return subjectRepository.findBySubjectNameAndStatusNotAndClasses(subjectName, StatusClass.DELETED,clas);
 	}
 
 
@@ -90,6 +91,9 @@ public class SubjectImplementationService implements SubjectService {
 	
 	
 	}
+
+
+	
 
 
 

@@ -4,9 +4,12 @@ import java.util.List;
 
 import com.jesperapps.schoolmanagement.api.model.Subject;
 
+import com.jesperapps.schoolmanagement.api.model.Class;
+
+
 public interface SubjectService {
 
-	Subject checksubject(String subjectName);
+	Subject checksubject(String subjectName,Class clas);
 
 	Subject createnewSubject(String subjectName, Integer subjectId, String status,Integer classId);
 
@@ -19,6 +22,8 @@ public interface SubjectService {
 	void deleteSubject(Subject subjectFromId);
 
 	List<Subject> findAll();
+
+
 
 
 }

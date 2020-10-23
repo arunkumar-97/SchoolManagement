@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.jesperapps.schoolmanagement.api.model.Subject;
+import com.jesperapps.schoolmanagement.api.model.Class;
 
 public interface SubjectRepository extends JpaRepository<Subject, Integer>{
 
@@ -11,7 +12,7 @@ public interface SubjectRepository extends JpaRepository<Subject, Integer>{
 
 	Subject findBySubjectId(Integer subjectId);
 	
-	Subject findBySubjectNameAndStatusNot(String subjectName, String status);
+	Subject findBySubjectNameAndStatusNotAndClasses(String subjectName, String status,Class clas);
 
 	List<Subject> findByStatusIsNot(String dELETED);
 
