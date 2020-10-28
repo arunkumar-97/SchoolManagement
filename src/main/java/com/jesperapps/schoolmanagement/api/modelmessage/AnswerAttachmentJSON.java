@@ -8,17 +8,13 @@ public class AnswerAttachmentJSON {
 	private String type;
 	private String fileByte;
 	
-	
-	
 	public AnswerAttachmentJSON() {
 		
 	}
 	
 	public AnswerAttachmentJSON(AnswerAttachment answerAttachment) {
-		
-		this.setName(answerAttachment.getName());
-		this.setType(answerAttachment.getType());
-		this.setFileByte("/profile/"+answerAttachment.getAttachmentId());
+		this.name=answerAttachment.getPictureName();
+		this.fileByte=answerAttachment.getPictureLocation();
 	}
 	
 	
@@ -43,6 +39,11 @@ public class AnswerAttachmentJSON {
 	public void setFileByte(String fileByte) {
 		this.fileByte = fileByte;
 	}
+
+
+
+
+
 	
 
 }

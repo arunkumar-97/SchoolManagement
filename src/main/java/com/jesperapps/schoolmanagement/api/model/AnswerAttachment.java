@@ -16,56 +16,49 @@ public class AnswerAttachment {
 	
 	
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer attachmentId;
-	private String name;
-	private String type;
-	@Column(columnDefinition ="LONGTEXT")
-	private String fileByte;
+	 @Id
+		@GeneratedValue(strategy = GenerationType.AUTO)
+	    private Integer pictureId;
+	    private String pictureName;
+	    private String pictureLocation;
 	@OneToOne(mappedBy="imageAttachment")
 	private Answers answer;
 	
-	public Integer getAttachmentId() {
-		return attachmentId;
-	}
-	public void setAttachmentId(Integer attachmentId) {
-		this.attachmentId = attachmentId;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
-	}
-	public String getFileByte() {
-		return fileByte;
-	}
-	public void setFileByte(String fileByte) {
-		this.fileByte = fileByte;
+	public AnswerAttachment() {
+		super();
 	}
 	
+	
+	public AnswerAttachment(AnswerAttachmentJSON image) {
+		this.pictureName=image.getName();
+	}
+	
+	public Integer getPictureId() {
+		return pictureId;
+	}
+	public void setPictureId(Integer pictureId) {
+		this.pictureId = pictureId;
+	}
+	public String getPictureName() {
+		return pictureName;
+	}
+	public void setPictureName(String pictureName) {
+		this.pictureName = pictureName;
+	}
+	public String getPictureLocation() {
+		return pictureLocation;
+	}
+	public void setPictureLocation(String pictureLocation) {
+		this.pictureLocation = pictureLocation;
+	}
 	public Answers getAnswer() {
 		return answer;
 	}
 	public void setAnswer(Answers answer) {
 		this.answer = answer;
 	}
-	public AnswerAttachment() {
-		super();
-	}
-	public AnswerAttachment(AnswerAttachmentJSON attachment) {
-
-		this.name=attachment.getName();
-		this.type=attachment.getType();
-		this.fileByte=attachment.getFileByte();
-	}
+	
+	
 	
 	
 	

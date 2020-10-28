@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jesperapps.schoolmanagement.api.model.AnswerAttachment;
 import com.jesperapps.schoolmanagement.api.model.Answers;
 import com.jesperapps.schoolmanagement.api.model.Question;
 import com.jesperapps.schoolmanagement.api.model.Subject;
@@ -45,6 +46,13 @@ public class QuestionImplementationService implements QuestionService{
 	@Override
 	public void saveQuestion(QuestionJson newQuestion) {
 		Question newQuestionSaveToDB = this.createQuestionFromRequest(newQuestion);
+		questionRepository.save(newQuestionSaveToDB);
+		newQuestionSaveToDB.getAnswers().forEach(answer ->{
+			AnswerAttachment attachment = answer.getImageAttachment();
+			if(attachment != null) {
+				attachment.setPictureLocation("/profile/"+attachment.getPictureId());
+			}
+		});
 		questionRepository.save(newQuestionSaveToDB);
 	}
 

@@ -1,7 +1,11 @@
 package com.jesperapps.schoolmanagement.api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,9 +44,10 @@ public class AnswerAttachmementController {
 		if(requestAnswerImage != null) {
 			AnswerAttachment attachmentFromDb = answerFromDb.getImageAttachment();
 			if(attachmentFromDb != null) {
-				if(answerAttachmentService.updateFile(requestAnswerImage, attachmentFromDb.getName())){
-					attachmentFromDb = answerAttachmentService.updateAttachmentDetails(attachmentFromDb, requestAnswerImage);
-					answerFromDb.setImageAttachment(attachmentFromDb);
+				if(answerAttachmentService.updateAttachmentDetails(attachmentFromDb, requestAnswerImage)){
+					attachmentFromDb.setPictureName(requestAnswerImage.getName());
+					answerAttachmentService.save(attachmentFromDb);
+					
 				}else {
 					return new AnswerJson();
 					//error updating the file
@@ -68,5 +73,7 @@ public class AnswerAttachmementController {
 	}
 	return new AnswerJson();
 	}
+	
+	
 
 }

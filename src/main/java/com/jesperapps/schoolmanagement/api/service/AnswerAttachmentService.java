@@ -11,6 +11,6 @@ public interface AnswerAttachmentService {
 	
 	boolean updateFile(AnswerAttachmentJSON updatedAttachment, String oldFileName);
 	
-	AnswerAttachment updateAttachmentDetails(AnswerAttachment attachmentFromDb, AnswerAttachmentJSON requestAttachment);
+	boolean updateAttachmentDetails(AnswerAttachment attachmentFromDb, AnswerAttachmentJSON requestAttachment);
 
 }

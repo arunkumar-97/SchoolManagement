@@ -89,18 +89,15 @@ private static final String LOCATION = "E:\\ContentUploading\\imageAnswers";
 	}
 
 	@Override
-	public AnswerAttachment updateAttachmentDetails(AnswerAttachment attachmentFromDb,
-			AnswerAttachmentJSON requestAttachment) {
-		if(requestAttachment.getName() != null) {
-			attachmentFromDb.setName(requestAttachment.getName());
+	public boolean updateAttachmentDetails(AnswerAttachment attachmentFromDb,
+			AnswerAttachmentJSON updateAttachmentRequest) {
+		if(this.deleteFileFromLocalStorage(attachmentFromDb.getPictureName())) {
+			if(this.saveFile(updateAttachmentRequest)) {
+				return true;
+			}
 		}
-		if(requestAttachment.getType() != null) {
-			attachmentFromDb.setType(requestAttachment.getType());
-		}
-		if(requestAttachment.getFileByte() != null) {
-			attachmentFromDb.setFileByte(requestAttachment.getFileByte());
-		}
-		return attachmentFromDb;
+		return false;
 	}
 
+	
 }
