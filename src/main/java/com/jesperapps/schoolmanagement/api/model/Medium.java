@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
+
 public class Medium {
 	
 	@Id
@@ -17,7 +18,7 @@ public class Medium {
 	@OneToMany(cascade=CascadeType.ALL,mappedBy="medium")
 	private List<Class> clas;
 	
-//	@ManyToOne(cascade = CascadeType.ALL)
+//	@ManyToOne(cascade = CascaZdeType.ALL)
 //	@JoinColumn(name="EducationBoardId",referencedColumnName = "educationBoardId")
 //	private EducationBoard educationBoard;
 	

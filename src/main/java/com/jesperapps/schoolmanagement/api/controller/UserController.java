@@ -66,12 +66,12 @@ public class UserController {
 	{
 		List<UserResponse> response=new ArrayList<>();
 		
-//		ClassResponse cls= new ClassResponse();
+
 	
 		userService.findAll().forEach(user->{
 			UserResponse userResponse = new UserResponse(user.getUserId(),user.getUserName(),user.getEmail(),user.getPassword(),user.getConfirmPassword(),user.getUserProfile().getPictureName(),user.getAuthentication(),user.getUserType(),user.getSubscriptionForm());
 			userResponse.setPhoneNumber(user.getPhoneNumber());
-//			userResponse.setPassword(user.getPassword());
+
 			response.add(userResponse);
 		});
 		
@@ -89,18 +89,14 @@ public class UserController {
 			userResponse.setUserId(user.getUserId());
 			userResponse.setUserName(user.getUserName());
 			userResponse.setEmail(user.getEmail());
-//			userResponse.setPassword(user.getPassword());
-//			userResponse.setConfirmPassword(user.getConfirmPassword());
+
 			userResponse.setPhoneNumber(user.getPhoneNumber());
 			userResponse.setUserType(user.getUserType().getUserTypeRole());
 			userResponse.setUserProfilePicture(user.getUserProfile().getPictureName());
 			userResponse.setAuthenticationType(user.getAuthentication());
 			userResponse.setSubscriptionFormFromUser(user.getSubscriptionForm());
 			
-//			Response.setClassId(cls.getClassId());
-//			classResponse.setClassName(cls.getClassName());
-//			classResponse.setStatus(cls.getStatus());
-//			classResponse.setMedium(cls.getMedium().getMediumLanguage());
+
 		}
 		return userResponse;
 

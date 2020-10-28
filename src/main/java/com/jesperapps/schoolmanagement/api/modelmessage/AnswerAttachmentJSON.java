@@ -18,7 +18,7 @@ public class AnswerAttachmentJSON {
 		
 		this.setName(answerAttachment.getName());
 		this.setType(answerAttachment.getType());
-		this.setFileByte(answerAttachment.getFileByte());
+		this.setFileByte("/profile/"+answerAttachment.getAttachmentId());
 	}
 	
 	

@@ -3,16 +3,21 @@ package com.jesperapps.schoolmanagement.api.model;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
 //import javax.persistence.Id;
 
 @Entity
+
 public class UserType {
 	
 	@Id
+
 	private Integer userTypeId;
+
 	private String userTypeRole;
 	
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "userType")
