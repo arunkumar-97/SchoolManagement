@@ -6,4 +6,6 @@ import com.jesperapps.schoolmanagement.api.model.AnswerAttachment;
 
 public interface AnswerAttachmentRepository extends CrudRepository<AnswerAttachment, Integer>{
 
+	AnswerAttachment findByPictureId(Integer pictureId);
+
 }

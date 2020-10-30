@@ -46,14 +46,17 @@ public class QuestionImplementationService implements QuestionService{
 	@Override
 	public void saveQuestion(QuestionJson newQuestion) {
 		Question newQuestionSaveToDB = this.createQuestionFromRequest(newQuestion);
-		questionRepository.save(newQuestionSaveToDB);
+		this.saveQuestion(newQuestionSaveToDB);
+	}
+	
+	private Question updateAnswerAttachmentURL(Question newQuestionSaveToDB) {
 		newQuestionSaveToDB.getAnswers().forEach(answer ->{
 			AnswerAttachment attachment = answer.getImageAttachment();
 			if(attachment != null) {
-				attachment.setPictureLocation("/profile/"+attachment.getPictureId());
+				attachment.setPictureLocation(AnswerService.BASE_URL +"/"+attachment.getPictureId());
 			}
 		});
-		questionRepository.save(newQuestionSaveToDB);
+		return newQuestionSaveToDB;
 	}
 
 	@Override
@@ -75,6 +78,8 @@ public class QuestionImplementationService implements QuestionService{
 	public void saveQuestion(Question questionFromDB) {
 		
 		questionRepository.save(questionFromDB);
+		questionFromDB = this.updateAnswerAttachmentURL(questionFromDB);
+		this.questionRepository.save(questionFromDB);
 	}
 
 	@Override
@@ -86,20 +91,8 @@ public class QuestionImplementationService implements QuestionService{
 	@Override
 	public void deleteQuestion(Question questionFromId) {
 		questionFromId.setStatus(StatusQuestion.DELETED);
-		this.saveQuestion1(questionFromId);
+		this.saveQuestion(questionFromId);
 		
-	}
-
-	public boolean saveQuestion1(Question question)
-	{
-		try{
-		questionRepository.save(question);
-			return true;
-			}
-		catch(Exception e) 
-			{
-			return false;
-			}
 	}
 
 	@Override
@@ -116,7 +109,7 @@ public class QuestionImplementationService implements QuestionService{
 			newQuestion.setClas(clas);
 			clas.addQuestion(newQuestion);
 		}
-		this.questionRepository.save(newQuestion);
+		this.saveQuestion(newQuestion);
 	}
 
 	@Override
@@ -130,7 +123,7 @@ public class QuestionImplementationService implements QuestionService{
 			newQuestionCreated.setSubject(subjectFromDb);
 			subjectFromDb.addQuestion(newQuestionCreated);
 		}
-		this.questionRepository.save(newQuestionCreated);
+		this.saveQuestion(newQuestionCreated);
 	}
 
 	@Override

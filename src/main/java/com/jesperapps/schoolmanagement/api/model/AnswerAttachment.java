@@ -1,6 +1,6 @@
 package com.jesperapps.schoolmanagement.api.model;
 
-import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,8 +21,8 @@ public class AnswerAttachment {
 	    private Integer pictureId;
 	    private String pictureName;
 	    private String pictureLocation;
-	@OneToOne(mappedBy="imageAttachment")
-	private Answers answer;
+	    @OneToOne(mappedBy="imageAttachment")
+	    private Answers answer;
 	
 	public AnswerAttachment() {
 		super();

@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jesperapps.schoolmanagement.api.message.YearBaseResponse;
 import com.jesperapps.schoolmanagement.api.message.YearRequest;
 import com.jesperapps.schoolmanagement.api.message.YearResponse;
+
 import com.jesperapps.schoolmanagement.api.model.Year;
+import com.jesperapps.schoolmanagement.api.service.SubjectService;
 import com.jesperapps.schoolmanagement.api.service.YearService;
 
 
@@ -30,6 +32,11 @@ public class YearController {
 	
 	@Autowired
 	private YearService yearService;
+	
+	@SuppressWarnings("unused")
+	@Autowired
+	private SubjectService subjectService;
+	
 	
 	
 	@PostMapping("/year")
@@ -89,5 +96,6 @@ public class YearController {
 				}
 		return response;
 	}
+	
 	
 }

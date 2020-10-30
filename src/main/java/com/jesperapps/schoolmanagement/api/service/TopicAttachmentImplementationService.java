@@ -6,25 +6,28 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jesperapps.schoolmanagement.api.model.AnswerAttachment;
-import com.jesperapps.schoolmanagement.api.modelmessage.AnswerAttachmentJSON;
-import com.jesperapps.schoolmanagement.api.repository.AnswerAttachmentRepository;
+import com.jesperapps.schoolmanagement.api.model.TopicAttachment;
 
+import com.jesperapps.schoolmanagement.api.modelmessage.AnswerAttachmentJSON;
+import com.jesperapps.schoolmanagement.api.repository.TopicAttachmentRepository;
 
 
 @Service
-public class AnswerAttachmentImplementationService  implements AnswerAttachmentService{
-
+public class TopicAttachmentImplementationService  implements TopicAttachmentService{
 	
-private static final String LOCATION = "E:\\ContentUploading\\imageAnswers";
+	
+	private static final String LOCATION = "E:\\ContentUploading\\videoAnswers";
 	
 	@Autowired
-	private AnswerAttachmentRepository answerAttachementRepository;
+	private TopicAttachmentRepository topicAttachmentRepository;
+	
 	
 	
 	private boolean saveFileToLocalStorage(String fileName, String fileBytes) {
@@ -53,6 +56,7 @@ private static final String LOCATION = "E:\\ContentUploading\\imageAnswers";
 		return true;
 	}
 	
+	
 	private boolean deleteFileFromLocalStorage(String fileName) {
 		try {
 			Files.delete(Paths.get(LOCATION+"\\"+fileName));
@@ -61,6 +65,7 @@ private static final String LOCATION = "E:\\ContentUploading\\imageAnswers";
 		}
 		return true;
 	}
+
 
 	@Override
 	public boolean saveFile(AnswerAttachmentJSON requestAttachment) {
@@ -72,8 +77,9 @@ private static final String LOCATION = "E:\\ContentUploading\\imageAnswers";
 	}
 
 	@Override
-	public void save(AnswerAttachment newAttachement) {
-		this.answerAttachementRepository.save(newAttachement);
+	public void save(TopicAttachment newAttachement) {
+		this.topicAttachmentRepository.save(newAttachement);
+		
 	}
 
 	@Override
@@ -90,22 +96,22 @@ private static final String LOCATION = "E:\\ContentUploading\\imageAnswers";
 	}
 
 	@Override
-	public boolean updateAttachmentDetails(AnswerAttachment attachmentFromDb,
-			AnswerAttachmentJSON updateAttachmentRequest) {
-		if(this.deleteFileFromLocalStorage(attachmentFromDb.getPictureName())) {
-			if(this.saveFile(updateAttachmentRequest)) {
-				return true;
+	public boolean updateAttachmentDetails(TopicAttachment attachmentFromDb, AnswerAttachmentJSON requestAttachment) {
+
+			if(this.deleteFileFromLocalStorage(attachmentFromDb.getPictureName())) {
+				if(this.saveFile(requestAttachment)) {
+					return true;
+				}
 			}
-		}
-		return false;
+			return false;
 	}
 
 	@Override
-	public AnswerAttachment getByPictureId(Integer pictureId) {
-		return this.answerAttachementRepository.findByPictureId(pictureId);
+	public TopicAttachment getByPictureId(Integer pictureId) {
+		
+		return this.topicAttachmentRepository.findByPictureId(pictureId);
 	}
-	
-	
+
 	@SuppressWarnings("static-access")
 	@Override
 	public byte[] getFileBytes(String pictureName) {
@@ -115,4 +121,7 @@ private static final String LOCATION = "E:\\ContentUploading\\imageAnswers";
 		}
 		return new byte[] {};
 	}
-}
+
+	}
+
+
