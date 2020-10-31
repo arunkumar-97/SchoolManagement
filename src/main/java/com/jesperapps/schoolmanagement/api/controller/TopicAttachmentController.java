@@ -4,15 +4,17 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jesperapps.schoolmanagement.api.message.Response;
+
 import com.jesperapps.schoolmanagement.api.message.TopicWithAttachmentResponse;
 import com.jesperapps.schoolmanagement.api.model.Topic;
 import com.jesperapps.schoolmanagement.api.model.TopicAttachment;
-import com.jesperapps.schoolmanagement.api.modelmessage.AnswerAttachmentJSON;
+
 import com.jesperapps.schoolmanagement.api.modelmessage.TopicJSON;
 import com.jesperapps.schoolmanagement.api.service.TopicAttachmentService;
 import com.jesperapps.schoolmanagement.api.service.TopicService;
@@ -57,4 +59,19 @@ public class TopicAttachmentController {
 		
 	}
 
+	
+	
+	@GetMapping("/topic/{topicId}")
+	public TopicJSON getAllAttachments(@PathVariable Integer topicId) {
+		
+	Topic IdFromDb=topicService.findByTopicId(topicId);
+List<TopicAttachment>	AttachmentFromDb=IdFromDb.getTopicAttachment();
+	TopicJSON topic=new TopicJSON();
+	if(AttachmentFromDb != null) {
+		topic=new TopicJSON(topic.getTopic(),topic.getAttachment());
+	}
+	return topic;
+		
+		
+	}
 }

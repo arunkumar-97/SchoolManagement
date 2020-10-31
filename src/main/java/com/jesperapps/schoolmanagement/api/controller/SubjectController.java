@@ -19,7 +19,7 @@ import com.jesperapps.schoolmanagement.api.message.SubjectBaseResponse;
 
 import com.jesperapps.schoolmanagement.api.message.SubjectRequest;
 import com.jesperapps.schoolmanagement.api.message.SubjectResponse;
-import com.jesperapps.schoolmanagement.api.message.YearResponse;
+
 import com.jesperapps.schoolmanagement.api.model.Subject;
 import com.jesperapps.schoolmanagement.api.model.Class;
 import com.jesperapps.schoolmanagement.api.service.ClassService;

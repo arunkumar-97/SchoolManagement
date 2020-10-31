@@ -21,4 +21,6 @@ public interface TopicService {
 
 	List<TopicAttachment> addTopicAttachment(Topic topicFromDb, List<AnswerAttachmentJSON> topicAttachmentList);
 
+	Topic findByTopicId(Integer topicId);
+
 }

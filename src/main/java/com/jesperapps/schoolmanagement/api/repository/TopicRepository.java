@@ -8,4 +8,6 @@ public interface TopicRepository extends JpaRepository<Topic, Integer> {
 
 	Topic findByTopicName(String topicName);
 
+	Topic findByTopicId(Integer topicId);
+
 }

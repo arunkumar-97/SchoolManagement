@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.jesperapps.schoolmanagement.api.message.TopicRequest;
+
 import com.jesperapps.schoolmanagement.api.model.Topic;
 import com.jesperapps.schoolmanagement.api.model.TopicAttachment;
 
@@ -11,10 +12,6 @@ public class TopicJSON {
 	
 	private TopicRequest topic;
 	private List<AnswerAttachmentJSON> attachment;
-	
-	public TopicJSON() {
-		
-	}
 	
 	public TopicJSON(Topic topic) {
 		this.setTopic(new TopicRequest(topic));
@@ -26,6 +23,24 @@ public class TopicJSON {
 		}
 	}
 	
+	public TopicJSON(TopicRequest topic2, List<AnswerAttachmentJSON> attachment2) {
+		this.topic=topic2;
+		if(this.attachment == null) {
+			this.attachment=new ArrayList<>();
+			
+		}
+		if(attachment2 !=null) {
+			for(AnswerAttachmentJSON eachAttachment:attachment2) {
+				this.attachment.add(new AnswerAttachmentJSON(eachAttachment));
+			}
+		}
+	}
+
+	public TopicJSON() {
+		
+	}
+
+
 	public TopicRequest getTopic() {
 		return topic;
 	}

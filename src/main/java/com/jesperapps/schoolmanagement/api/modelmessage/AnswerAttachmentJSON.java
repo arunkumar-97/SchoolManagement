@@ -52,6 +52,18 @@ public class AnswerAttachmentJSON {
 	}
 
 
+	
+
+	
+
+
+
+	public AnswerAttachmentJSON(AnswerAttachmentJSON eachAttachment) {
+		this.name=eachAttachment.getName();
+		this.type=eachAttachment.getType();
+		this.viewUrl=eachAttachment.getViewUrl();
+	}
+
 	public String getName() {
 		return name;
 	}

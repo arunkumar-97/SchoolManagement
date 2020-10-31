@@ -88,6 +88,12 @@ public class TopicImplementationService implements TopicService {
 		topicRepository.save(newTopic);
 		
 	}
+
+	@Override
+	public Topic findByTopicId(Integer topicId) {
+		// TODO Auto-generated method stub
+		return topicRepository.findByTopicId(topicId);
+	}
 	
 
 	
