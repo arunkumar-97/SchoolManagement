@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import com.jesperapps.schoolmanagement.api.model.Topic;
 import com.jesperapps.schoolmanagement.api.model.TopicAttachment;
 import com.jesperapps.schoolmanagement.api.modelmessage.AnswerAttachmentJSON;
@@ -93,6 +94,12 @@ public class TopicImplementationService implements TopicService {
 	public Topic findByTopicId(Integer topicId) {
 		// TODO Auto-generated method stub
 		return topicRepository.findByTopicId(topicId);
+	}
+
+	@Override
+	public List<Topic> findAll() {
+		
+		return topicRepository.findAll();
 	}
 	
 

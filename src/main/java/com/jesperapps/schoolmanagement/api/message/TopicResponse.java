@@ -6,6 +6,14 @@ public class TopicResponse {
 	private String topicName;
 	
 	
+	public TopicResponse() {
+		
+	}
+	
+	public TopicResponse(Integer topicId2, String topicName2) {
+		this.topicId=topicId2;
+		this.topicName=topicName2;
+	}
 	public Integer getTopicId() {
 		return topicId;
 	}

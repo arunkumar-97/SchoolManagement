@@ -2,6 +2,7 @@ package com.jesperapps.schoolmanagement.api.service;
 
 import java.util.List;
 
+
 import com.jesperapps.schoolmanagement.api.model.Topic;
 import com.jesperapps.schoolmanagement.api.model.TopicAttachment;
 import com.jesperapps.schoolmanagement.api.modelmessage.AnswerAttachmentJSON;;
@@ -22,5 +23,7 @@ public interface TopicService {
 	List<TopicAttachment> addTopicAttachment(Topic topicFromDb, List<AnswerAttachmentJSON> topicAttachmentList);
 
 	Topic findByTopicId(Integer topicId);
+
+	List<Topic> findAll();
 
 }

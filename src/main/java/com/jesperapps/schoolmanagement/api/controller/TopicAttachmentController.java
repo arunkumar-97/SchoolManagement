@@ -61,14 +61,14 @@ public class TopicAttachmentController {
 
 	
 	
-	@GetMapping("/topic/{topicId}")
+	@GetMapping("/attachment/{topicId}")
 	public TopicJSON getAllAttachments(@PathVariable Integer topicId) {
 		
 	Topic IdFromDb=topicService.findByTopicId(topicId);
 List<TopicAttachment>	AttachmentFromDb=IdFromDb.getTopicAttachment();
 	TopicJSON topic=new TopicJSON();
 	if(AttachmentFromDb != null) {
-		topic=new TopicJSON(topic.getTopic(),topic.getAttachment());
+		topic=new TopicJSON(IdFromDb);
 	}
 	return topic;
 		

@@ -4,10 +4,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,16 +44,29 @@ public class TopicAttachmentImplementationService  implements TopicAttachmentSer
             if(fileName != ""){
                 File newAnswerImage = new File(LOCATION + "\\"+ fileName);
 				OutputStream buffer = new FileOutputStream(newAnswerImage);
-				buffer.write(Base64.decodeBase64(fileBytes));
+				buffer.write(this.addPaddingToBase64String(fileBytes));
 				buffer.close();
             }
             else{
                 return false;
             }
 		}catch(Exception e) {
+			System.out.println(e.toString()+fileBytes.length());
 			return false;
 		}
 		return true;
+	}
+	
+	private byte[] addPaddingToBase64String(String base64Encoded) {
+		Integer length = base64Encoded.length();
+		if(length % 4 ==0) {
+			return Base64.decodeBase64(base64Encoded);
+		}else {
+			Integer numberOfZeros = 4-(base64Encoded.length() % 4);
+			char[] zerosArray = new char[numberOfZeros];
+			Arrays.fill(zerosArray, '0');
+			return Base64.decodeBase64(base64Encoded+new String(zerosArray));
+		}
 	}
 	
 	
@@ -110,6 +123,7 @@ public class TopicAttachmentImplementationService  implements TopicAttachmentSer
 	public TopicAttachment getByPictureId(Integer pictureId) {
 		
 		return this.topicAttachmentRepository.findByPictureId(pictureId);
+		
 	}
 
 	@SuppressWarnings("static-access")

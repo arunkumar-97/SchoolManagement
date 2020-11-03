@@ -39,6 +39,7 @@ public class AnswerAttachmentJSON {
 	
 	
 	public AnswerAttachmentJSON(TopicAttachment topicAttachment) {
+		String HOST_NAME = "http://192.168.1.6:8080";
 		this.name=topicAttachment.getPictureName();
 		this.setType("unknown");
 		String pictureName = topicAttachment.getPictureName();
@@ -48,7 +49,12 @@ public class AnswerAttachmentJSON {
 				this.setType(fileNameAndFileType[fileNameAndFileType.length-1]);	
 			}
 		}
-		this.viewUrl=topicAttachment.getPictureLocation();
+		String urlFromDB = topicAttachment.getPictureLocation();
+		if(urlFromDB.contains(":")) {
+			this.viewUrl = urlFromDB;
+		}else {
+		this.viewUrl=HOST_NAME + topicAttachment.getPictureLocation();
+		}
 	}
 
 

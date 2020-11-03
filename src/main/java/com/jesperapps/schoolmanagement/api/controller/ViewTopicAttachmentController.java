@@ -11,39 +11,40 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jesperapps.schoolmanagement.api.model.AnswerAttachment;
-import com.jesperapps.schoolmanagement.api.service.AnswerAttachmentService;
+import com.jesperapps.schoolmanagement.api.model.TopicAttachment;
+import com.jesperapps.schoolmanagement.api.service.TopicAttachmentService;
+
+
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping(AnswerAttachmentService.BASE_URL)
-public class ViewController {
-
+@RequestMapping(TopicAttachmentService.BASE_URL)
+public class ViewTopicAttachmentController {
 	
 	@Autowired
-	private AnswerAttachmentService answerAttachmentService;
+	private TopicAttachmentService topicAttachmentService;
 	
 	@SuppressWarnings("rawtypes")
 	@GetMapping("/{pictureId}")
-	public ResponseEntity viewAnswer(@PathVariable Integer pictureId) {
-		AnswerAttachment pictureFromDB = this.answerAttachmentService.getByPictureId(pictureId);
+	public ResponseEntity viewTopicAttachments(@PathVariable Integer pictureId) {
+		TopicAttachment pictureFromDB = this.topicAttachmentService.getByPictureId(pictureId);
 		if(pictureFromDB != null) {
 		if(pictureFromDB.getPictureName().toLowerCase().contains("mp4")) {
 					return ResponseEntity.status(HttpStatus.OK)
 
 					.header("Content-Type", "video/mp4")
 
-					.body(new ByteArrayResource(answerAttachmentService.getFileBytes(pictureFromDB.getPictureName())));
+					.body(new ByteArrayResource(topicAttachmentService.getFileBytes(pictureFromDB.getPictureName())));
 		}else if(pictureFromDB.getPictureName().toLowerCase().contains("gif")){
 			return ResponseEntity.status(HttpStatus.OK)
 					
 					.contentType(MediaType.IMAGE_GIF)
-					.body(new ByteArrayResource(answerAttachmentService.getFileBytes(pictureFromDB.getPictureName())));
+					.body(new ByteArrayResource(topicAttachmentService.getFileBytes(pictureFromDB.getPictureName())));
 		}else if(pictureFromDB.getPictureName().toLowerCase().contains("png")){
 			return ResponseEntity.status(HttpStatus.OK)
 					
 					.contentType(MediaType.IMAGE_PNG)
-					.body(new ByteArrayResource(answerAttachmentService.getFileBytes(pictureFromDB.getPictureName())));
+					.body(new ByteArrayResource(topicAttachmentService.getFileBytes(pictureFromDB.getPictureName())));
 		}
 		else {
 			return ResponseEntity.status(HttpStatus.OK)
@@ -51,11 +52,12 @@ public class ViewController {
 					
 					.contentType(MediaType.IMAGE_JPEG)
 
-					.body(new ByteArrayResource(answerAttachmentService.getFileBytes(pictureFromDB.getPictureName())));
+					.body(new ByteArrayResource(topicAttachmentService.getFileBytes(pictureFromDB.getPictureName())));
 			
 		}
 		
 		}
 		return ResponseEntity.status(HttpStatus.OK).body("No picture found");
 	}
+
 }
