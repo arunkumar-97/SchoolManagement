@@ -1,6 +1,10 @@
 package com.jesperapps.schoolmanagement.api.message;
 
+import com.jesperapps.schoolmanagement.api.model.Class;
+import com.jesperapps.schoolmanagement.api.model.EducationBoard;
+import com.jesperapps.schoolmanagement.api.model.Medium;
 import com.jesperapps.schoolmanagement.api.model.SubscriptionForm;
+import com.jesperapps.schoolmanagement.api.model.SubscriptionStatus;
 import com.jesperapps.schoolmanagement.api.model.User;
 
 
@@ -65,10 +69,17 @@ public class SubscriptionResponse {
 		subscriptionStatus=new SubscriptionStatusJson(subscriptionForm.getSubscriptionStatus());
 		this.user = new UserSubscriptionResponse(subscriptionForm.getUser());
 		
+	
+	}
+	public SubscriptionResponse(int i, Medium medium2, SubscriptionStatus subscriptionStatus2, EducationBoard educationBoard2, User user2, Class subscriptionClass2) {
+		this.user=new UserSubscriptionResponse(user2);
+		this.subscriptionClass= subscriptionClass2.getClassId();
+		this.subscriptionId=i;
+		this.medium=medium2.getMediumLanguage();
+		this.educationBoard=educationBoard2.getEducationBoardName();
+		this.subscriptionStatus=new SubscriptionStatusJson(subscriptionStatus2);
 		
 	}
-	
-	
 	
 	
 

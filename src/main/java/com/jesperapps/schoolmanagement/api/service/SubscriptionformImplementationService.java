@@ -9,13 +9,17 @@ import org.springframework.stereotype.Service;
 import com.jesperapps.schoolmanagement.api.message.SubscriptionRequest;
 import com.jesperapps.schoolmanagement.api.message.SubscriptionResponse;
 import com.jesperapps.schoolmanagement.api.message.SubscriptionStatusJson;
+
 import com.jesperapps.schoolmanagement.api.model.SubscriptionForm;
 import com.jesperapps.schoolmanagement.api.model.SubscriptionStatus;
 import com.jesperapps.schoolmanagement.api.model.User;
+
 import com.jesperapps.schoolmanagement.api.repository.SubscriptionFormRepository;
 import com.jesperapps.schoolmanagement.api.repository.SubscriptionStatusRepository;
 import com.jesperapps.schoolmanagement.api.repository.UserRepository;
 import com.jesperapps.schoolmanagement.api.utils.SubscriptionStatusTag;
+
+import com.jesperapps.schoolmanagement.api.model.Class;
 
 @Service
 public class SubscriptionformImplementationService implements SubscriptionFormService {
@@ -28,6 +32,8 @@ public class SubscriptionformImplementationService implements SubscriptionFormSe
 	
 	@Autowired
 	private ClassService classService;
+	
+	
 	
 	@Autowired
 	private MediumService mediumService;
@@ -88,5 +94,19 @@ public class SubscriptionformImplementationService implements SubscriptionFormSe
 		
 		return subscriptionFormRepository.findAll();
 	}
+
+
+	@Override
+	public List<SubscriptionForm> findByClass(Class cls) {
+		// TODO Auto-generated method stub
+		return this.subscriptionFormRepository.findBySubscriptionClass(cls);
+	}
+
+
+	
+
+	
+
+
 
 }
