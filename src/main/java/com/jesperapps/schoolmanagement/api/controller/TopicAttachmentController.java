@@ -30,6 +30,7 @@ public class TopicAttachmentController {
 	private TopicService topicService;
 	
 	
+	@SuppressWarnings("unused")
 	@Autowired
 	private TopicAttachmentService topicAttachmentService;
 	

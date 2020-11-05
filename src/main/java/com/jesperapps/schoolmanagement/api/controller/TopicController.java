@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jesperapps.schoolmanagement.api.message.TopicBaseResponse;
 import com.jesperapps.schoolmanagement.api.message.TopicRequest;
 import com.jesperapps.schoolmanagement.api.message.TopicResponse;
-import com.jesperapps.schoolmanagement.api.message.YearResponse;
+
 import com.jesperapps.schoolmanagement.api.model.Topic;
-import com.jesperapps.schoolmanagement.api.model.Year;
+
 import com.jesperapps.schoolmanagement.api.service.TopicService;
 
 

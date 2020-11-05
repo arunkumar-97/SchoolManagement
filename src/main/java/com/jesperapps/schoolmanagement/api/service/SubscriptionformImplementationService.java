@@ -1,5 +1,7 @@
 package com.jesperapps.schoolmanagement.api.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +12,7 @@ import com.jesperapps.schoolmanagement.api.message.SubscriptionStatusJson;
 import com.jesperapps.schoolmanagement.api.model.SubscriptionForm;
 import com.jesperapps.schoolmanagement.api.model.SubscriptionStatus;
 import com.jesperapps.schoolmanagement.api.model.User;
-import com.jesperapps.schoolmanagement.api.repository.SubscriptionRepository;
+import com.jesperapps.schoolmanagement.api.repository.SubscriptionFormRepository;
 import com.jesperapps.schoolmanagement.api.repository.SubscriptionStatusRepository;
 import com.jesperapps.schoolmanagement.api.repository.UserRepository;
 import com.jesperapps.schoolmanagement.api.utils.SubscriptionStatusTag;
@@ -19,7 +21,7 @@ import com.jesperapps.schoolmanagement.api.utils.SubscriptionStatusTag;
 public class SubscriptionformImplementationService implements SubscriptionFormService {
 
 	@Autowired
-	private SubscriptionRepository subscriptionRepository;
+	private SubscriptionFormRepository subscriptionFormRepository;
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -40,7 +42,7 @@ public class SubscriptionformImplementationService implements SubscriptionFormSe
 	@Override
 	public SubscriptionForm findBySubscriptionId(int subscriptionId) {
 		// TODO Auto-generated method stub
-		return subscriptionRepository.findBySubscriptionId(subscriptionId);
+		return subscriptionFormRepository.findBySubscriptionId(subscriptionId);
 	}
 
 
@@ -78,6 +80,13 @@ public class SubscriptionformImplementationService implements SubscriptionFormSe
 //		subscriptionRepository.save(subscriptionForm);
 //		subscriptionRequest.
 		return null;
+	}
+
+
+	@Override
+	public List<SubscriptionForm> findAll() {
+		
+		return subscriptionFormRepository.findAll();
 	}
 
 }

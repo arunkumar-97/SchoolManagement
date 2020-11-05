@@ -1,8 +1,12 @@
 package com.jesperapps.schoolmanagement.api.message;
 
+
+
 import com.jesperapps.schoolmanagement.api.model.Class;
+
 //import com.jesperapps.schoolmanagement.api.model.EducationBoard;
 //import com.jesperapps.schoolmanagement.api.model.Medium;
+
 
 public class ClassResponse {
 
@@ -36,8 +40,7 @@ public class ClassResponse {
 		this.medium=medium;
 		this.educationBoard=educationBoard;
 	}
-	
-	
+
 	public String getEducationBoard() {
 		return educationBoard;
 	}
