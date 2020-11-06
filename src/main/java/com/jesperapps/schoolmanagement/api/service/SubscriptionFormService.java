@@ -24,6 +24,9 @@ public interface SubscriptionFormService {
 
 	List<SubscriptionForm> findAll();
 
+
+	boolean saveSubscriptionForm(SubscriptionForm subscriptionFromDb);
+
 	
 	
 

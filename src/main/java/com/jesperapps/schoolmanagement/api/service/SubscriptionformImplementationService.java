@@ -47,7 +47,7 @@ public class SubscriptionformImplementationService implements SubscriptionFormSe
 	
 	@Override
 	public SubscriptionForm findBySubscriptionId(int subscriptionId) {
-		// TODO Auto-generated method stub
+		
 		return subscriptionFormRepository.findBySubscriptionId(subscriptionId);
 	}
 
@@ -57,7 +57,7 @@ public class SubscriptionformImplementationService implements SubscriptionFormSe
 		SubscriptionResponse response= new SubscriptionResponse();
 		
 		SubscriptionForm subscriptionForm= new SubscriptionForm();
-		subscriptionForm.setSubscriptionId(subscriptionRequest.getSubscriptionId());
+//		subscriptionForm.setSubscriptionId(subscriptionRequest.getSubscriptionId());
 		subscriptionForm.setSubscriptionClass(classService.fromClassId(subscriptionRequest.getSubscriptionClass().getClassId()));
 		subscriptionForm.setMedium(mediumService.findMediumFromId(subscriptionRequest.getMedium().getMediumId()));
 		subscriptionForm.setEducationBoard(educationBoardService.findEducationBoardFromId(subscriptionRequest.getEducationBoard().getEducationBoardId()));
@@ -83,8 +83,7 @@ public class SubscriptionformImplementationService implements SubscriptionFormSe
 			response.setSubscriptionStatus(new SubscriptionStatusJson(subscribedStatusFromDB));
 			return response;	
 		}
-//		subscriptionRepository.save(subscriptionForm);
-//		subscriptionRequest.
+
 		return null;
 	}
 
@@ -100,6 +99,19 @@ public class SubscriptionformImplementationService implements SubscriptionFormSe
 	public List<SubscriptionForm> findByClass(Class cls) {
 		// TODO Auto-generated method stub
 		return this.subscriptionFormRepository.findBySubscriptionClass(cls);
+	}
+
+
+	@Override
+	public boolean saveSubscriptionForm(SubscriptionForm subscriptionFromDb) {
+		try{
+			subscriptionFormRepository.save(subscriptionFromDb);
+				return true;
+				}
+			catch(Exception e) 
+				{
+				return false;
+				}
 	}
 
 

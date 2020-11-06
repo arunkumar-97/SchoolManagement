@@ -8,16 +8,22 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jesperapps.schoolmanagement.api.message.ClassResponse;
+import com.jesperapps.schoolmanagement.api.message.Response;
 import com.jesperapps.schoolmanagement.api.message.SubscriptionRequest;
 import com.jesperapps.schoolmanagement.api.message.SubscriptionResponse;
-
+import com.jesperapps.schoolmanagement.api.message.SubscriptionStatusJson;
 import com.jesperapps.schoolmanagement.api.model.Class;
+import com.jesperapps.schoolmanagement.api.model.SubscriptionForm;
+import com.jesperapps.schoolmanagement.api.model.SubscriptionStatus;
+
 import com.jesperapps.schoolmanagement.api.service.ClassService;
 import com.jesperapps.schoolmanagement.api.service.SubscriptionFormService;
+
 
 
 
@@ -35,8 +41,9 @@ public class SubscriptionFormController {
 	private ClassService classService;
 	
 	
+
 	
-	@PostMapping("/subscription-form")
+	@PostMapping("/subscriptionForm")
 	public SubscriptionResponse createSubscription(@RequestBody SubscriptionRequest subscriptionRequest) {
 		return subscriptionFormService.createSubscription(subscriptionRequest);
 		}
@@ -69,9 +76,34 @@ public class SubscriptionFormController {
 		
 	}
 		
-
+	
+	@PutMapping("/subscriptionform/{subscriptionId}")
+	public Response updateSubscriptionStatus(@PathVariable Integer subscriptionId,@RequestBody SubscriptionStatusJson updateJson) {
 		
+		Response response=new Response(409,"No such Id Found");
+		SubscriptionResponse subscriptionResponse=new SubscriptionResponse();
+				SubscriptionForm subscriptionFromDb=subscriptionFormService.findBySubscriptionId(subscriptionId);
+					if(subscriptionFromDb != null) {
+						
+						subscriptionFromDb.setSubscriptionStatus(new SubscriptionStatus(updateJson));
+						subscriptionFormService.saveSubscriptionForm(subscriptionFromDb);
+						response.setStatuscode(200);
+						response.setDescription("Successfully updated the SubscriptionStatus");
+						subscriptionResponse.setUser(subscriptionFromDb.getUser());
+						subscriptionResponse.setSubscriptionClass(subscriptionFromDb.getSubscriptionClass().getClassId());
+						subscriptionResponse.setEducationBoard(subscriptionFromDb.getEducationBoard().getEducationBoardName());
+						subscriptionResponse.setSubscriptionStatus(updateJson);
+						subscriptionResponse.setMedium(subscriptionFromDb.getMedium().getMediumLanguage());
+						subscriptionResponse.setSubscriptionId(subscriptionFromDb.getSubscriptionId());
+					
+					}
+					return response;
+					
 	}
+	
+	}
+
+
 	
 	
 

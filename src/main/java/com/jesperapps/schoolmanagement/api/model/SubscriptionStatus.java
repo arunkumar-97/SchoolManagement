@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.jesperapps.schoolmanagement.api.message.SubscriptionStatusJson;
+
 @Entity
 public class SubscriptionStatus {
 	
@@ -38,6 +40,11 @@ public class SubscriptionStatus {
 	public SubscriptionStatus(int id, String subscriptionStatus) {
 		this.subscriptionStatusId=id;
 		this.status=subscriptionStatus;
+	}
+
+	public SubscriptionStatus(SubscriptionStatusJson updateJson) {
+		this.subscriptionStatusId=updateJson.getSubscriptionStatusid();
+		this.status=updateJson.getSubscriptionStatus();
 	}
 	
 }
