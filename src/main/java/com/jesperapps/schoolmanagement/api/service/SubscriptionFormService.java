@@ -4,10 +4,11 @@ import com.jesperapps.schoolmanagement.api.message.SubscriptionResponse;
 
 import java.util.List;
 
+
 import com.jesperapps.schoolmanagement.api.message.SubscriptionRequest;
 
 import com.jesperapps.schoolmanagement.api.model.SubscriptionForm;
-
+import com.jesperapps.schoolmanagement.api.model.User;
 import com.jesperapps.schoolmanagement.api.model.Class;
 
 
@@ -26,6 +27,9 @@ public interface SubscriptionFormService {
 
 
 	boolean saveSubscriptionForm(SubscriptionForm subscriptionFromDb);
+
+
+	List<SubscriptionForm> findByUser(User userFromDb);
 
 	
 	

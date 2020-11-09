@@ -76,6 +76,7 @@ public class SubscriptionformImplementationService implements SubscriptionFormSe
 			subscriptionUser.addSubscription(subscriptionForm);
 			userRepository.save(subscriptionUser);
 			response.setSubscriptionId(subscriptionForm.getSubscriptionId());
+//			System.out.println(subscriptionForm.getSubscriptionId());
 			response.setSubscriptionClass(subscriptionForm.getSubscriptionClass().getClassId());
 			response.setMedium(subscriptionForm.getMedium().getMediumLanguage());
 			response.setEducationBoard(subscriptionForm.getEducationBoard().getEducationBoardName());
@@ -97,7 +98,7 @@ public class SubscriptionformImplementationService implements SubscriptionFormSe
 
 	@Override
 	public List<SubscriptionForm> findByClass(Class cls) {
-		// TODO Auto-generated method stub
+	
 		return this.subscriptionFormRepository.findBySubscriptionClass(cls);
 	}
 
@@ -112,6 +113,13 @@ public class SubscriptionformImplementationService implements SubscriptionFormSe
 				{
 				return false;
 				}
+	}
+
+
+	@Override
+	public List<SubscriptionForm> findByUser(User userFromDb) {
+		
+		return this.subscriptionFormRepository.findByUser(userFromDb);
 	}
 
 

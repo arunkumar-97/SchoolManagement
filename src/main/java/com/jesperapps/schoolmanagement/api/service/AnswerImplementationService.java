@@ -22,9 +22,9 @@ public class AnswerImplementationService implements AnswerService {
 	public Answers saveAnswer(AnswerJson requestAnswer) {
 		try {
 			Answers newAnswer = new Answers(requestAnswer);
-			if(requestAnswer.getImage()!=null) {
-				if(answerAttachmentService.saveFile(requestAnswer.getImage())) {
-					AnswerAttachment imageAttachment=new AnswerAttachment(requestAnswer.getImage());
+			if(requestAnswer.getAnswerAttachment()!=null) {
+				if(answerAttachmentService.saveFile(requestAnswer.getAnswerAttachment())) {
+					AnswerAttachment imageAttachment=new AnswerAttachment(requestAnswer.getAnswerAttachment());
 					newAnswer.setImageAttachment(imageAttachment);
 					imageAttachment.setAnswer(newAnswer);
 				}

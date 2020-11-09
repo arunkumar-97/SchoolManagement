@@ -46,5 +46,7 @@ public class SubscriptionStatus {
 		this.subscriptionStatusId=updateJson.getSubscriptionStatusid();
 		this.status=updateJson.getSubscriptionStatus();
 	}
+
+	
 	
 }

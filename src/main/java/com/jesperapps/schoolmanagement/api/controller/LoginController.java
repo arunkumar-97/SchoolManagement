@@ -24,10 +24,10 @@ public class LoginController {
 	@SuppressWarnings("rawtypes")
 	@PostMapping("/login")
 	public ResponseEntity loginuser(@RequestBody UserRequest adminRequest) {
-//		Response response = new Response(409,"No such User Found");
+
 		User emailFromDb=userService.findByEmail(adminRequest.getEmail());
 		if(emailFromDb!=null) {
-			//System.out.println(emailFromDb.getEmail()+","+adminRequest.getEmail());
+			
 			if(userService.checkPasswordIsSame(adminRequest.getPassword(), emailFromDb.getPassword())) {
 				return ResponseEntity.status(HttpStatus.ACCEPTED).body(new BaseResponse(200,"Login SuccessFull") {
 				});

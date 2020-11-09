@@ -7,7 +7,7 @@ public class AnswerJson {
 	private Integer answerId;
 	private String label;
 	private String answer;
-	private AnswerAttachmentJSON image;
+	private AnswerAttachmentJSON answerAttachment;
 	
 	
 	public Integer getAnswerId() {
@@ -28,13 +28,14 @@ public class AnswerJson {
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
-	public AnswerAttachmentJSON getImage() {
-		return image;
-	}
-	public void setImage(AnswerAttachmentJSON image) {
-		this.image = image;
-	}
 	
+	
+	public AnswerAttachmentJSON getAnswerAttachment() {
+		return answerAttachment;
+	}
+	public void setAnswerAttachment(AnswerAttachmentJSON answerAttachment) {
+		this.answerAttachment = answerAttachment;
+	}
 	public AnswerJson() {
 		
 	}
@@ -43,7 +44,7 @@ public class AnswerJson {
 		this.label=answers.getLabel();
 		this.answer=answers.getAnswer();
 		if(answers.getImageAttachment()!=null) {
-		this.image= new AnswerAttachmentJSON(answers.getImageAttachment());
+		this.answerAttachment= new AnswerAttachmentJSON(answers.getImageAttachment());
 		}
 		}
 

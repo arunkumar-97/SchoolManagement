@@ -39,7 +39,7 @@ public class AnswerAttachmementController {
 			answerFromDb.setAnswerId(answerJsonRequest.getAnswerId());	
 		}
 		answerFromDb.setLabel(answerJsonRequest.getLabel());
-		AnswerAttachmentJSON requestAnswerImage = answerJsonRequest.getImage();
+		AnswerAttachmentJSON requestAnswerImage = answerJsonRequest.getAnswerAttachment();
 		if(requestAnswerImage != null) {
 			AnswerAttachment attachmentFromDb = answerFromDb.getImageAttachment();
 			if(attachmentFromDb != null) {
@@ -66,7 +66,7 @@ public class AnswerAttachmementController {
 		response.setAnswerId(answerJsonRequest.getAnswerId());
 		response.setAnswer(answerJsonRequest.getAnswer());
 		response.setLabel(answerJsonRequest.getLabel());
-		response.setImage(answerJsonRequest.getImage());
+		response.setAnswerAttachment(answerJsonRequest.getAnswerAttachment());
 		answerService.saveAnswer(answerFromDb);
 		return new AnswerJson(answerFromDb);
 	}

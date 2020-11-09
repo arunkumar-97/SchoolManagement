@@ -7,7 +7,7 @@ import com.jesperapps.schoolmanagement.api.model.Class;
 public class SubscriptionRequest {
 	
 	
-	private int subscriptionId;
+	
 	private Class subscriptionClass;
 	private Medium medium;
 	private EducationBoard educationBoard;
@@ -15,16 +15,6 @@ public class SubscriptionRequest {
 	
 	
 	private UserRequest user;
-
-
-	public int getSubscriptionId() {
-		return subscriptionId;
-	}
-
-
-	public void setSubscriptionId(int subscriptionId) {
-		this.subscriptionId = subscriptionId;
-	}
 
 
 	public Class getSubscriptionClass() {

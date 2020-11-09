@@ -20,9 +20,13 @@ import com.jesperapps.schoolmanagement.api.message.SubscriptionStatusJson;
 import com.jesperapps.schoolmanagement.api.model.Class;
 import com.jesperapps.schoolmanagement.api.model.SubscriptionForm;
 import com.jesperapps.schoolmanagement.api.model.SubscriptionStatus;
-
+import com.jesperapps.schoolmanagement.api.model.User;
 import com.jesperapps.schoolmanagement.api.service.ClassService;
 import com.jesperapps.schoolmanagement.api.service.SubscriptionFormService;
+import com.jesperapps.schoolmanagement.api.service.UserService;
+import com.jesperapps.schoolmanagement.api.utils.SubscriptionStatusTag;
+
+
 
 
 
@@ -40,6 +44,8 @@ public class SubscriptionFormController {
 	@Autowired
 	private ClassService classService;
 	
+	@Autowired
+	private UserService userService;
 	
 
 	
@@ -66,12 +72,18 @@ public class SubscriptionFormController {
 	public List<SubscriptionResponse> getAllUsersForTheSubscribedClass(@PathVariable Integer classId){
 		List<SubscriptionResponse> response=new ArrayList<>();
 	Class classFromDb=classService.findById(classId);
-	System.out.println(classFromDb.getClassId());
+
 	if(classFromDb != null) {
-      subscriptionFormService.findByClass(classFromDb).forEach(clas ->{
-			response.add(new SubscriptionResponse(clas.getSubscriptionId(),clas.getMedium(),clas.getSubscriptionStatus(),clas.getEducationBoard(),clas.getUser(),clas.getSubscriptionClass()));
-		});
-	}
+		subscriptionFormService.findByClass(classFromDb).forEach(clas ->{
+   	 	 if(!clas.getSubscriptionStatus().getStatus().equalsIgnoreCase(SubscriptionStatusTag.SUBSCRIBED)) {
+				response.add(new SubscriptionResponse(clas.getSubscriptionId(),clas.getMedium(),clas.getSubscriptionStatus(),clas.getEducationBoard(),clas.getUser(),clas.getSubscriptionClass()));
+		      }else {
+		    	  
+		      }
+      });
+      
+      
+      }
 	return response;
 		
 	}
@@ -101,9 +113,30 @@ public class SubscriptionFormController {
 					
 	}
 	
+	
+	
+	@GetMapping("/subscriptionForm/{userId}")
+	private List<SubscriptionResponse> getAllSubscribedClassForUsers(@PathVariable Integer userId){
+	
+		List<SubscriptionResponse> response=new ArrayList<>();
+			User userFromDb=userService.findById(userId);
+				if(userFromDb != null) {
+			
+				subscriptionFormService.findByUser(userFromDb).forEach(user ->{
+		    	if(!user.getSubscriptionStatus().getStatus().equalsIgnoreCase(SubscriptionStatusTag.UNSUBSCRIBED)) {
+					response.add(new SubscriptionResponse(user.getSubscriptionId(),user.getMedium(),user.getSubscriptionStatus(),user.getEducationBoard(),user.getUser(),user.getSubscriptionClass()));
+		    	}else {
+		    		
+		    	}
+	  
+		      });
+		      
+		
+	}
+	return response;
 	}
 
-
+}
 	
 	
 
