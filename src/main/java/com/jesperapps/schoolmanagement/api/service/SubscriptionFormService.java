@@ -4,7 +4,7 @@ import com.jesperapps.schoolmanagement.api.message.SubscriptionResponse;
 
 import java.util.List;
 
-
+import com.jesperapps.schoolmanagement.api.message.ClassResponse;
 import com.jesperapps.schoolmanagement.api.message.SubscriptionRequest;
 
 import com.jesperapps.schoolmanagement.api.model.SubscriptionForm;
@@ -30,6 +30,8 @@ public interface SubscriptionFormService {
 
 
 	List<SubscriptionForm> findByUser(User userFromDb);
+	
+	boolean checkClassInResponse(List<ClassResponse> classListFroResponse, Class cls);
 
 	
 	

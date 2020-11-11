@@ -33,7 +33,7 @@ public class SubjectController {
 	@Autowired
 	private SubjectService subjectService;
 	
-	@SuppressWarnings("unused")
+
 	@Autowired
 	private ClassService classService;
 	
@@ -47,8 +47,7 @@ public class SubjectController {
 		if(classFromDb !=null) {
 			
 			Subject subjectName=subjectService.checksubject(subjectRequest.getSubjectName(),classFromDb);
-			
-//			SubjectListResponse subjectListResponse = new SubjectListResponse();
+
 		
 			
 			if(subjectName!=null) {
@@ -58,7 +57,6 @@ public class SubjectController {
 				
 			}
 			else {
-			@SuppressWarnings("unused")
 			Subject newsubject=	subjectService.createnewSubject(subjectRequest.getSubjectName(),subjectRequest.getSubjectId(),StatusSubject.getStatus(subjectRequest.getStatus()),subjectRequest.getClas().getClassId());
 
 			subjectResponse.setSubjectId(newsubject.getSubjectId());
@@ -120,7 +118,7 @@ public class SubjectController {
 	public SubjectResponse viewSubject(@PathVariable int subjectId)
 	{
 		Subject sub = subjectService.findById(subjectId);
-//		SubjectBaseResponse response = new SubjectBaseResponse();
+
 		SubjectResponse subjectResponse = new SubjectResponse();
 		if(sub != null)
 		{

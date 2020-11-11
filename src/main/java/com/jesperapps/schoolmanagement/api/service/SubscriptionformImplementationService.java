@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jesperapps.schoolmanagement.api.message.ClassResponse;
 //import com.jesperapps.schoolmanagement.api.message.SubscriptionBaseResponse;
 import com.jesperapps.schoolmanagement.api.message.SubscriptionRequest;
 import com.jesperapps.schoolmanagement.api.message.SubscriptionResponse;
@@ -76,7 +77,7 @@ public class SubscriptionformImplementationService implements SubscriptionFormSe
 			subscriptionUser.addSubscription(subscriptionForm);
 			userRepository.save(subscriptionUser);
 			response.setSubscriptionId(subscriptionForm.getSubscriptionId());
-//			System.out.println(subscriptionForm.getSubscriptionId());
+
 			response.setSubscriptionClass(subscriptionForm.getSubscriptionClass().getClassId());
 			response.setMedium(subscriptionForm.getMedium().getMediumLanguage());
 			response.setEducationBoard(subscriptionForm.getEducationBoard().getEducationBoardName());
@@ -120,6 +121,17 @@ public class SubscriptionformImplementationService implements SubscriptionFormSe
 	public List<SubscriptionForm> findByUser(User userFromDb) {
 		
 		return this.subscriptionFormRepository.findByUser(userFromDb);
+	}
+
+
+	@Override
+	public boolean checkClassInResponse(List<ClassResponse> classListForResponse, Class cls) {
+		for(int i=0;i<classListForResponse.size();i++) {
+			if(classListForResponse.get(i).getClassId() == cls.getClassId()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 

@@ -60,25 +60,37 @@ public class SubscriptionFormController {
 		
 	List<ClassResponse> response=new ArrayList<>();
 	subscriptionFormService.findAll().forEach(subscription ->{
-	{
-			response.add(new ClassResponse(subscription.getSubscriptionClass()));		
+			if(!this.subscriptionFormService.checkClassInResponse(response, subscription.getSubscriptionClass())) {
+				if(!subscription.getSubscriptionStatus().getStatus().equalsIgnoreCase(SubscriptionStatusTag.SUBSCRIBED)) {
+					response.add(new ClassResponse(subscription.getSubscriptionClass()));			
+				}
+				
+			}
 	
-		}
+	
 		});
 	return response;
 	}
 	
 	@GetMapping("/subscriptionform/{classId}")
 	public List<SubscriptionResponse> getAllUsersForTheSubscribedClass(@PathVariable Integer classId){
+		
+	
+		
+		
 		List<SubscriptionResponse> response=new ArrayList<>();
-	Class classFromDb=classService.findById(classId);
+		
+		
+		
+		Class classFromDb=classService.findById(classId);
+	
 
 	if(classFromDb != null) {
 		subscriptionFormService.findByClass(classFromDb).forEach(clas ->{
    	 	 if(!clas.getSubscriptionStatus().getStatus().equalsIgnoreCase(SubscriptionStatusTag.SUBSCRIBED)) {
 				response.add(new SubscriptionResponse(clas.getSubscriptionId(),clas.getMedium(),clas.getSubscriptionStatus(),clas.getEducationBoard(),clas.getUser(),clas.getSubscriptionClass()));
 		      }else {
-		    	  
+		    	 return;
 		      }
       });
       

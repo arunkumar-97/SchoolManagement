@@ -42,6 +42,8 @@ public class Subject  {
 	@OneToMany(cascade = CascadeType.ALL,mappedBy="subject")
 	private List<Question> questionsList;
  	
+	@OneToMany(cascade = CascadeType.ALL,mappedBy="subjects")
+	private List<OneMarkQuestion> questions;
 	
 	public Class getCls() {
 		return cls;
@@ -103,6 +105,16 @@ public class Subject  {
 		if(question != null) {
 			this.questionsList.add(question);	
 		}
+	}
+
+	public void addQuestion(OneMarkQuestion newQuestion) {
+		if(this.questions==null) {
+			this.questions=new ArrayList<>();
+		}
+		if(newQuestion !=null) {
+			this.questions.add(newQuestion);
+		}
+		
 	}
 	
 

@@ -199,7 +199,7 @@ public class ClassController {
 		Class requestClass = classService.findById(classId);
 		if(requestClass != null) {
 			requestClass.getSubject().forEach(subject -> {
-//				System.out.println(subject.getSubjectName()+","+subject.getStatus());
+
 				if(!subject.getStatus().equalsIgnoreCase(StatusSubject.DELETED)) {
 					subjectList.add(new SubjectResponse(
 							subject.getSubjectId(),

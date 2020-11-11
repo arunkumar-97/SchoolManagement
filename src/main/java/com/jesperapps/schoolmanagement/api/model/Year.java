@@ -29,6 +29,10 @@ public class Year {
 	@OneToMany(cascade = CascadeType.ALL,mappedBy ="year")
 	private List<Question> questionsList;
 	
+	
+	@OneToMany(cascade = CascadeType.ALL,mappedBy ="years")
+	private List<OneMarkQuestion> questions;
+	
 	public Year() {
 		super();
 	}
@@ -82,6 +86,19 @@ public class Year {
 		if(question != null) {
 			this.questionsList.add(question);	
 		}
+	}
+
+
+
+
+	public void addQuestion(OneMarkQuestion newQuestion) {
+		if(this.questions==null) {
+			this.questions=new ArrayList<>();
+		}
+		if(newQuestion !=null) {
+			this.questions.add(newQuestion);
+		}
+		
 	}
 
 }

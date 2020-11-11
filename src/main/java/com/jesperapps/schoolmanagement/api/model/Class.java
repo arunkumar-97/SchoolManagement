@@ -42,6 +42,9 @@ public class Class {
 	@OneToMany(cascade = CascadeType.ALL,mappedBy ="clas")
 	private List<Question> questionsList;
 	
+	@OneToMany(cascade = CascadeType.ALL,mappedBy ="classs")
+	private List<OneMarkQuestion> questions;
+	
 	public List<Subject> getSubject() {
 		return subject;
 	}
@@ -161,6 +164,17 @@ public class Class {
 		this.className=requestClass.getClassName();
 		this.status = requestClass.getStatus() != null ? requestClass.getStatus() : this.status;
 		
+		
+	}
+
+
+	public void addQuestion(OneMarkQuestion newQuestion) {
+		if(this.questions==null) {
+			this.questions=new ArrayList<>();
+		}
+		if(newQuestion !=null ) {
+			this.questions.add(newQuestion);
+		}
 		
 	}
 	
