@@ -27,8 +27,8 @@ public class SubscriptionStatusController {
 	public BaseResponse createsubscriptionStatus(){
 		BaseResponse response=new BaseResponse(200,"subscriptionStatus Created Successfully") {
 		};
-		SubscriptionStatus subscriptionStatus1=new SubscriptionStatus(1,SubscriptionStatusTag.SUBSCRIBED);
-		SubscriptionStatus subscriptionStatus2=new SubscriptionStatus(1,SubscriptionStatusTag.UNSUBSCRIBED);
+		SubscriptionStatus subscriptionStatus1=new SubscriptionStatus(64,SubscriptionStatusTag.SUBSCRIBED);
+		SubscriptionStatus subscriptionStatus2=new SubscriptionStatus(65,SubscriptionStatusTag.UNSUBSCRIBED);
 		 subscriptionStatusRepository.save(subscriptionStatus1);
 		 subscriptionStatusRepository.save(subscriptionStatus2);
 		return response;

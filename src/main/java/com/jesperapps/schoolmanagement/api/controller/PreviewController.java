@@ -14,13 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jesperapps.schoolmanagement.api.model.TopicAttachment;
 import com.jesperapps.schoolmanagement.api.service.TopicAttachmentService;
 
-
-
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping(TopicAttachmentService.BASE_URL)
-public class ViewTopicAttachmentController {
-	
+@RequestMapping(TopicAttachmentService.PREVIEW_URL)
+public class PreviewController {
+
 	@Autowired
 	private TopicAttachmentService topicAttachmentService;
 	

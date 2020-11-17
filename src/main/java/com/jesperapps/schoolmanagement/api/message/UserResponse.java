@@ -9,7 +9,7 @@ import com.jesperapps.schoolmanagement.api.model.User;
 //import com.jesperapps.schoolmanagement.api.model.UserProfilePicture;
 import com.jesperapps.schoolmanagement.api.model.UserType;
 
-public class UserResponse extends BaseResponse{
+public class UserResponse extends BaseResponseForUser{
 
 	
 	private Integer userId;

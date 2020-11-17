@@ -31,6 +31,7 @@ public class TopicAttachmentImplementationService  implements TopicAttachmentSer
 	
 	
 	private boolean saveFileToLocalStorage(String fileName, String fileBytes) {
+	
 		try {
 			if(Files.notExists(Paths.get(LOCATION))){
                 File directoryFile = new File(LOCATION);
@@ -82,8 +83,13 @@ public class TopicAttachmentImplementationService  implements TopicAttachmentSer
 
 	@Override
 	public boolean saveFile(AnswerAttachmentJSON requestAttachment) {
-		if(this.saveFileToLocalStorage(requestAttachment.getName(), requestAttachment.getFileByte()))
-		{
+		if(this.saveFileToLocalStorage(requestAttachment.getName(), requestAttachment.getFileByte())) {
+			if(requestAttachment.getPreviewfileByte() !=null) {
+				if(this.saveFileToLocalStorage("Preview" + requestAttachment.getName() ,requestAttachment.getPreviewfileByte())){
+					return true;
+					}
+				return false;
+				}
 			return true;
 		}
 		return false;

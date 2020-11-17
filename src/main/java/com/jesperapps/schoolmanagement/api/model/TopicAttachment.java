@@ -18,6 +18,7 @@ public class TopicAttachment {
 	    private Integer pictureId;
 	    private String pictureName;
 	    private String pictureLocation;
+	    private String previewLocation;
 	    @ManyToOne
 		@JoinColumn(name="topicId", referencedColumnName="topicId")
 		private Topic topic;
@@ -54,6 +55,12 @@ public class TopicAttachment {
 		}
 		public void setTopic(Topic topic) {
 			this.topic = topic;
+		}
+		public String getPreviewLocation() {
+			return previewLocation;
+		}
+		public void setPreviewLocation(String previewLocation) {
+			this.previewLocation = previewLocation;
 		}
 	    
 	    

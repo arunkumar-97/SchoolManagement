@@ -41,9 +41,7 @@ public class UserImplementationService implements UserService{
 			newUsersList.setEmail(user.getEmail());
 			newUsersList.setPhoneNumber(user.getPhoneNumber());
 			newUsersList.setAuthentication(user.getAuthenticationType());
-//			newUsersList.setConfirmPassword(user.);
-//			for( UserRequestWithProfilePicture eachuser:user) {
-//		User newUser = new User(eachuser);
+
 				newUsersList.setPassword(this.createsafepassword(user.getPassword()));
 				if(user.getUserType() != null) {
 					UserTypeRequest requestUserType = user.getUserType();
@@ -59,10 +57,11 @@ public class UserImplementationService implements UserService{
 				//save profilePIcuter
 				try {
 					Attachment profileAttachment = user.getAttachment();
-					if(profileAttachment != null) {
+					if(profileAttachment == null) {
 					UserProfilePicture profilePicture = userProfilePictureService.saveFile(profileAttachment);
 					profilePicture.setUser(newUsersList);
 					newUsersList.setUserProfile(profilePicture);
+					
 					userRepository.save(newUsersList);
 					}else {
 						

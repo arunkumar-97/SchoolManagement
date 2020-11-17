@@ -15,7 +15,7 @@ import java.io.OutputStream;
 @Service
 public class UserProfilePictureImplementationService implements UserProfilePictureService{
 
-    private final String LOCATION = "C:\\Users\\Admin\\OrganizationProfilePicture";
+    private final String LOCATION = "C:\\Users\\Admin\\UserProfilePicture";
 
     private boolean saveRequestFile(String name, String bytes){
         try{
@@ -47,7 +47,7 @@ public class UserProfilePictureImplementationService implements UserProfilePictu
     public UserProfilePicture saveFile(Attachment profilePicture){
         UserProfilePicture userProfilePicture = new UserProfilePicture();
         if(this.saveRequestFile(profilePicture.getAttachmentName(), profilePicture.getFileByte())){
-            userProfilePicture.setPictureName(profilePicture.getAttachmentName());
+                    userProfilePicture.setPictureName(profilePicture.getAttachmentName());
             userProfilePicture.setPictureLocation(LOCATION+"\\"+profilePicture.getAttachmentName());
             return userProfilePicture;
         }

@@ -99,6 +99,8 @@ public class OneMarkContentUploading {
 					questionsList.forEach(question -> {
 						responseQuestionList.add(new OneMarkQuestionJSON(question));
 					});
+				}else {
+					return null;
 				}
 			}
 			

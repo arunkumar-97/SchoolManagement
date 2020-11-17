@@ -8,6 +8,8 @@ import com.jesperapps.schoolmanagement.api.modelmessage.AnswerAttachmentJSON;;
 public interface TopicAttachmentService {
 	
 static final String BASE_URL = "/topic";
+
+static final String PREVIEW_URL= "/preview";
 	
 	static final String URL = BASE_URL+ "/";
 

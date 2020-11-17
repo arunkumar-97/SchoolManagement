@@ -34,6 +34,7 @@ public class TopicImplementationService implements TopicService {
 		if(topicAttachmentList != null) {
 		topicAttachmentList.forEach(attachment ->{
 			attachment.setPictureLocation(TopicAttachmentService.BASE_URL+"/"+attachment.getPictureId());
+			attachment.setPreviewLocation(TopicAttachmentService.PREVIEW_URL+"/"+attachment.getPictureId());
 		});
 		topicToBeUpdated.setTopicAttachment(topicAttachmentList);
 		}

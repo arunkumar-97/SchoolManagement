@@ -8,10 +8,10 @@ public class AnswerAttachmentJSON {
 	private String name;
 	private String type;
 	private String viewUrl;
-	
+	private String previewUrl;
 	//only for request purpose
 	private String fileByte;
-	
+	private String previewfileByte;
 	public String getFileByte() {
 		return fileByte;
 	}
@@ -25,7 +25,7 @@ public class AnswerAttachmentJSON {
 	}
 	
 	public AnswerAttachmentJSON(AnswerAttachment answerAttachment) {
-		String HOST_NAME = "http://192.168.1.6:8080";
+		String HOST_NAME = "http://192.168.1.243:8080";
 		this.name=answerAttachment.getPictureName();
 		this.setType("unknown");
 		String pictureName = answerAttachment.getPictureName();
@@ -35,15 +35,17 @@ public class AnswerAttachmentJSON {
 				this.setType(fileNameAndFileType[fileNameAndFileType.length-1]);	
 			}
 		}
-		String urlFromDB = answerAttachment.getPictureLocation();if(urlFromDB.contains(":")) {
+		String urlFromDB = answerAttachment.getPictureLocation();
+		if(urlFromDB.contains(":")) {
 			this.viewUrl = urlFromDB;
 		}else {
 		this.viewUrl= HOST_NAME +answerAttachment.getPictureLocation();
+		
 	}
 	}
 	
 	public AnswerAttachmentJSON(TopicAttachment topicAttachment) {
-		String HOST_NAME = "http://192.168.1.6:8080";
+		String HOST_NAME = "http://192.168.1.243:8080";
 		this.name=topicAttachment.getPictureName();
 		this.setType("unknown");
 		String pictureName = topicAttachment.getPictureName();
@@ -58,6 +60,7 @@ public class AnswerAttachmentJSON {
 			this.viewUrl = urlFromDB;
 		}else {
 		this.viewUrl=HOST_NAME + topicAttachment.getPictureLocation();
+		this.previewUrl=HOST_NAME +topicAttachment.getPreviewLocation();
 		}
 	}
 
@@ -72,6 +75,7 @@ public class AnswerAttachmentJSON {
 		this.name=eachAttachment.getName();
 		this.type=eachAttachment.getType();
 		this.viewUrl=eachAttachment.getViewUrl();
+		
 	}
 
 	public String getName() {
@@ -93,6 +97,22 @@ public class AnswerAttachmentJSON {
 
 	public void setViewUrl(String viewUrl) {
 		this.viewUrl = viewUrl;
+	}
+
+	public String getPreviewfileByte() {
+		return previewfileByte;
+	}
+
+	public void setPreviewfileByte(String previewfileByte) {
+		this.previewfileByte = previewfileByte;
+	}
+
+	public String getPreviewUrl() {
+		return previewUrl;
+	}
+
+	public void setPreviewUrl(String previewUrl) {
+		this.previewUrl = previewUrl;
 	}
 	
 
