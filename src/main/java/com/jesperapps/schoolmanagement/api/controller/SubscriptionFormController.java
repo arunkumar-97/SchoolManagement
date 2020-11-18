@@ -50,7 +50,7 @@ public class SubscriptionFormController {
 
 	
 	@PostMapping("/subscriptionForm")
-	public SubscriptionResponse createSubscription(@RequestBody SubscriptionRequest subscriptionRequest) {
+	public Response createSubscription(@RequestBody SubscriptionRequest subscriptionRequest) {
 		return subscriptionFormService.createSubscription(subscriptionRequest);
 		}
 	

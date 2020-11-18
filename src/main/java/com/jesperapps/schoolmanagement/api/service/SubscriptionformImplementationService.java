@@ -6,9 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jesperapps.schoolmanagement.api.message.ClassResponse;
+import com.jesperapps.schoolmanagement.api.message.Response;
 import com.jesperapps.schoolmanagement.api.message.SubscriptionRequest;
-import com.jesperapps.schoolmanagement.api.message.SubscriptionResponse;
-import com.jesperapps.schoolmanagement.api.message.SubscriptionStatusJson;
 
 import com.jesperapps.schoolmanagement.api.model.SubscriptionForm;
 import com.jesperapps.schoolmanagement.api.model.SubscriptionStatus;
@@ -53,9 +52,9 @@ public class SubscriptionformImplementationService implements SubscriptionFormSe
 
 
 	@Override
-	public SubscriptionResponse createSubscription(SubscriptionRequest subscriptionRequest) {
+	public Response createSubscription(SubscriptionRequest subscriptionRequest) {
 		
-		SubscriptionResponse response= new SubscriptionResponse();
+		Response response= new Response(409,"Error While subscribing");
 		
 		SubscriptionForm subscriptionForm= new SubscriptionForm();
 //		subscriptionForm.setSubscriptionId(subscriptionRequest.getSubscriptionId());
@@ -76,13 +75,15 @@ public class SubscriptionformImplementationService implements SubscriptionFormSe
 			subscriptionForm.setSubscriptionStatus(subscribedStatusFromDB);
 			subscriptionUser.addSubscription(subscriptionForm);
 			userRepository.save(subscriptionUser);
-			response.setSubscriptionId(subscriptionForm.getSubscriptionId());
-
-			response.setSubscriptionClass(subscriptionForm.getSubscriptionClass().getClassId());
-			response.setMedium(subscriptionForm.getMedium().getMediumLanguage());
-			response.setEducationBoard(subscriptionForm.getEducationBoard().getEducationBoardName());
-			response.setUser(subscriptionUser);
-			response.setSubscriptionStatus(new SubscriptionStatusJson(subscribedStatusFromDB));
+			response.setStatuscode(200);
+			response.setDescription("Successfully Subscribed");
+//			response.setSubscriptionId(subscriptionForm.getSubscriptionId());
+//
+//			response.setSubscriptionClass(subscriptionForm.getSubscriptionClass().getClassId());
+//			response.setMedium(subscriptionForm.getMedium().getMediumLanguage());
+//			response.setEducationBoard(subscriptionForm.getEducationBoard().getEducationBoardName());
+//			response.setUser(subscriptionUser);
+//			response.setSubscriptionStatus(new SubscriptionStatusJson(subscribedStatusFromDB));
 			return response;	
 		}
 

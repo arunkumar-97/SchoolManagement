@@ -65,7 +65,8 @@ public class User {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="user")
 	private Set<SubscriptionForm> subscriptionForm;
 	
-	
+	@OneToMany(cascade = CascadeType.ALL,mappedBy="userTopic")
+	private Set<TopicSubscription> topicSubscription;
 	
 	public int getUserId() {
 		return userId;
@@ -135,6 +136,14 @@ public class User {
 		this.subscriptionForm.add(newSubscription);
 	}
 	
+	public void addSubscription(TopicSubscription subscription) {
+		if(topicSubscription == null) {
+			topicSubscription=new HashSet<>();
+		}
+		this.topicSubscription.add(subscription);
+	}
+
+	
 
 	public Set<SubscriptionForm> getSubscriptionForm() {
 		return subscriptionForm;
@@ -145,6 +154,15 @@ public class User {
 	 */
 	public void setSubscriptionForm(Set<SubscriptionForm> subscriptionForm) {
 		this.subscriptionForm = subscriptionForm;
+	}
+
+	
+	public Set<TopicSubscription> getTopicSubscription() {
+		return topicSubscription;
+	}
+
+	public void setTopicSubscription(Set<TopicSubscription> topicSubscription) {
+		this.topicSubscription = topicSubscription;
 	}
 
 	public User() {
@@ -167,6 +185,8 @@ public class User {
 		this.authentication=userRequest.getAuthenticationType();
 	}
 
+	
+	
 
 	
 	

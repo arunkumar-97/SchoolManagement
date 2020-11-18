@@ -12,11 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jesperapps.schoolmanagement.api.message.TopicBaseResponse;
-import com.jesperapps.schoolmanagement.api.message.TopicRequest;
 import com.jesperapps.schoolmanagement.api.message.TopicResponse;
 
 import com.jesperapps.schoolmanagement.api.model.Topic;
-
+import com.jesperapps.schoolmanagement.api.modelmessage.TopicJSON;
 import com.jesperapps.schoolmanagement.api.service.TopicService;
 
 
@@ -33,21 +32,28 @@ public class TopicController {
 	
 	
 	@PostMapping("/topic")
-	private TopicBaseResponse createTopic(@RequestBody List<TopicRequest> topicRequestList) {
+	private TopicBaseResponse createTopic(@RequestBody List<TopicJSON> topicRequestList) {
 		TopicResponse topicResponse= new TopicResponse();
 		TopicBaseResponse response = new TopicBaseResponse(200, "Topics created successfully");
 		response.setTopic(null);
 		topicRequestList.forEach(topicRequest -> {
-			Topic topicFromDB = topicService.checkTopic(topicRequest.getTopicName());
+			Topic topicFromDB = topicService.checkTopic(topicRequest.getTopic().getTopicName());
 			if(topicFromDB == null) {
-				topicService.createnewTopic(topicRequest.getTopicId(),topicRequest.getTopicName());				
+				topicFromDB = topicService.createnewTopic(topicRequest.getTopic().getTopicId(),topicRequest.getTopic().getTopicName());
+				if(topicRequest.getAttachment() != null) {
+					this.topicService.addTopicAttachment(topicFromDB, topicRequest.getAttachment());
+				}
 			}else {
+				if(topicRequest.getAttachment() != null) {
+					this.topicService.addTopicAttachment(topicFromDB, topicRequest.getAttachment());
+				}
 				topicResponse.setTopicId(topicFromDB.getTopicId());
 				topicResponse.setTopicName(topicFromDB.getTopicName());
 				response.setTopic(topicResponse);
 				response.setStatuscode(409);
 				response.setDescription("topic already exists");
 			}
+			this.topicService.saveTopic(topicFromDB);
 		});
 		return response;
 	}

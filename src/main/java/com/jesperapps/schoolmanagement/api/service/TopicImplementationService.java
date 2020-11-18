@@ -51,8 +51,7 @@ public class TopicImplementationService implements TopicService {
 	public Topic createnewTopic(Integer topicId, String topicName) {
 		Topic newTopic =new Topic();
 		newTopic.setTopicId(topicId);
-		newTopic.setTopicName(topicName);		
-		this.saveTopic(newTopic);
+		newTopic.setTopicName(topicName);
 		return newTopic;
 	}
 
@@ -82,11 +81,11 @@ public class TopicImplementationService implements TopicService {
 		return null;
 	}
 
-
+	
 	@Override
 	public void saveTopic(Topic newTopic) {
-		topicRepository.save(newTopic);
-		newTopic = this.updateTopicAttachmentURL(newTopic);
+		//topicRepository.save(newTopic);
+		//newTopic = this.updateTopicAttachmentURL(newTopic);
 		topicRepository.save(newTopic);
 		
 	}

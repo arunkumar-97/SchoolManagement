@@ -6,8 +6,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 
-import com.jesperapps.schoolmanagement.api.modelmessage.AnswerAttachmentJSON;;
+import com.jesperapps.schoolmanagement.api.modelmessage.AnswerAttachmentJSON;
+import com.jesperapps.schoolmanagement.api.service.TopicAttachmentService;;
 
 
 @Entity
@@ -27,8 +29,15 @@ public class TopicAttachment {
 	
 	    
 	    public TopicAttachment() {
-	    	
+	    	super();
 	    }
+	    
+	    @PrePersist
+	    public void updateAttachmentURLAfterSaving() {
+	    	this.setPictureLocation(TopicAttachmentService.BASE_URL+"/"+this.getPictureId());
+			this.setPreviewLocation(TopicAttachmentService.PREVIEW_URL+"/"+this.getPictureId());
+	    }
+	    
 		public TopicAttachment(AnswerAttachmentJSON attachmentRequest) {
 			this.pictureName=attachmentRequest.getName();
 		}

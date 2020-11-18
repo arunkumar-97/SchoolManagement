@@ -1,5 +1,7 @@
 package com.jesperapps.schoolmanagement.api.message;
 
+import com.jesperapps.schoolmanagement.api.model.Topic;
+
 public class TopicResponse {
 	
 	private Integer topicId;
@@ -14,6 +16,11 @@ public class TopicResponse {
 		this.topicId=topicId2;
 		this.topicName=topicName2;
 	}
+	public TopicResponse(Topic topic) {
+		this.topicId=topic.getTopicId();
+		this.topicName=topic.getTopicName();
+	}
+
 	public Integer getTopicId() {
 		return topicId;
 	}

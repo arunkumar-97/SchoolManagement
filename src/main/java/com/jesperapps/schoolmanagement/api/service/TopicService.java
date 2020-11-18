@@ -25,5 +25,7 @@ public interface TopicService {
 	Topic findByTopicId(Integer topicId);
 
 	List<Topic> findAll();
+	
+
 
 }

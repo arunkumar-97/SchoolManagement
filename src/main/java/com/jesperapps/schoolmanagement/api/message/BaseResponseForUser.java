@@ -1,4 +1,4 @@
-package com.jesperapps.schoolmanagement.api.message;
+ package com.jesperapps.schoolmanagement.api.message;
 
 public  abstract class BaseResponseForUser {
 
