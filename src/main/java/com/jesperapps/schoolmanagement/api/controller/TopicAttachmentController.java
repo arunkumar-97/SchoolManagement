@@ -40,6 +40,8 @@ public class TopicAttachmentController {
 		TopicWithAttachmentResponse response = new TopicWithAttachmentResponse(200, "Success");
 		Topic topicFromDb=topicService.findByTopicName(requestTopicWithAttachment.getTopic().getTopicName());
 		if(topicFromDb != null) {
+			System.out.println(requestTopicWithAttachment.getTopic().getTopicName());
+
 			List<TopicAttachment> existingAttachmentFromDB = topicFromDb.getTopicAttachment();
 			List<TopicAttachment> newAttachmentsListForDB = this.topicService.addTopicAttachment(topicFromDb,requestTopicWithAttachment.getAttachment());
 			if(existingAttachmentFromDB != null) {

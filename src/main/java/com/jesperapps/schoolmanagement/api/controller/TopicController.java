@@ -46,6 +46,7 @@ public class TopicController {
 			}else {
 				if(topicRequest.getAttachment() != null) {
 					this.topicService.addTopicAttachment(topicFromDB, topicRequest.getAttachment());
+					
 				}
 				topicResponse.setTopicId(topicFromDB.getTopicId());
 				topicResponse.setTopicName(topicFromDB.getTopicName());

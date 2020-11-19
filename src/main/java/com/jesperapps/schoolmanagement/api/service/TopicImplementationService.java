@@ -43,7 +43,6 @@ public class TopicImplementationService implements TopicService {
 
 	@Override
 	public Topic checkTopic(String topicName) {
-		
 		return topicRepository.findByTopicName(topicName);
 	}
 
@@ -87,7 +86,8 @@ public class TopicImplementationService implements TopicService {
 		//topicRepository.save(newTopic);
 		//newTopic = this.updateTopicAttachmentURL(newTopic);
 		topicRepository.save(newTopic);
-		
+		newTopic = this.updateTopicAttachmentURL(newTopic);
+		this.topicRepository.save(newTopic);		
 	}
 
 	@Override

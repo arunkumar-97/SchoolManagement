@@ -56,6 +56,7 @@ public class UserImplementationService implements UserService{
 				emailService.sendOTPMail(newUsersList);
 				//save profilePIcuter
 				try {
+					
 					Attachment profileAttachment = user.getAttachment();
 					if(profileAttachment == null) {
 					UserProfilePicture profilePicture = userProfilePictureService.saveFile(profileAttachment);

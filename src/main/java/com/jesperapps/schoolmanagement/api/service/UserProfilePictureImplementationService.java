@@ -45,7 +45,8 @@ public class UserProfilePictureImplementationService implements UserProfilePictu
 
     @Override
     public UserProfilePicture saveFile(Attachment profilePicture){
-        UserProfilePicture userProfilePicture = new UserProfilePicture();
+
+    	UserProfilePicture userProfilePicture = new UserProfilePicture();
         if(this.saveRequestFile(profilePicture.getAttachmentName(), profilePicture.getFileByte())){
                     userProfilePicture.setPictureName(profilePicture.getAttachmentName());
             userProfilePicture.setPictureLocation(LOCATION+"\\"+profilePicture.getAttachmentName());

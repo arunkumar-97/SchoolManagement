@@ -36,6 +36,7 @@ public class TopicAttachment {
 	    public void updateAttachmentURLAfterSaving() {
 	    	this.setPictureLocation(TopicAttachmentService.BASE_URL+"/"+this.getPictureId());
 			this.setPreviewLocation(TopicAttachmentService.PREVIEW_URL+"/"+this.getPictureId());
+			
 	    }
 	    
 		public TopicAttachment(AnswerAttachmentJSON attachmentRequest) {
