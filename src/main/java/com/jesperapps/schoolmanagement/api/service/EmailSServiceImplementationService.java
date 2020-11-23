@@ -47,10 +47,10 @@ public class EmailSServiceImplementationService implements EmailSenderService {
 		}
 		return oneTimePassword;
 	}
+	
 
 	@Override
 	public ConfirmationToken getConfirmationTokenForUser(User user) {
-		// TODO Auto-generated method stub
 		String newOtp = this.generateRandomOTP();
 		ConfirmationToken newToken = user.getOtpToken() != null ? user.getOtpToken() : new ConfirmationToken(newOtp, user);
 		newToken.setConfirmationToken(newOtp);

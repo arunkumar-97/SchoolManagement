@@ -37,7 +37,6 @@ public class UserProfilePictureImplementationService implements UserProfilePictu
                 return false;
             }
         }catch(Exception e){
-            // System.out.println(e.toString());
             return false;
         }
         return true;

@@ -26,12 +26,6 @@ import com.jesperapps.schoolmanagement.api.service.SubscriptionFormService;
 import com.jesperapps.schoolmanagement.api.service.UserService;
 import com.jesperapps.schoolmanagement.api.utils.SubscriptionStatusTag;
 
-
-
-
-
-
-
 @CrossOrigin(origins="*",allowedHeaders="*")
 @RestController
 public class SubscriptionFormController {

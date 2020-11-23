@@ -30,6 +30,7 @@ public class TopicSubscription {
 	@JoinColumn(name="topicId" ,referencedColumnName ="topicId")
 	private Topic topic;
 
+	
 	public Integer getTopicSubscriptionId() {
 		return topicSubscriptionId;
 	}
