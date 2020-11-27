@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.jesperapps.schoolmanagement.api.message.Response;
+import com.jesperapps.schoolmanagement.api.message.YearResponse;
 import com.jesperapps.schoolmanagement.api.model.Question;
 import com.jesperapps.schoolmanagement.api.model.Subject;
 import com.jesperapps.schoolmanagement.api.model.Class;
@@ -140,7 +140,30 @@ public class ContentUploadingController {
 	return responseList;
 	}
 	
+	@GetMapping("/Years/{subjectId}")
+	public List<YearResponse> getAllYearsForTheSubject(@PathVariable Integer subjectId){
+		
 	
+		
+		
+		List<YearResponse> response=new ArrayList<>();
+		
+		
+		
+		Subject subjectFromDb=subjectService.findById(subjectId);
+	
+
+	if(subjectFromDb != null) {
+		questionService.findBySubject(subjectFromDb).forEach(Year ->{
+				response.add(new YearResponse(Year.getYear().getYear(),Year.getYear().getYearId()));
+		     
+      });
+      
+      
+      }
+	return response;
+		
+	}
 
 	
 	

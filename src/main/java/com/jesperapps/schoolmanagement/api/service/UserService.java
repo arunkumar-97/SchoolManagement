@@ -1,6 +1,8 @@
 package com.jesperapps.schoolmanagement.api.service;
 
 import java.util.List;
+import java.util.Optional;
+
 import com.jesperapps.schoolmanagement.api.message.OtpRequest;
 import com.jesperapps.schoolmanagement.api.message.OtpResponse;
 //import com.jesperapps.schoolmanagement.api.message.UserListResponse;
@@ -21,5 +23,7 @@ public interface UserService {
 	User findById(int userId);
 	
 	List<User> findAll();
+
+	Optional<User> findByPhoneNumber(Long phone);
 
 }

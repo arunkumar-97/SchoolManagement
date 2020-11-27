@@ -1,6 +1,7 @@
 package com.jesperapps.schoolmanagement.api.model;
 
-import javax.persistence.CascadeType;
+
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,7 +24,7 @@ public class TopicAttachmentSubscription {
 	@JoinColumn(name="subscriptionStatusId")
 	private SubscriptionStatus subscriptionStatus;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="userId")
 	private User users;
 	
@@ -31,10 +32,27 @@ public class TopicAttachmentSubscription {
 	@JoinColumn(name="topicId" ,referencedColumnName ="topicId")
 	private Topic topics;
 	
-	@OneToOne
-	@JoinColumn(name = "attachmentId" , referencedColumnName = "pictureId")
+	@ManyToOne
+	@JoinColumn(name="pictureId", referencedColumnName="pictureId")
 	private TopicAttachment topicAttachment;
 	
+	
+	public TopicAttachmentSubscription() {
+		
+	}
+	
+	
+
+	public TopicAttachmentSubscription(TopicAttachmentSubscription topicAttSub) {
+		super();
+		this.subscriptionId = topicAttSub.getSubscriptionId();
+		this.subscriptionStatus = topicAttSub.getSubscriptionStatus();
+		this.users = topicAttSub.users;
+		this.topics = topicAttSub.getTopics();
+		this.topicAttachment = topicAttSub.getTopicAttachment();
+	}
+
+
 
 	public Integer getSubscriptionId() {
 		return subscriptionId;

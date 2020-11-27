@@ -82,7 +82,6 @@ public class QuestionController {
 			}
 		});
 		
-		// @formatter:on
 
 		return response;
 	}
@@ -94,7 +93,6 @@ public class QuestionController {
 	QuestionJson questionJson=new QuestionJson();
 	if(question!=null) {
 		questionJson=new QuestionJson(question.getQuestionId(), question.getQuestion(), question.getStatus(), question.getAnswers());
-//		questionJson.setAnswer(question.getAnswers(List<AnswerJson>) );
 
 	}
 	return questionJson;

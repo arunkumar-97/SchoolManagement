@@ -68,6 +68,10 @@ public class User {
 	@OneToMany(cascade = CascadeType.ALL,mappedBy="userTopic")
 	private Set<TopicSubscription> topicSubscription;
 	
+	@OneToMany(cascade = CascadeType.ALL,mappedBy="users")
+	private Set<TopicAttachmentSubscription> topicAttachmentSubscription;
+	
+	
 	public int getUserId() {
 		return userId;
 	}
@@ -163,6 +167,16 @@ public class User {
 
 	public void setTopicSubscription(Set<TopicSubscription> topicSubscription) {
 		this.topicSubscription = topicSubscription;
+	}
+	
+	
+
+	public Set<TopicAttachmentSubscription> getTopicAttachmentSubscription() {
+		return topicAttachmentSubscription;
+	}
+
+	public void setTopicAttachmentSubscription(Set<TopicAttachmentSubscription> topicAttachmentSubscription) {
+		this.topicAttachmentSubscription = topicAttachmentSubscription;
 	}
 
 	public User() {

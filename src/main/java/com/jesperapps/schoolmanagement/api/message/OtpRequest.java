@@ -2,6 +2,7 @@ package com.jesperapps.schoolmanagement.api.message;
 
 public class OtpRequest {
 	private String email;
+
 	private String otp;
 	public String getEmail() {
 		return email;

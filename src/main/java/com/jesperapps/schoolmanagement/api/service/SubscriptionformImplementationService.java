@@ -55,7 +55,6 @@ public class SubscriptionformImplementationService implements SubscriptionFormSe
 	public Response createSubscription(SubscriptionRequest subscriptionRequest) {
 		
 		Response response= new Response(409,"Error While subscribing");
-		
 		SubscriptionForm subscriptionForm= new SubscriptionForm();
 //		subscriptionForm.setSubscriptionId(subscriptionRequest.getSubscriptionId());
 		subscriptionForm.setSubscriptionClass(classService.fromClassId(subscriptionRequest.getSubscriptionClass().getClassId()));

@@ -2,7 +2,6 @@ package com.jesperapps.schoolmanagement.api.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,22 +11,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable; 
 import org.springframework.web.bind.annotation.RestController;
-
-//import com.jesperapps.schoolmanagement.api.message.ClassBaseResponse;
-//import com.jesperapps.schoolmanagement.api.message.ClassListResponse;
-//import com.jesperapps.schoolmanagement.api.message.ClassResponse;
 import com.jesperapps.schoolmanagement.api.message.OtpRequest;
 import com.jesperapps.schoolmanagement.api.message.OtpResponse;
 import com.jesperapps.schoolmanagement.api.message.Response;
-
 import com.jesperapps.schoolmanagement.api.message.SubscriptionResponse;
 import com.jesperapps.schoolmanagement.api.message.SubscriptionStatusJson;
-
 import com.jesperapps.schoolmanagement.api.message.UserRequestWithProfilePicture;
-//import com.jesperapps.schoolmanagement.api.message.UserRequest;
 import com.jesperapps.schoolmanagement.api.message.UserResponse;
-
-//import com.jesperapps.schoolmanagement.api.model.Class;
 import com.jesperapps.schoolmanagement.api.model.SubscriptionForm;
 import com.jesperapps.schoolmanagement.api.model.User;
 import com.jesperapps.schoolmanagement.api.service.SubscriptionFormService;

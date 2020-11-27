@@ -6,6 +6,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -210,6 +211,17 @@ public class UserImplementationService implements UserService{
 			e.printStackTrace();
 		}
 
+	}
+
+
+
+
+
+
+	@Override
+	public Optional<User> findByPhoneNumber(Long phone) {
+		// TODO Auto-generated method stub
+		return userRepository.findByPhoneNumber(phone);
 	}
 	
 	

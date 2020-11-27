@@ -1,6 +1,7 @@
 package com.jesperapps.schoolmanagement.api.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,5 +14,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	User findByEmail(String geteMail);
 	
 	User findByUserId(Integer userId);
+
+	Optional<User> findByPhoneNumber(Long phone);
 
 }

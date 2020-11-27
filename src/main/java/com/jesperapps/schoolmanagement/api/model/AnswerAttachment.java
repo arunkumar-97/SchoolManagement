@@ -15,8 +15,8 @@ import com.jesperapps.schoolmanagement.api.modelmessage.AnswerAttachmentJSON;
 public class AnswerAttachment {
 	
 	
-
-	 @Id
+		
+		@Id
 		@GeneratedValue(strategy = GenerationType.AUTO)
 	    private Integer pictureId;
 	    private String pictureName;
