@@ -18,7 +18,7 @@ import com.jesperapps.schoolmanagement.api.message.SubscriptionRequest;
 import com.jesperapps.schoolmanagement.api.message.SubscriptionResponse;
 import com.jesperapps.schoolmanagement.api.message.SubscriptionStatusJson;
 import com.jesperapps.schoolmanagement.api.model.Class;
-import com.jesperapps.schoolmanagement.api.model.SubscriptionForm;
+import com.jesperapps.schoolmanagement.api.model.ClassSubscription;
 import com.jesperapps.schoolmanagement.api.model.SubscriptionStatus;
 import com.jesperapps.schoolmanagement.api.model.User;
 import com.jesperapps.schoolmanagement.api.service.ClassService;
@@ -28,7 +28,7 @@ import com.jesperapps.schoolmanagement.api.utils.SubscriptionStatusTag;
 
 @CrossOrigin(origins="*",allowedHeaders="*")
 @RestController
-public class SubscriptionFormController {
+public class ClassSubscriptionController {
 
 	
 	@Autowired
@@ -100,7 +100,7 @@ public class SubscriptionFormController {
 		
 		Response response=new Response(409,"No such Id Found");
 		SubscriptionResponse subscriptionResponse=new SubscriptionResponse();
-				SubscriptionForm subscriptionFromDb=subscriptionFormService.findBySubscriptionId(subscriptionId);
+				ClassSubscription subscriptionFromDb=subscriptionFormService.findBySubscriptionId(subscriptionId);
 					if(subscriptionFromDb != null) {
 						
 						subscriptionFromDb.setSubscriptionStatus(new SubscriptionStatus(updateJson));

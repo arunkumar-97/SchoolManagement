@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.jesperapps.schoolmanagement.api.model.SubscriptionForm;
+import com.jesperapps.schoolmanagement.api.model.ClassSubscription;
 import com.jesperapps.schoolmanagement.api.model.User;
 //import com.jesperapps.schoolmanagement.api.model.UserProfilePicture;
 import com.jesperapps.schoolmanagement.api.model.UserType;
@@ -46,7 +46,7 @@ public class UserResponse extends BaseResponseForUser{
 	
 	
 	public UserResponse(int userId2, String userName2, String email2, String password2, String confirmPassword2,
-			String pictureName, String authentication, UserType userType2, Set<SubscriptionForm> subscriptionList) {
+			String pictureName, String authentication, UserType userType2, Set<ClassSubscription> subscriptionList) {
 		this.userId=userId2;
 		this.userName=userName2;
 		this.email=email2;
@@ -135,7 +135,7 @@ public class UserResponse extends BaseResponseForUser{
 	public void setSubscriptionForm(List<SubscriptionResponse> subscriptionForm) {
 		this.subscriptionForm = subscriptionForm;
 	}
-	public void setSubscriptionFormFromUser(Set<SubscriptionForm> subscriptionFormList) {
+	public void setSubscriptionFormFromUser(Set<ClassSubscription> subscriptionFormList) {
 		if(subscriptionFormList == null) {
 			this.subscriptionForm = null;
 		}else {

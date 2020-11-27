@@ -18,4 +18,6 @@ public interface TopicSubscriptionRepository  extends JpaRepository<TopicSubscri
 	
 
 	List<TopicSubscription> findByUserTopic(User userFromDb);
+
+	List<TopicSubscription> findAllByTopic_topicIdAndUserTopic_userId(Integer topicId, Integer userId);
 }

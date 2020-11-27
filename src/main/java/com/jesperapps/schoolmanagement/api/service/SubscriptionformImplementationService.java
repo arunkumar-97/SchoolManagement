@@ -9,7 +9,7 @@ import com.jesperapps.schoolmanagement.api.message.ClassResponse;
 import com.jesperapps.schoolmanagement.api.message.Response;
 import com.jesperapps.schoolmanagement.api.message.SubscriptionRequest;
 
-import com.jesperapps.schoolmanagement.api.model.SubscriptionForm;
+import com.jesperapps.schoolmanagement.api.model.ClassSubscription;
 import com.jesperapps.schoolmanagement.api.model.SubscriptionStatus;
 import com.jesperapps.schoolmanagement.api.model.User;
 
@@ -45,7 +45,7 @@ public class SubscriptionformImplementationService implements SubscriptionFormSe
 	
 	
 	@Override
-	public SubscriptionForm findBySubscriptionId(int subscriptionId) {
+	public ClassSubscription findBySubscriptionId(int subscriptionId) {
 		
 		return subscriptionFormRepository.findBySubscriptionId(subscriptionId);
 	}
@@ -55,35 +55,47 @@ public class SubscriptionformImplementationService implements SubscriptionFormSe
 	public Response createSubscription(SubscriptionRequest subscriptionRequest) {
 		
 		Response response= new Response(409,"Error While subscribing");
-		SubscriptionForm subscriptionForm= new SubscriptionForm();
-//		subscriptionForm.setSubscriptionId(subscriptionRequest.getSubscriptionId());
-		subscriptionForm.setSubscriptionClass(classService.fromClassId(subscriptionRequest.getSubscriptionClass().getClassId()));
-		subscriptionForm.setMedium(mediumService.findMediumFromId(subscriptionRequest.getMedium().getMediumId()));
-		subscriptionForm.setEducationBoard(educationBoardService.findEducationBoardFromId(subscriptionRequest.getEducationBoard().getEducationBoardId()));
-//		subscriptionForm.getSubscriptionStatus()
-		User subscriptionUser = userRepository.findByUserId(subscriptionRequest.getUser().getUserId());
-		if(subscriptionUser != null) {
-			SubscriptionStatus subscribedStatusFromDB = subscriptionStatusRepository.findByStatus(SubscriptionStatusTag.SUBSCRIBED);
-			if(subscriptionRequest.getSubscriptionStatus().getSubscriptionStatusid() != null) {
-				subscribedStatusFromDB = subscriptionStatusRepository.findBySubscriptionStatusId(subscriptionRequest.getSubscriptionStatus().getSubscriptionStatusid());
-			}else if(subscriptionRequest.getSubscriptionStatus().getSubscriptionStatus() != null) {
-				subscribedStatusFromDB = subscriptionStatusRepository.findByStatus(subscriptionRequest.getSubscriptionStatus().getSubscriptionStatus());
-			}
-			subscriptionForm.setUser(subscriptionUser);
-			subscriptionUser.addSubscription(subscriptionForm);
-			subscriptionForm.setSubscriptionStatus(subscribedStatusFromDB);
-			subscriptionUser.addSubscription(subscriptionForm);
-			userRepository.save(subscriptionUser);
-			response.setStatuscode(200);
-			response.setDescription("Successfully Subscribed");
-//			response.setSubscriptionId(subscriptionForm.getSubscriptionId());
-//
-//			response.setSubscriptionClass(subscriptionForm.getSubscriptionClass().getClassId());
-//			response.setMedium(subscriptionForm.getMedium().getMediumLanguage());
-//			response.setEducationBoard(subscriptionForm.getEducationBoard().getEducationBoardName());
-//			response.setUser(subscriptionUser);
-//			response.setSubscriptionStatus(new SubscriptionStatusJson(subscribedStatusFromDB));
-			return response;	
+		ClassSubscription classSubscription= new ClassSubscription();
+		List <ClassSubscription>  userSubscription = subscriptionFormRepository.findAllBySubscriptionClass_classIdAndUser_userId(subscriptionRequest.getSubscriptionClass().getClassId() , subscriptionRequest.getUser().getUserId());
+		  System.out.println("userSubscription"+userSubscription.toString());
+		  System.out.println("userSubscription"+userSubscription.size());
+		if(userSubscription.isEmpty() == false)
+		{
+			   response.setStatuscode(409);
+			   response.setDescription("Class Already Subscribed For User");
+			   return response;
+		}else
+		{
+//			subscriptionForm.setSubscriptionId(subscriptionRequest.getSubscriptionId());
+			classSubscription.setSubscriptionClass(classService.fromClassId(subscriptionRequest.getSubscriptionClass().getClassId()));
+			classSubscription.setMedium(mediumService.findMediumFromId(subscriptionRequest.getMedium().getMediumId()));
+			classSubscription.setEducationBoard(educationBoardService.findEducationBoardFromId(subscriptionRequest.getEducationBoard().getEducationBoardId()));
+//			subscriptionForm.getSubscriptionStatus()
+			User subscriptionUser = userRepository.findByUserId(subscriptionRequest.getUser().getUserId());
+			if(subscriptionUser != null) {
+				SubscriptionStatus subscribedStatusFromDB = subscriptionStatusRepository.findByStatus(SubscriptionStatusTag.SUBSCRIBED);
+				if(subscriptionRequest.getSubscriptionStatus().getSubscriptionStatusid() != null) {
+					subscribedStatusFromDB = subscriptionStatusRepository.findBySubscriptionStatusId(subscriptionRequest.getSubscriptionStatus().getSubscriptionStatusid());
+				}else if(subscriptionRequest.getSubscriptionStatus().getSubscriptionStatus() != null) {
+					subscribedStatusFromDB = subscriptionStatusRepository.findByStatus(subscriptionRequest.getSubscriptionStatus().getSubscriptionStatus());
+				}
+				classSubscription.setUser(subscriptionUser);
+				subscriptionUser.addSubscription(classSubscription);
+				classSubscription.setSubscriptionStatus(subscribedStatusFromDB);
+				subscriptionUser.addSubscription(classSubscription);
+				userRepository.save(subscriptionUser);
+				response.setStatuscode(200);
+				response.setDescription("Successfully Subscribed");
+//				response.setSubscriptionId(subscriptionForm.getSubscriptionId());
+	//
+//				response.setSubscriptionClass(subscriptionForm.getSubscriptionClass().getClassId());
+//				response.setMedium(subscriptionForm.getMedium().getMediumLanguage());
+//				response.setEducationBoard(subscriptionForm.getEducationBoard().getEducationBoardName());
+//				response.setUser(subscriptionUser);
+//				response.setSubscriptionStatus(new SubscriptionStatusJson(subscribedStatusFromDB));
+				return response;	
+		}
+
 		}
 
 		return null;
@@ -91,21 +103,21 @@ public class SubscriptionformImplementationService implements SubscriptionFormSe
 
 
 	@Override
-	public List<SubscriptionForm> findAll() {
+	public List<ClassSubscription> findAll() {
 		
 		return subscriptionFormRepository.findAll();
 	}
 
 
 	@Override
-	public List<SubscriptionForm> findByClass(Class cls) {
+	public List<ClassSubscription> findByClass(Class cls) {
 	
 		return this.subscriptionFormRepository.findBySubscriptionClass(cls);
 	}
 
 
 	@Override
-	public boolean saveSubscriptionForm(SubscriptionForm subscriptionFromDb) {
+	public boolean saveSubscriptionForm(ClassSubscription subscriptionFromDb) {
 		try{
 			subscriptionFormRepository.save(subscriptionFromDb);
 				return true;
@@ -118,7 +130,7 @@ public class SubscriptionformImplementationService implements SubscriptionFormSe
 
 
 	@Override
-	public List<SubscriptionForm> findByUser(User userFromDb) {
+	public List<ClassSubscription> findByUser(User userFromDb) {
 		
 		return this.subscriptionFormRepository.findByUser(userFromDb);
 	}
@@ -132,6 +144,13 @@ public class SubscriptionformImplementationService implements SubscriptionFormSe
 			}
 		}
 		return false;
+	}
+
+
+	@Override
+	public List<ClassSubscription> findAllBySubscriptionClass_classIdAndUser_userId(int ClassID , int UserID) {
+		// TODO Auto-generated method stub
+		return subscriptionFormRepository.findAllBySubscriptionClass_classIdAndUser_userId( ClassID ,  UserID);
 	}
 
 

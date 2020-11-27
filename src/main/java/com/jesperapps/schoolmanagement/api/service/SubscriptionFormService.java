@@ -8,7 +8,7 @@ import com.jesperapps.schoolmanagement.api.message.ClassResponse;
 import com.jesperapps.schoolmanagement.api.message.Response;
 import com.jesperapps.schoolmanagement.api.message.SubscriptionRequest;
 
-import com.jesperapps.schoolmanagement.api.model.SubscriptionForm;
+import com.jesperapps.schoolmanagement.api.model.ClassSubscription;
 import com.jesperapps.schoolmanagement.api.model.User;
 import com.jesperapps.schoolmanagement.api.model.Class;
 
@@ -17,24 +17,24 @@ public interface SubscriptionFormService {
 	
 	
 
-	List<SubscriptionForm> findByClass(Class cls);
+	List<ClassSubscription> findByClass(Class cls);
 	
 	
-	SubscriptionForm findBySubscriptionId(int subscriptionId);
+	ClassSubscription findBySubscriptionId(int subscriptionId);
 
 	Response createSubscription(SubscriptionRequest subscriptionRequest);
 
-	List<SubscriptionForm> findAll();
+	List<ClassSubscription> findAll();
 
 
-	boolean saveSubscriptionForm(SubscriptionForm subscriptionFromDb);
+	boolean saveSubscriptionForm(ClassSubscription subscriptionFromDb);
 
 
-	List<SubscriptionForm> findByUser(User userFromDb);
+	List<ClassSubscription> findByUser(User userFromDb);
 	
 	boolean checkClassInResponse(List<ClassResponse> classListFroResponse, Class cls);
 
-	
+	List<ClassSubscription> findAllBySubscriptionClass_classIdAndUser_userId(int ClassID , int UserID);
 	
 
 }

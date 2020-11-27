@@ -40,24 +40,35 @@ public class TopicSubscriptionImplementationService  implements TopicSubscriptio
 		
 		Response response=new Response();
 		TopicSubscription subscription=new TopicSubscription();
-		subscription.setTopic(topicService.findByTopicId(topicSubscriptionRequest.getSubscriptionTopic().getTopicId()));
-		User subscriptionUser = userRepository.findByUserId(topicSubscriptionRequest.getUser().getUserId());
-		if(subscriptionUser != null) {
-			SubscriptionStatus subscribedStatusFromDB = subscriptionStatusRepository.findByStatus(SubscriptionStatusTag.SUBSCRIBED);
-			if(topicSubscriptionRequest.getSubscriptionStatus().getSubscriptionStatusid() != null) {
-				subscribedStatusFromDB = subscriptionStatusRepository.findBySubscriptionStatusId(topicSubscriptionRequest.getSubscriptionStatus().getSubscriptionStatusid());
-			}else if(topicSubscriptionRequest.getSubscriptionStatus().getSubscriptionStatus() != null) {
-				subscribedStatusFromDB = subscriptionStatusRepository.findByStatus(topicSubscriptionRequest.getSubscriptionStatus().getSubscriptionStatus());
-			}
-			subscription.setUserTopic(subscriptionUser);
-			subscriptionUser.addSubscription(subscription);
-			subscription.setSubscriptionStatus(subscribedStatusFromDB);
-			subscriptionUser.addSubscription(subscription);
-			userRepository.save(subscriptionUser);
-			response.setDescription("Successly subscribed");
-			response.setStatuscode(200);
-			
-			return response;	
+		List<TopicSubscription >SubscriptionFromDb=topicSubscriptionRepository.findAllByTopic_topicIdAndUserTopic_userId(topicSubscriptionRequest.getSubscriptionTopic().getTopicId(),topicSubscriptionRequest.getUser().getUserId());
+		if(SubscriptionFromDb.isEmpty()==false) {
+			response.setStatuscode(409);
+			response.setDescription("Topic Already Subscribed For User");
+			return response;
+		}else {
+			subscription.setTopic(topicService.findByTopicId(topicSubscriptionRequest.getSubscriptionTopic().getTopicId()));
+			User subscriptionUser = userRepository.findByUserId(topicSubscriptionRequest.getUser().getUserId());
+			if(subscriptionUser != null) {
+				SubscriptionStatus subscribedStatusFromDB = subscriptionStatusRepository.findByStatus(SubscriptionStatusTag.SUBSCRIBED);
+				if(topicSubscriptionRequest.getSubscriptionStatus().getSubscriptionStatusid() != null) {
+					subscribedStatusFromDB = subscriptionStatusRepository.findBySubscriptionStatusId(topicSubscriptionRequest.getSubscriptionStatus().getSubscriptionStatusid());
+				}else if(topicSubscriptionRequest.getSubscriptionStatus().getSubscriptionStatus() != null) {
+					subscribedStatusFromDB = subscriptionStatusRepository.findByStatus(topicSubscriptionRequest.getSubscriptionStatus().getSubscriptionStatus());
+				}
+				subscription.setUserTopic(subscriptionUser);
+				subscriptionUser.addSubscription(subscription);
+				subscription.setSubscriptionStatus(subscribedStatusFromDB);
+				subscriptionUser.addSubscription(subscription);
+				userRepository.save(subscriptionUser);
+				response.setDescription("Successly subscribed");
+				response.setStatuscode(200);
+				
+				return response;	
+		}
+		
+		
+		
+	
 		}
 		
 		return response;
@@ -107,6 +118,12 @@ public class TopicSubscriptionImplementationService  implements TopicSubscriptio
 	public List<TopicSubscription> findByUser(User userFromDb) {
 	
 		return topicSubscriptionRepository.findByUserTopic(userFromDb);
+	}
+
+	@Override
+	public List<TopicSubscription> findAllByTopic_topicIdAndUserTopic_userId(Integer topicId, Integer userId) {
+	
+		return topicSubscriptionRepository.findAllByTopic_topicIdAndUserTopic_userId(topicId, userId);
 	}
 
 }

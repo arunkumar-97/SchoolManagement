@@ -18,7 +18,7 @@ import com.jesperapps.schoolmanagement.api.message.SubscriptionResponse;
 import com.jesperapps.schoolmanagement.api.message.SubscriptionStatusJson;
 import com.jesperapps.schoolmanagement.api.message.UserRequestWithProfilePicture;
 import com.jesperapps.schoolmanagement.api.message.UserResponse;
-import com.jesperapps.schoolmanagement.api.model.SubscriptionForm;
+import com.jesperapps.schoolmanagement.api.model.ClassSubscription;
 import com.jesperapps.schoolmanagement.api.model.User;
 import com.jesperapps.schoolmanagement.api.service.SubscriptionFormService;
 import com.jesperapps.schoolmanagement.api.service.UserService;
@@ -100,7 +100,7 @@ public class UserController {
 		SubscriptionResponse response = new SubscriptionResponse();
 		User requestUser = userService.findById(userId);
 		if(requestUser != null) {
-			SubscriptionForm userSubscription = subscriptionFormService.findBySubscriptionId(subscriptionId);
+			ClassSubscription userSubscription = subscriptionFormService.findBySubscriptionId(subscriptionId);
 			if(userSubscription != null) {
 				response.setSubscriptionClass(userSubscription.getSubscriptionClass().getClassId());
 				response.setSubscriptionId(userSubscription.getSubscriptionId());

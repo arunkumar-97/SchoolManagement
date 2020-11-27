@@ -12,7 +12,7 @@ import javax.persistence.OneToOne;
 
 
 @Entity
-public class SubscriptionForm {
+public class ClassSubscription {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

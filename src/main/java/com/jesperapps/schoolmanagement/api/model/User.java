@@ -18,7 +18,6 @@ import javax.persistence.OneToOne;
 import com.jesperapps.schoolmanagement.api.message.UserRequest;
 import com.jesperapps.schoolmanagement.api.message.UserRequestWithProfilePicture;
 
-//import com.jesperapps.schoolmanagement.api.message.UserResponse;
 
 @Entity
 public class User {
@@ -63,7 +62,7 @@ public class User {
 	private UserProfilePicture userProfile;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="user")
-	private Set<SubscriptionForm> subscriptionForm;
+	private Set<ClassSubscription> classSubscription;
 	
 	@OneToMany(cascade = CascadeType.ALL,mappedBy="userTopic")
 	private Set<TopicSubscription> topicSubscription;
@@ -133,11 +132,11 @@ public class User {
 		this.userType = userType;
 	}
 	
-	public void addSubscription(SubscriptionForm newSubscription) {
-		if(subscriptionForm == null) {
-			subscriptionForm =new HashSet<>();
+	public void addSubscription(ClassSubscription newSubscription) {
+		if(classSubscription == null) {
+			classSubscription =new HashSet<>();
 		}
-		this.subscriptionForm.add(newSubscription);
+		this.classSubscription.add(newSubscription);
 	}
 	
 	public void addSubscription(TopicSubscription subscription) {
@@ -149,15 +148,15 @@ public class User {
 
 	
 
-	public Set<SubscriptionForm> getSubscriptionForm() {
-		return subscriptionForm;
+	public Set<ClassSubscription> getSubscriptionForm() {
+		return classSubscription;
 	}
 
 	/**
-	 * @param subscriptionForm
+	 * @param classSubscription
 	 */
-	public void setSubscriptionForm(Set<SubscriptionForm> subscriptionForm) {
-		this.subscriptionForm = subscriptionForm;
+	public void setSubscriptionForm(Set<ClassSubscription> classSubscription) {
+		this.classSubscription = classSubscription;
 	}
 
 	

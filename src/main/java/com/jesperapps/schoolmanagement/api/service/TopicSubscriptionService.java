@@ -25,4 +25,5 @@ public interface TopicSubscriptionService {
 
 	List<TopicSubscription> findByUser(User userFromDb);
 
+	List<TopicSubscription> findAllByTopic_topicIdAndUserTopic_userId(Integer topicId, Integer userId);
 }
