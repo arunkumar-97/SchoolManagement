@@ -24,7 +24,7 @@ public class OTPSmsController {
 	@Autowired
 	private OtpService otpSmsService;
 
-	@SuppressWarnings({ "unchecked", "rawtypes", "static-access" })
+	@SuppressWarnings({ "rawtypes", "static-access" })
 	@GetMapping("/generate_otp/{phone}")
 	public ResponseEntity sendSMS(@PathVariable("phone") Long phone) {
 		System.out.println("phoneNumber" + phone);

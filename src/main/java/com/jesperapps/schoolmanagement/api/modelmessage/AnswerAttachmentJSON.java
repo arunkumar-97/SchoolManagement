@@ -5,6 +5,7 @@ import com.jesperapps.schoolmanagement.api.model.TopicAttachment;
 
 public class AnswerAttachmentJSON {
 	
+	private Integer id;
 	private String name;
 	private String type;
 	private String viewUrl;
@@ -45,7 +46,11 @@ public class AnswerAttachmentJSON {
 	}
 	
 	public AnswerAttachmentJSON(TopicAttachment topicAttachment) {
+		
 		String HOST_NAME = "http://192.168.1.243:8080";
+		
+		
+		this.id=topicAttachment.getPictureId();
 		this.name=topicAttachment.getPictureName();
 		this.setType("unknown");
 		String pictureName = topicAttachment.getPictureName();
@@ -70,6 +75,14 @@ public class AnswerAttachmentJSON {
 	
 
 
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public AnswerAttachmentJSON(AnswerAttachmentJSON eachAttachment) {
 		this.name=eachAttachment.getName();

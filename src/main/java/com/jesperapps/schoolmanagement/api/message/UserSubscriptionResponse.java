@@ -3,11 +3,24 @@ package com.jesperapps.schoolmanagement.api.message;
 import com.jesperapps.schoolmanagement.api.model.User;
 
 public class UserSubscriptionResponse {
+	
+	private Integer userId;
 	private String userName;
 	private String email;
 //	private String password;
 	private Long phoneNumber;
 	private UserTypeRequest userType;
+	
+	
+	
+	
+	
+	public Integer getUserId() {
+		return userId;
+	}
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 	public String getUserName() {
 		return userName;
 	}
@@ -40,11 +53,13 @@ public class UserSubscriptionResponse {
 	}
 	
 	public UserSubscriptionResponse(User user) {
+		this.userId=user.getUserId();
 		this.email = user.getEmail();
 //		this.password = user.getPassword();
 		this.phoneNumber = user.getPhoneNumber();
 		this.userName = user.getUserName();
 		this.userType = new UserTypeRequest(user.getUserType());
 	}
+	
 	
 }
