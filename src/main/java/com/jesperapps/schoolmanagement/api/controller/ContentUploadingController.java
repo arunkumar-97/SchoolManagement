@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,8 @@ import com.jesperapps.schoolmanagement.api.service.QuestionService;
 import com.jesperapps.schoolmanagement.api.service.SubjectService;
 import com.jesperapps.schoolmanagement.api.service.YearService;
 
+
+@CrossOrigin(origins="*",allowedHeaders="*")
 @RestController
 public class ContentUploadingController {
 
@@ -45,6 +48,8 @@ public class ContentUploadingController {
 	@SuppressWarnings("rawtypes")
 	@PostMapping("/content/year")
 	private ResponseEntity ContentByYear(@RequestBody YearContent subjectRequestContent) {
+		
+		System.out.println("Post Method Called");
 		//create response
 		Response response = new Response(200, "Success");
 		//find class from database

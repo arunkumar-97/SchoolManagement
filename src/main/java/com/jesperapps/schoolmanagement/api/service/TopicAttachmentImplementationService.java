@@ -17,13 +17,14 @@ import com.jesperapps.schoolmanagement.api.model.TopicAttachment;
 
 import com.jesperapps.schoolmanagement.api.modelmessage.AnswerAttachmentJSON;
 import com.jesperapps.schoolmanagement.api.repository.TopicAttachmentRepository;
+import com.jesperapps.schoolmanagement.api.utils.StorageUtils;
 
 
 @Service
 public class TopicAttachmentImplementationService  implements TopicAttachmentService{
 	
 	
-	private static final String LOCATION = "E:\\ContentUploading\\videoAnswers";
+	private static final String LOCATION = StorageUtils.getFolderLocation("video_answers");
 	
 	@Autowired
 	private TopicAttachmentRepository topicAttachmentRepository;
@@ -43,7 +44,7 @@ public class TopicAttachmentImplementationService  implements TopicAttachmentSer
                 }
             }
             if(fileName != ""){
-                File newAnswerImage = new File(LOCATION + "\\"+ fileName);
+                File newAnswerImage = new File(LOCATION + fileName);
 				OutputStream buffer = new FileOutputStream(newAnswerImage);
 				buffer.write(this.addPaddingToBase64String(fileBytes));
 				buffer.close();

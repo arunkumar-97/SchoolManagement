@@ -24,4 +24,7 @@ public interface TopicAttachmentSubscriptionService {
 
 	List<TopicAttachmentSubscription> findByUser(User userFromDb);
 
+	List<TopicAttachmentSubscription> findAllByUsers_userIdAndTopics_topicIdAndTopicAttachment_pictureId(int userId,
+			Integer topicId, Integer pictureId);
+
 }

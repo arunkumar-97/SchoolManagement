@@ -40,9 +40,22 @@ public class TopicAttachmentSubscriptionController {
 	
 	
 	@PostMapping("/attachmentSubscription")
-	public TopicAttachmentSubscription createSubscriptionForAttachment(@RequestBody TopicAttachmentSubscription topicAttSub) {
+	public Response createSubscriptionForAttachment(@RequestBody TopicAttachmentSubscription topicAttSub) {
+		Response response=new Response();
+	List<TopicAttachmentSubscription>	attachmentSubscriptionFromDb= topicAttachmentSubscriptionService.findAllByUsers_userIdAndTopics_topicIdAndTopicAttachment_pictureId(topicAttSub.getUsers().getUserId(),topicAttSub.getTopics().getTopicId(),topicAttSub.getTopicAttachment().getPictureId());
+	if(attachmentSubscriptionFromDb.isEmpty()==false) {
+		response.setStatuscode(409);
+		response.setDescription("Topic Attachment Already Subscribed For User");
+		return response;
+	}else {
 		TopicAttachmentSubscription topicAttachmentSubscription = new TopicAttachmentSubscription(topicAttSub);
-		return topicAttachmentSubscriptionService.createSubscription(topicAttachmentSubscription);
+		topicAttachmentSubscriptionService.createSubscription(topicAttachmentSubscription);
+		response.setStatuscode(200);
+		response.setDescription("Topic Attachment Successfully subscribed for the user");
+		return response;
+	}
+		
+//		return topicAttachmentSubscriptionService.createSubscription(topicAttachmentSubscription);
 	}
 	
 

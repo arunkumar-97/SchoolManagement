@@ -16,4 +16,7 @@ public interface TopicAttachmentSubscriptionRepository  extends JpaRepository<To
 
 	List<TopicAttachmentSubscription> findByUsers(User userFromDb);
 
+	List<TopicAttachmentSubscription> findAllByUsers_userIdAndTopics_topicIdAndTopicAttachment_pictureId(int userId,
+			Integer topicId, Integer pictureId);
+
 }

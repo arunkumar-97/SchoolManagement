@@ -91,4 +91,14 @@ public class TopicAtachmentSubscriptionImplService implements TopicAttachmentSub
 		return topicAttachmentSubscriptionRepository.findByUsers(userFromDb);
 	}
 
+
+
+
+	@Override
+	public List<TopicAttachmentSubscription> findAllByUsers_userIdAndTopics_topicIdAndTopicAttachment_pictureId(
+			int userId, Integer topicId, Integer pictureId) {
+		
+		return topicAttachmentSubscriptionRepository.findAllByUsers_userIdAndTopics_topicIdAndTopicAttachment_pictureId(userId,topicId,pictureId);
+	}
+
 }

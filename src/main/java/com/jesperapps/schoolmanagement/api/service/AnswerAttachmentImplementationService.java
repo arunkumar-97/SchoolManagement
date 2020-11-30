@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.jesperapps.schoolmanagement.api.model.AnswerAttachment;
 import com.jesperapps.schoolmanagement.api.modelmessage.AnswerAttachmentJSON;
 import com.jesperapps.schoolmanagement.api.repository.AnswerAttachmentRepository;
+import com.jesperapps.schoolmanagement.api.utils.StorageUtils;
 
 
 
@@ -21,7 +22,7 @@ import com.jesperapps.schoolmanagement.api.repository.AnswerAttachmentRepository
 public class AnswerAttachmentImplementationService  implements AnswerAttachmentService{
 
 	
-private static final String LOCATION = "E:\\ContentUploading\\imageAnswers";
+private static final String LOCATION = StorageUtils.getFolderLocation("image_answers");
 	
 	@Autowired
 	private AnswerAttachmentRepository answerAttachementRepository;
@@ -39,7 +40,7 @@ private static final String LOCATION = "E:\\ContentUploading\\imageAnswers";
                 }
             }
             if(fileName != ""){
-                File newAnswerImage = new File(LOCATION + "\\"+ fileName);
+                File newAnswerImage = new File(LOCATION + fileName);
 				OutputStream buffer = new FileOutputStream(newAnswerImage);
 				buffer.write(Base64.decodeBase64(fileBytes));
 				buffer.close();
