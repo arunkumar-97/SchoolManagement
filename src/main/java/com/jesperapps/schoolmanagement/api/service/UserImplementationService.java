@@ -223,7 +223,30 @@ public class UserImplementationService implements UserService{
 		// TODO Auto-generated method stub
 		return userRepository.findByPhoneNumber(phone);
 	}
+
+
+
+
+
+
+	@Override
+	public User save(User user) {
+		// TODO Auto-generated method stub
+		return userRepository.save(user);
+	}
+
+
+
+
+
+
+	@Override
+	public User findByEmailAndPassword(String email, String password) {
+		
+		return userRepository.findByEmailAndPassword(email,password);
+	}
 	
 	
+
 
 }

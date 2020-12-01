@@ -26,7 +26,7 @@ public class AnswerAttachmentJSON {
 	}
 	
 	public AnswerAttachmentJSON(AnswerAttachment answerAttachment) {
-		String HOST_NAME = "http://192.168.1.243:8080";
+		String HOST_NAME = "https://www.jespersoft.com:6007/schoolQA";
 		this.name=answerAttachment.getPictureName();
 		this.setType("unknown");
 		String pictureName = answerAttachment.getPictureName();
@@ -47,7 +47,7 @@ public class AnswerAttachmentJSON {
 	
 	public AnswerAttachmentJSON(TopicAttachment topicAttachment) {
 		
-		String HOST_NAME = "http://192.168.1.243:8080";
+		String HOST_NAME = "https://www.jespersoft.com:6007/schoolQA";
 		
 		
 		this.id=topicAttachment.getPictureId();

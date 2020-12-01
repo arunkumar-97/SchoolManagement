@@ -111,7 +111,7 @@ private static final String LOCATION = StorageUtils.getFolderLocation("image_ans
 	@Override
 	public byte[] getFileBytes(String pictureName) {
 		try {
-			return Files.readAllBytes(Paths.get(this.LOCATION+"\\"+pictureName));
+			return Files.readAllBytes(Paths.get(this.LOCATION+pictureName));
 		}catch(IOException e) {
 		}
 		return new byte[] {};

@@ -28,7 +28,7 @@ public class UserResponse extends BaseResponseForUser{
 		
 	}
 	public UserResponse(int statuscode,String decription) {
-		
+		super(statuscode,decription);
 	}
 	
 	public UserResponse(User user) {

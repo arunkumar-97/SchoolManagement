@@ -26,4 +26,8 @@ public interface UserService {
 
 	Optional<User> findByPhoneNumber(Long phone);
 
+	User save(User user);
+
+	User findByEmailAndPassword(String email, String password);
+
 }

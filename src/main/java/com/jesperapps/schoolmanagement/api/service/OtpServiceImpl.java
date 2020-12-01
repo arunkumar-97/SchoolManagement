@@ -3,6 +3,7 @@ package com.jesperapps.schoolmanagement.api.service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import javax.transaction.Transactional;
@@ -72,5 +73,30 @@ public class OtpServiceImpl implements OtpService {
 	public OtpSms deleteByPhoneNumber(Long phoneNumber) {
 		return otpSmsRepository.deleteByPhoneNumber(phoneNumber);
 	}
+
+	
+	
+	@Override
+	public Optional<OtpSms> getOtp(Long phoneNumber) {
+		System.out.println("phoneNumber" + phoneNumber);
+		try {
+			Optional<OtpSms> sms = this.findByPhoneNumber(phoneNumber);
+			System.out.println("sms" + sms);
+			return sms;
+		} catch (Exception e) {
+			
+			return null;
+		}
+
+	}
+	
+	@Override
+	public Optional<OtpSms> findByPhoneNumber(Long phoneNumber) {
+		return otpSmsRepository.findByPhoneNumber(phoneNumber);
+	}
+
+	
+	
+
 
 }
