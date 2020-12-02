@@ -37,7 +37,7 @@ public class UserController {
 	@SuppressWarnings("rawtypes")
 	@PostMapping("/user")
 	public ResponseEntity addadmin(@RequestBody UserRequestWithProfilePicture userRequestWithProfilePicture){
-//		UserResponse response=new UserResponse(userRequestWithProfilePicture);
+
 		User createdUsersList = userService.addadmin(userRequestWithProfilePicture);
 		if(createdUsersList != null) {
 			return ResponseEntity.status(HttpStatus.ACCEPTED).body(new UserResponse(createdUsersList));

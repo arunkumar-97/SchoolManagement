@@ -33,36 +33,38 @@ public class AnswerAttachmementController {
 		AnswerJson response=new AnswerJson();
 			Answers answerFromDb = answerService.getAnswerId(answerJsonRequest.getAnswerId());
 			
-	if(answerFromDb != null) {
+	if(answerFromDb != null)
+	{
 		answerFromDb.setAnswer(answerJsonRequest.getAnswer());
-		if(answerJsonRequest.getAnswerId() != null) {
-			answerFromDb.setAnswerId(answerJsonRequest.getAnswerId());	
-		}
+			if(answerJsonRequest.getAnswerId() != null)
+				{
+					answerFromDb.setAnswerId(answerJsonRequest.getAnswerId());	
+				}
 		answerFromDb.setLabel(answerJsonRequest.getLabel());
 		AnswerAttachmentJSON requestAnswerImage = answerJsonRequest.getAnswerAttachment();
-		if(requestAnswerImage != null) {
-			AnswerAttachment attachmentFromDb = answerFromDb.getImageAttachment();
-			if(attachmentFromDb != null) {
-				if(answerAttachmentService.updateAttachmentDetails(attachmentFromDb, requestAnswerImage)){
-					attachmentFromDb.setPictureName(requestAnswerImage.getName());
-					answerAttachmentService.save(attachmentFromDb);
+			if(requestAnswerImage != null) {
+				AnswerAttachment attachmentFromDb = answerFromDb.getImageAttachment();
+					if(attachmentFromDb != null) {
+							if(answerAttachmentService.updateAttachmentDetails(attachmentFromDb, requestAnswerImage)){
+									attachmentFromDb.setPictureName(requestAnswerImage.getName());
+									answerAttachmentService.save(attachmentFromDb);
 					
-				}else {
-					return new AnswerJson();
-					//error updating the file
-				}
-			}else {
-				AnswerAttachment newAttachment = new AnswerAttachment(requestAnswerImage);
-				if(answerAttachmentService.saveFile(requestAnswerImage)) {
-					answerFromDb.setImageAttachment(newAttachment);
-					newAttachment.setAnswer(answerFromDb);
-				}
-				else {
-					return new AnswerJson();
-					//error saving new file
-				}
-			}			
-		}
+							}else {
+									return new AnswerJson();
+									//error updating the file
+							}
+					}else {
+						AnswerAttachment newAttachment = new AnswerAttachment(requestAnswerImage);
+							if(answerAttachmentService.saveFile(requestAnswerImage)) {
+								answerFromDb.setImageAttachment(newAttachment);
+								newAttachment.setAnswer(answerFromDb);
+							}
+							else {
+								return new AnswerJson();
+								//error saving new file
+							}
+					}			
+			}
 		response.setAnswerId(answerJsonRequest.getAnswerId());
 		response.setAnswer(answerJsonRequest.getAnswer());
 		response.setLabel(answerJsonRequest.getLabel());

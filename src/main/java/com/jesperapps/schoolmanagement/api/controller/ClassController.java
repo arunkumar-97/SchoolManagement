@@ -45,23 +45,15 @@ public class ClassController {
 	{
 		ClassBaseResponse response= new ClassBaseResponse(409,"Class Already Exists");
 		ClassResponse classResponse=new ClassResponse();
-		//		for(ClassRequest eachclass:classRequest) 
-		//		{
+		
 		Class classOfName=classService.checkclass(classRequest.getClassName());
 		
 		if(classOfName!= null)
 		{
-			/*
-			 * classResponse.setClassName(classRequest.getClassName());
-			 * classResponse.setClassId(classOfName.getClassId());
-			 * classResponse.setStatus(classRequest.getStatus());
-			 * classResponse.setMedium(classRequest.getMedium());
-			 * classResponse.setEducationBoard(classRequest.getEducationBoard());
-			 */
+			
 		}
 		else
 		{
-			@SuppressWarnings("unused")
 			Class newClass =classService.createnewclass(classRequest.getClassName(),classRequest.getClassId(),StatusClass.getStatus(classRequest.getStatus()),classRequest.getMedium().getMediumId().toString(),classRequest.getEducationBoard().getEducationBoardId().toString());
 			classResponse.setClassId(newClass.getClassId());
 			classResponse.setClassName(newClass.getClassName());
@@ -82,27 +74,27 @@ public class ClassController {
 		ClassBaseResponse response = new ClassBaseResponse(409, "No such ClassId Found");
 		Class requestClass = classService.findById(classId);
 		if(requestClass != null) {
-			List<Subject> classListOfSubject = new ArrayList<>();
-			for(SubjectRequest subject : subjectRequestList) {
-				Subject subjectFromDB=null;
-				if(subject.getSubjectId() == null) {
-//					subjectFromDB = subjectService.checksubject(subject.getSubjectName());	
-				}else {
-					subjectFromDB = subjectService.findById(subject.getSubjectId());
+				List<Subject> classListOfSubject = new ArrayList<>();
+					for(SubjectRequest subject : subjectRequestList) {
+						Subject subjectFromDB=null;
+							if(subject.getSubjectId() == null) {
+//								subjectFromDB = subjectService.checksubject(subject.getSubjectName());	
+							}else {
+								subjectFromDB = subjectService.findById(subject.getSubjectId());
+							}
+							if(subjectFromDB != null) {
+								subjectFromDB.setCls(requestClass);
+								classListOfSubject.add(subjectFromDB);
+							}else {
+								Subject newSubject = new Subject(subject);
+								newSubject.setCls(requestClass);
+							classListOfSubject.add(newSubject);
+					}
 				}
-				if(subjectFromDB != null) {
-					subjectFromDB.setCls(requestClass);
-					classListOfSubject.add(subjectFromDB);
-				}else {
-					Subject newSubject = new Subject(subject);
-					newSubject.setCls(requestClass);
-					classListOfSubject.add(newSubject);
-				}
-			}
-			requestClass.setSubject(classListOfSubject);
-			classService.saveClass(requestClass);
-			response.setDescription("Subjects added Successfully");
-			response.setStatuscode(200);
+				requestClass.setSubject(classListOfSubject);
+				classService.saveClass(requestClass);
+				response.setDescription("Subjects added Successfully");
+				response.setStatuscode(200);
 		}
 		return response;
 	}
@@ -144,7 +136,6 @@ public class ClassController {
 	{
 		List<ClassResponse> res=new ArrayList<>();
 		
-//		ClassResponse cls= new ClassResponse();
 		classService.findAll().forEach(clss->{
 			res.add(new ClassResponse(clss.getClassId(),clss.getClassName(),clss.getStatus(), clss.getMedium().getMediumLanguage(),clss.getEducationBoard().getEducationBoardName()));
 		});

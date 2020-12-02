@@ -2,7 +2,6 @@ package com.jesperapps.schoolmanagement.api.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,23 +56,23 @@ public class ContentUploadingController {
 		if(classFromDb !=null) {
 			//find subject from database
 			Subject subjectFromDb = subjectService.findById(subjectRequestContent.getSubject().getSubjectId());
-			if(subjectFromDb != null) {
+				if(subjectFromDb != null) {
 				//requested subject is on database
-				Year yearFromDb= yearService.findById(subjectRequestContent.getYear().getYearId());
-				if(yearFromDb != null) {
-					//year from database
-					List<QuestionJson> questionRequestList = subjectRequestContent.getQuestion();
-					questionRequestList.forEach(questionRequest -> {
+					Year yearFromDb= yearService.findById(subjectRequestContent.getYear().getYearId());
+						if(yearFromDb != null) {
+							//year from database
+							List<QuestionJson> questionRequestList = subjectRequestContent.getQuestion();
+							questionRequestList.forEach(questionRequest -> {
 
-						Question newQuestion = questionService.createQuestionFromRequest(questionRequest);
-						questionService.saveQuestionWithSubjectAndYear(newQuestion, subjectFromDb, yearFromDb,classFromDb);
-					});
-				}
-				else {
-					response.setDescription("No such year with id found");
-					response.setStatuscode(409);
-					//return no year found ERR
-					return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+									Question newQuestion = questionService.createQuestionFromRequest(questionRequest);
+									questionService.saveQuestionWithSubjectAndYear(newQuestion, subjectFromDb, yearFromDb,classFromDb);
+							});
+							}
+						else {
+							response.setDescription("No such year with id found");
+							response.setStatuscode(409);
+							//return no year found ERR
+							return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
 				}
 			}else {
 				response.setDescription("No such Subject with id found");
@@ -99,8 +98,8 @@ public class ContentUploadingController {
 		Response response=new Response(200,"Successfully Created");
 		Subject	subjectFromDb=subjectService.findById(requestContent.getSubject().getSubjectId());
 		if(subjectFromDb != null) {
-			List<QuestionJson> subjectRequestQuestionsList=requestContent.getQuestion();
-			subjectRequestQuestionsList.forEach(eachQuestion ->{
+				List<QuestionJson> subjectRequestQuestionsList=requestContent.getQuestion();
+				subjectRequestQuestionsList.forEach(eachQuestion ->{
 				Question newQuestionCreated=questionService.createQuestionFromRequest(eachQuestion);
 				questionService.saveQuestionWithSubject(newQuestionCreated,subjectFromDb);			
 			});
@@ -109,7 +108,7 @@ public class ContentUploadingController {
 			response.setDescription("No Such Subject Found");
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
 		}
-		return ResponseEntity.status(HttpStatus.OK).body(response);
+			return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 	
 	@GetMapping("/content/{yearId}/{classId}/{subjectId}")
@@ -118,12 +117,12 @@ public class ContentUploadingController {
 		Year yearFromDb=yearService.findById(yearId);
 		if(yearFromDb!=null) {
 			Class classFromDb=classService.findById(classId);
-			if(classFromDb !=null) {
-				Subject	subjectFromDb=subjectService.findById(subjectId);
-				if(subjectFromDb!=null) {
-					List<Question> questionsList=questionService.findBySubjectAndYearAndClass(subjectFromDb,classFromDb, yearFromDb);
-					questionsList.forEach(question -> {
-						responseQuestionList.add(new QuestionJson(question));
+				if(classFromDb !=null) {
+					Subject	subjectFromDb=subjectService.findById(subjectId);
+						if(subjectFromDb!=null) {
+							List<Question> questionsList=questionService.findBySubjectAndYearAndClass(subjectFromDb,classFromDb, yearFromDb);
+							questionsList.forEach(question -> {
+							responseQuestionList.add(new QuestionJson(question));
 					});
 				}
 			}
@@ -133,33 +132,24 @@ public class ContentUploadingController {
 	}
 	
 	@GetMapping("/{subjectId}")
-	private List<QuestionJson> getAllBySubject(@PathVariable Integer subjectId){
+		private List<QuestionJson> getAllBySubject(@PathVariable Integer subjectId){
 		List<QuestionJson> responseList=new ArrayList<>();
-	Subject	subjectFromDb=subjectService.findById(subjectId);
-	if(subjectFromDb !=null) {
-		List<Question> questionsList=questionService.findBySubject(subjectFromDb);
-		questionsList.forEach(question ->{
+		Subject	subjectFromDb=subjectService.findById(subjectId);
+		if(subjectFromDb !=null) {
+			List<Question> questionsList=questionService.findBySubject(subjectFromDb);
+			questionsList.forEach(question ->{
 			responseList.add(new QuestionJson(question));
 			});
 		}
-	return responseList;
+		return responseList;
 	}
 	
 	@GetMapping("/Years/{subjectId}")
 	public List<YearResponse> getAllYearsForTheSubject(@PathVariable Integer subjectId){
-		
-	
-		
-		
 		List<YearResponse> response=new ArrayList<>();
-		
-		
-		
 		Subject subjectFromDb=subjectService.findById(subjectId);
-	
-
-	if(subjectFromDb != null) {
-		questionService.findBySubject(subjectFromDb).forEach(Year ->{
+		if(subjectFromDb != null) {
+			questionService.findBySubject(subjectFromDb).forEach(Year ->{
 				response.add(new YearResponse(Year.getYear().getYear(),Year.getYear().getYearId()));
 		     
       });

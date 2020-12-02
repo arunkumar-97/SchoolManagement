@@ -58,7 +58,6 @@ public class SubjectController {
 			}
 			else {
 			Subject newsubject=	subjectService.createnewSubject(subjectRequest.getSubjectName(),subjectRequest.getSubjectId(),StatusSubject.getStatus(subjectRequest.getStatus()),subjectRequest.getClas().getClassId());
-
 			subjectResponse.setSubjectId(newsubject.getSubjectId());
 			subjectResponse.setSubjectName(newsubject.getSubjectName());
 			subjectResponse.setStatus(StatusSubject.getStatus(newsubject.getStatus()));

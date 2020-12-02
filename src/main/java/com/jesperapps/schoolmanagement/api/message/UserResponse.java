@@ -57,6 +57,18 @@ public class UserResponse extends BaseResponseForUser{
 		this.setSubscriptionFormFromUser(subscriptionList);
 		
 	}
+	
+	public UserResponse(int userId2, String userName2, String email2, Long phoneNumber2, String authentication,
+			String pictureName, String userTypeRole) {
+		userId=userId2;
+		userName=userName2;
+		email=email2;
+		phoneNumber=phoneNumber2;
+		authenticationType=authentication;
+		userProfilePicture=pictureName;
+		userType=userTypeRole;
+		
+	}
 	public String getUserProfilePicture() {
 		return userProfilePicture;
 	}

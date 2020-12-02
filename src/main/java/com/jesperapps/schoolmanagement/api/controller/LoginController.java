@@ -1,7 +1,8 @@
 package com.jesperapps.schoolmanagement.api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,9 +23,9 @@ public class LoginController {
 
 	@SuppressWarnings("rawtypes")
 	@PostMapping("/login")
-	public UserResponse loginuser(@RequestBody UserRequest adminRequest) {
+	public ResponseEntity loginuser(@RequestBody UserRequest adminRequest) {
 
-		UserResponse res=new UserResponse(400, "No Such User Found");
+		
 		User emailFromDb=userService.findByEmail(adminRequest.getEmail());
 		if(emailFromDb!=null) {
 			
@@ -33,31 +34,36 @@ public class LoginController {
 			User userFromDb=userService.findByEmailAndPassword(emailFromDb.getEmail(),emailFromDb.getPassword());
 			System.out.println(userFromDb);	
 			
-			UserResponse response=new UserResponse();
+			UserResponse response=new UserResponse(userFromDb.getUserId(),userFromDb.getUserName(),userFromDb.getEmail(),userFromDb.getPhoneNumber(),userFromDb.getAuthentication(),userFromDb.getUserProfile().getPictureName(),userFromDb.getUserType().getUserTypeRole());
 				
 				
-				response.setUserId(userFromDb.getUserId());
-				response.setUserName(userFromDb.getUserName());
-				response.setEmail(userFromDb.getEmail());
-				response.setPhoneNumber(userFromDb.getPhoneNumber());
-				response.setUserProfilePicture(userFromDb.getUserProfile().getPictureName());
-				response.setAuthenticationType(userFromDb.getAuthentication());
-				response.setUserType(userFromDb.getUserType().getUserTypeRole());
-				response.setStatuscode(200);
-				response.setDescription("Login Successfull");
-			return response;
+//				response.setUserId(userFromDb.getUserId());
+//				response.setUserName(userFromDb.getUserName());
+//				response.setEmail(userFromDb.getEmail());
+//				response.setPhoneNumber(userFromDb.getPhoneNumber());
+//				response.setUserProfilePicture(userFromDb.getUserProfile().getPictureName());
+//				response.setAuthenticationType(userFromDb.getAuthentication());
+//				response.setUserType(userFromDb.getUserType().getUserTypeRole());
+//				response.setStatuscode(200);
+//				response.setDescription("Login Successfull");
+			response.setStatuscode(200);
+			response.setDescription("Login Successfull");
+			return new ResponseEntity(response,HttpStatus.OK);
 			
 			}else {
 				UserResponse response1=new UserResponse();
 				response1.setStatuscode(409);
 				response1.setDescription("Password Invalid");
-				return response1;
+				return new ResponseEntity(response1,HttpStatus.BAD_REQUEST);
 				
 		}
 
 		
 		
 	}
-		return res;	
+		UserResponse response3=new UserResponse();
+		response3.setStatuscode(409);
+		response3.setDescription("Email does not exists");
+		 return new ResponseEntity(response3,HttpStatus.BAD_REQUEST);
 	}
 }

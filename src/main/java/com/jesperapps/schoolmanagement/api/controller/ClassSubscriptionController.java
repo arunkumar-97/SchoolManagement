@@ -45,15 +45,14 @@ public class ClassSubscriptionController {
 	
 	@PostMapping("/subscriptionForm")
 	public Response createSubscription(@RequestBody SubscriptionRequest subscriptionRequest) {
-		return subscriptionFormService.createSubscription(subscriptionRequest);
+			return subscriptionFormService.createSubscription(subscriptionRequest);
 		}
 	
 	
 	@GetMapping("/subcriptionform")
 		public List<ClassResponse> listAllClassesBasedOnSubscription(){
-		
-	List<ClassResponse> response=new ArrayList<>();
-	subscriptionFormService.findAll().forEach(subscription ->{
+		List<ClassResponse> response=new ArrayList<>();
+		subscriptionFormService.findAll().forEach(subscription ->{
 			if(!this.subscriptionFormService.checkClassInResponse(response, subscription.getSubscriptionClass())) {
 				if(!subscription.getSubscriptionStatus().getStatus().equalsIgnoreCase(SubscriptionStatusTag.SUBSCRIBED)) {
 					response.add(new ClassResponse(subscription.getSubscriptionClass()));			
@@ -67,30 +66,23 @@ public class ClassSubscriptionController {
 	}
 	
 	@GetMapping("/subscriptionform/{classId}")
-	public List<SubscriptionResponse> getAllUsersForTheSubscribedClass(@PathVariable Integer classId){
-		
-	
-		
+		public List<SubscriptionResponse> getAllUsersForTheSubscribedClass(@PathVariable Integer classId){
 		
 		List<SubscriptionResponse> response=new ArrayList<>();
-		
-		
-		
 		Class classFromDb=classService.findById(classId);
 	
-
-	if(classFromDb != null) {
-		subscriptionFormService.findByClass(classFromDb).forEach(clas ->{
-   	 	 if(!clas.getSubscriptionStatus().getStatus().equalsIgnoreCase(SubscriptionStatusTag.SUBSCRIBED)) {
-				response.add(new SubscriptionResponse(clas.getSubscriptionId(),clas.getMedium(),clas.getSubscriptionStatus(),clas.getEducationBoard(),clas.getUser(),clas.getSubscriptionClass()));
-		      }else {
-		    	 return;
-		      }
-      });
+		if(classFromDb != null) {
+			subscriptionFormService.findByClass(classFromDb).forEach(clas ->{
+				if(!clas.getSubscriptionStatus().getStatus().equalsIgnoreCase(SubscriptionStatusTag.SUBSCRIBED)) {
+					response.add(new SubscriptionResponse(clas.getSubscriptionId(),clas.getMedium(),clas.getSubscriptionStatus(),clas.getEducationBoard(),clas.getUser(),clas.getSubscriptionClass()));
+				}else {
+					return;
+				}
+			});
       
       
-      }
-	return response;
+		}
+		return response;
 		
 	}
 		
@@ -126,21 +118,22 @@ public class ClassSubscriptionController {
 	
 		List<SubscriptionResponse> response=new ArrayList<>();
 			User userFromDb=userService.findById(userId);
-				if(userFromDb != null) {
+				if(userFromDb != null)
+				{
 			
-				subscriptionFormService.findByUser(userFromDb).forEach(user ->{
-		    	if(!user.getSubscriptionStatus().getStatus().equalsIgnoreCase(SubscriptionStatusTag.UNSUBSCRIBED)) {
-					response.add(new SubscriptionResponse(user.getSubscriptionId(),user.getMedium(),user.getSubscriptionStatus(),user.getEducationBoard(),user.getUser(),user.getSubscriptionClass()));
-		    	}else {
+					subscriptionFormService.findByUser(userFromDb).forEach(user ->{
+							if(!user.getSubscriptionStatus().getStatus().equalsIgnoreCase(SubscriptionStatusTag.UNSUBSCRIBED)) {
+									response.add(new SubscriptionResponse(user.getSubscriptionId(),user.getMedium(),user.getSubscriptionStatus(),user.getEducationBoard(),user.getUser(),user.getSubscriptionClass()));
+							}else {
 		    		
-		    	}
+							}
 	  
-		      });
+					});
 		      
 		
-	}
+				}
 	return response;
-	}
+		}
 
 }
 	

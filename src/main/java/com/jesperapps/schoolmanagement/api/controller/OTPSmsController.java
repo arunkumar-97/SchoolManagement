@@ -31,14 +31,14 @@ public class OTPSmsController {
 	@Autowired
 	private OtpService otpSmsService;
 
-	@SuppressWarnings({ "rawtypes", "static-access" })
+	@SuppressWarnings({ "rawtypes"})
 	@GetMapping("/generate_otp/{phone}")
 	public ResponseEntity sendSMS(@PathVariable("phone") Long phone) {
 //		System.out.println("phoneNumber" + phone);
 		// for(String phone : otpSmsRequestEntity.getPhoneNumber()) {
 		// System.out.println("phones"+phone);
 		Optional<User> phoneNumber = userRegistrationService.findByPhoneNumber(phone);
-		System.out.println("phoneNumbers" + phoneNumber);
+//		System.out.println("phoneNumbers" + phoneNumber);
 		if (phoneNumber.isPresent()) {
 //			System.out.println("phone present");
 				List<OtpSms> otpSms = otpSmsService.findAll();
@@ -137,7 +137,7 @@ public class OTPSmsController {
 	}
 	
 	
-	@SuppressWarnings({ "rawtypes", "static-access" })
+	@SuppressWarnings({ "rawtypes" })
 	@GetMapping("/validate_otp/{otp}/{phone}")
 	public ResponseEntity validateOtp(@PathVariable("otp") int otp, @PathVariable("phone") Long phoneNumber)
 			throws ParseException {
@@ -173,7 +173,7 @@ public class OTPSmsController {
 
 						}
 					} catch (java.text.ParseException e) {
-						// TODO Auto-generated catch block
+						//  
 						e.printStackTrace();
 					}
 
