@@ -47,8 +47,9 @@ public class AnswerAttachmentJSON {
 	
 	public AnswerAttachmentJSON(TopicAttachment topicAttachment) {
 		
-		String HOST_NAME = "https://www.jespersoft.com:6007/schoolQA";
+//		String HOST_NAME = "https://www.jespersoft.com:6007/schoolQA";
 		
+		String HOST_NAME="http://localhost:8080";
 		
 		this.id=topicAttachment.getPictureId();
 		this.name=topicAttachment.getPictureName();
@@ -66,6 +67,7 @@ public class AnswerAttachmentJSON {
 		}else {
 		this.viewUrl=HOST_NAME + topicAttachment.getPictureLocation();
 		this.previewUrl=HOST_NAME +topicAttachment.getPreviewLocation();
+		System.out.println(topicAttachment.getPreviewLocation());
 		}
 	}
 

@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.jesperapps.schoolmanagement.api.message.OtpRequest;
 import com.jesperapps.schoolmanagement.api.message.OtpResponse;
 import com.jesperapps.schoolmanagement.api.message.UserRequestWithProfilePicture;
+import com.jesperapps.schoolmanagement.api.message.UserResponse;
 import com.jesperapps.schoolmanagement.api.message.UserTypeRequest;
 import com.jesperapps.schoolmanagement.api.model.Attachment;
 import com.jesperapps.schoolmanagement.api.model.User;
@@ -42,10 +43,13 @@ public class UserImplementationService implements UserService{
 	@Autowired
 	private UserProfilePictureService userProfilePictureService;
 
-	public User addadmin( UserRequestWithProfilePicture user){
+	public UserResponse addadmin( UserRequestWithProfilePicture user){
 		User userWithSameEmailId = userRepository.findByEmail(user.getEmail());
+		
 		if(userWithSameEmailId == null) {
-			User newUsersList = new User();
+		Optional<User>	userWithPhNum=userRepository.findByPhoneNumber(user.getPhoneNumber());
+			if(!userWithPhNum.isPresent()) {
+				User newUsersList = new User();
 
 			newUsersList.setUserName(user.getUserName());
 			newUsersList.setEmail(user.getEmail());
@@ -91,13 +95,22 @@ public class UserImplementationService implements UserService{
 				}
 				catch(Exception e) {
 			System.out.println(e);
-				return new User();
+				return new UserResponse();
 				}
 //				newUsersList.add();
-				return newUsersList;	
-		}else {
-			return null;
+
+			UserResponse res=new UserResponse(newUsersList);	
+			res.setStatuscode(200);
+			res.setDescription("Registered Successfully");
+			return res;
+			}else {
+			UserResponse response=new UserResponse(409,"Phone Number Already Exists");
+					
+			return response;
 		}
+		}
+		UserResponse response=new UserResponse(409,"Email Already Exists");
+		return response;
 		}
 		
 		

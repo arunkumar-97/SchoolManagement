@@ -4,17 +4,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
-
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.jesperapps.schoolmanagement.api.model.TopicAttachment;
-
 import com.jesperapps.schoolmanagement.api.modelmessage.AnswerAttachmentJSON;
 import com.jesperapps.schoolmanagement.api.repository.TopicAttachmentRepository;
 import com.jesperapps.schoolmanagement.api.utils.StorageUtils;
@@ -44,7 +40,7 @@ public class TopicAttachmentImplementationService  implements TopicAttachmentSer
                 }
             }
             if(fileName != ""){
-                File newAnswerImage = new File(LOCATION + fileName);
+                File newAnswerImage = new File(LOCATION +"\\"+ fileName);
 				OutputStream buffer = new FileOutputStream(newAnswerImage);
 				buffer.write(this.addPaddingToBase64String(fileBytes));
 				buffer.close();
@@ -86,7 +82,7 @@ public class TopicAttachmentImplementationService  implements TopicAttachmentSer
 	public boolean saveFile(AnswerAttachmentJSON requestAttachment) {
 		if(this.saveFileToLocalStorage(requestAttachment.getName(), requestAttachment.getFileByte())) {
 			if(requestAttachment.getPreviewfileByte() !=null) {
-				if(this.saveFileToLocalStorage("Preview" + requestAttachment.getName() ,requestAttachment.getPreviewfileByte())){
+				if(this.saveFileToLocalStorage("Preview" +requestAttachment.getName(),requestAttachment.getPreviewfileByte())){
 					return true;
 					}
 				return false;
@@ -141,6 +137,15 @@ public class TopicAttachmentImplementationService  implements TopicAttachmentSer
 		}catch(IOException e) {
 		}
 		return new byte[] {};
+	}
+
+	@Override
+	public long getFileSize(String fileName) {
+		File requestedFile = new File(this.LOCATION+fileName);
+		if(requestedFile.exists()) {		
+			return requestedFile.length();
+		}
+		return 0L;
 	}
 
 	}

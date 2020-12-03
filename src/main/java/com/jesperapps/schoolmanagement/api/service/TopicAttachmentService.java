@@ -25,5 +25,5 @@ static final String PREVIEW_URL= "/preview";
 
 	byte[] getFileBytes(String pictureName);
 
-
+	long getFileSize(String fileName);
 }

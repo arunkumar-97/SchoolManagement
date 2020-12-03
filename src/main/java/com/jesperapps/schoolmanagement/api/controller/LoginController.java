@@ -21,7 +21,7 @@ public class LoginController {
 	private UserService userService;
 	
 
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@PostMapping("/login")
 	public ResponseEntity loginuser(@RequestBody UserRequest adminRequest) {
 
@@ -37,15 +37,7 @@ public class LoginController {
 			UserResponse response=new UserResponse(userFromDb.getUserId(),userFromDb.getUserName(),userFromDb.getEmail(),userFromDb.getPhoneNumber(),userFromDb.getAuthentication(),userFromDb.getUserProfile().getPictureName(),userFromDb.getUserType().getUserTypeRole());
 				
 				
-//				response.setUserId(userFromDb.getUserId());
-//				response.setUserName(userFromDb.getUserName());
-//				response.setEmail(userFromDb.getEmail());
-//				response.setPhoneNumber(userFromDb.getPhoneNumber());
-//				response.setUserProfilePicture(userFromDb.getUserProfile().getPictureName());
-//				response.setAuthenticationType(userFromDb.getAuthentication());
-//				response.setUserType(userFromDb.getUserType().getUserTypeRole());
-//				response.setStatuscode(200);
-//				response.setDescription("Login Successfull");
+
 			response.setStatuscode(200);
 			response.setDescription("Login Successfull");
 			return new ResponseEntity(response,HttpStatus.OK);

@@ -17,7 +17,9 @@ import java.io.OutputStream;
 @Service
 public class UserProfilePictureImplementationService implements UserProfilePictureService{
 
-    private final String LOCATION = StorageUtils.getFolderLocation("profile_pictures");
+  private final String LOCATION = StorageUtils.getFolderLocation("profile_pictures");
+    
+//    private final String LOCATION ="C:\\Users\\Admin\\UserProfilePicture";
 
     private boolean saveRequestFile(String name, String bytes){
         try{

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import com.jesperapps.schoolmanagement.api.message.OtpRequest;
 import com.jesperapps.schoolmanagement.api.message.OtpResponse;
-import com.jesperapps.schoolmanagement.api.message.Response;
 import com.jesperapps.schoolmanagement.api.message.SubscriptionResponse;
 import com.jesperapps.schoolmanagement.api.message.SubscriptionStatusJson;
 import com.jesperapps.schoolmanagement.api.message.UserRequestWithProfilePicture;
@@ -38,11 +37,11 @@ public class UserController {
 	@PostMapping("/user")
 	public ResponseEntity addadmin(@RequestBody UserRequestWithProfilePicture userRequestWithProfilePicture){
 
-		User createdUsersList = userService.addadmin(userRequestWithProfilePicture);
+		UserResponse createdUsersList = userService.addadmin(userRequestWithProfilePicture);
 		if(createdUsersList != null) {
-			return ResponseEntity.status(HttpStatus.ACCEPTED).body(new UserResponse(createdUsersList));
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(createdUsersList);
 		}else {
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new Response(409, "Email already exsists"));
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(createdUsersList);
 		}
 	}
 	

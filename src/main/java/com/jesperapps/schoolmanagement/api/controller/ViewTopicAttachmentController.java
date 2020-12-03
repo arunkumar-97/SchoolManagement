@@ -34,8 +34,8 @@ public class ViewTopicAttachmentController {
 					return ResponseEntity.status(HttpStatus.OK)
 
 					.header("Content-Type", "video/mp4")
-
-					.body(new ByteArrayResource(topicAttachmentService.getFileBytes(pictureFromDB.getPictureName())));
+					.header("Content-Length", String.valueOf(this.topicAttachmentService.getFileSize(pictureFromDB.getPictureName()) - 1))
+					.body(topicAttachmentService.getFileBytes(pictureFromDB.getPictureName()));
 		}else if(pictureFromDB.getPictureName().toLowerCase().contains("gif")){
 			return ResponseEntity.status(HttpStatus.OK)
 					
