@@ -94,13 +94,13 @@ public class UserImplementationService implements UserService{
 					}
 				}
 				catch(Exception e) {
-			System.out.println(e);
+						System.out.println(e);
 				return new UserResponse();
 				}
 //				newUsersList.add();
 
 			UserResponse res=new UserResponse(newUsersList);	
-			res.setStatuscode(200);
+			res.setStatusCode(200);
 			res.setDescription("Registered Successfully");
 			return res;
 			}else {

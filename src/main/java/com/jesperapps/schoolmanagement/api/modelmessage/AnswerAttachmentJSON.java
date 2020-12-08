@@ -49,7 +49,7 @@ public class AnswerAttachmentJSON {
 		
 //		String HOST_NAME = "https://www.jespersoft.com:6007/schoolQA";
 		
-		String HOST_NAME="http://localhost:8080";
+		String HOST_NAME="http://192.168.1.244:8080";
 		
 		this.id=topicAttachment.getPictureId();
 		this.name=topicAttachment.getPictureName();

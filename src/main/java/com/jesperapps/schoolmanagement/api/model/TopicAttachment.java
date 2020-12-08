@@ -24,6 +24,7 @@ public class TopicAttachment {
 		@GeneratedValue(strategy = GenerationType.AUTO)
 	    private Integer pictureId;
 	    private String pictureName;
+	    private String previewName;
 	    private String pictureLocation;
 	    private String previewLocation;
 	    @ManyToOne
@@ -47,6 +48,7 @@ public class TopicAttachment {
 	    
 		public TopicAttachment(AnswerAttachmentJSON attachmentRequest) {
 			this.pictureName=attachmentRequest.getName();
+			this.previewName="Preview"+attachmentRequest.getName();
 		}
 		public Integer getPictureId() {
 			return pictureId;
@@ -77,6 +79,14 @@ public class TopicAttachment {
 		}
 		public void setPreviewLocation(String previewLocation) {
 			this.previewLocation = previewLocation;
+		}
+
+		public String getPreviewName() {
+			return previewName;
+		}
+
+		public void setPreviewName(String previewName) {
+			this.previewName = previewName;
 		}
 	    
 	    

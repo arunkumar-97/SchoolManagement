@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jesperapps.schoolmanagement.api.model.TopicAttachment;
 import com.jesperapps.schoolmanagement.api.service.TopicAttachmentService;
 
+
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping(TopicAttachmentService.PREVIEW_URL)
-public class PreviewController {
-
+public class PreviewTopicAttachmentController {
+	
+	
 	@Autowired
 	private TopicAttachmentService topicAttachmentService;
 	
@@ -32,18 +34,18 @@ public class PreviewController {
 					return ResponseEntity.status(HttpStatus.OK)
 
 					.header("Content-Type", "video/mp4")
-
-					.body(new ByteArrayResource(topicAttachmentService.getFileBytes(pictureFromDB.getPictureName())));
+					.header("Content-Length", String.valueOf(this.topicAttachmentService.getFileSize(pictureFromDB.getPictureName()) - 1))
+					.body(topicAttachmentService.getPreviewFileBytes(pictureFromDB.getPreviewName()));
 		}else if(pictureFromDB.getPictureName().toLowerCase().contains("gif")){
 			return ResponseEntity.status(HttpStatus.OK)
 					
 					.contentType(MediaType.IMAGE_GIF)
-					.body(new ByteArrayResource(topicAttachmentService.getFileBytes(pictureFromDB.getPictureName())));
+					.body(new ByteArrayResource(topicAttachmentService.getPreviewFileBytes(pictureFromDB.getPreviewName())));
 		}else if(pictureFromDB.getPictureName().toLowerCase().contains("png")){
 			return ResponseEntity.status(HttpStatus.OK)
 					
 					.contentType(MediaType.IMAGE_PNG)
-					.body(new ByteArrayResource(topicAttachmentService.getFileBytes(pictureFromDB.getPictureName())));
+					.body(new ByteArrayResource(topicAttachmentService.getPreviewFileBytes(pictureFromDB.getPreviewName())));
 		}
 		else {
 			return ResponseEntity.status(HttpStatus.OK)
@@ -51,7 +53,7 @@ public class PreviewController {
 					
 					.contentType(MediaType.IMAGE_JPEG)
 
-					.body(new ByteArrayResource(topicAttachmentService.getFileBytes(pictureFromDB.getPictureName())));
+					.body(new ByteArrayResource(topicAttachmentService.getPreviewFileBytes(pictureFromDB.getPictureName())));
 			
 		}
 		

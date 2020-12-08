@@ -40,7 +40,7 @@ public class TopicAttachmentImplementationService  implements TopicAttachmentSer
                 }
             }
             if(fileName != ""){
-                File newAnswerImage = new File(LOCATION +"\\"+ fileName);
+                File newAnswerImage = new File(LOCATION + fileName);
 				OutputStream buffer = new FileOutputStream(newAnswerImage);
 				buffer.write(this.addPaddingToBase64String(fileBytes));
 				buffer.close();
@@ -138,9 +138,22 @@ public class TopicAttachmentImplementationService  implements TopicAttachmentSer
 		}
 		return new byte[] {};
 	}
+	
+	
+	
+	@SuppressWarnings("static-access")
+	@Override
+	public byte[] getPreviewFileBytes(String pictureName) {
+		try {
+			return Files.readAllBytes(Paths.get(this.LOCATION+pictureName));
+		}catch(IOException e) {
+		}
+		return new byte[] {};
+	}
 
 	@Override
 	public long getFileSize(String fileName) {
+		@SuppressWarnings("static-access")
 		File requestedFile = new File(this.LOCATION+fileName);
 		if(requestedFile.exists()) {		
 			return requestedFile.length();
