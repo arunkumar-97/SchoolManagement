@@ -41,6 +41,12 @@ public class ClassResponse {
 		this.educationBoard=educationBoard;
 	}
 
+	public ClassResponse(ClassResponse subscriptionClass) {
+		this.classId=subscriptionClass.getClassId();
+		this.className=subscriptionClass.getClassName();
+	}
+
+
 	public String getEducationBoard() {
 		return educationBoard;
 	}

@@ -101,10 +101,10 @@ public class UserController {
 		if(requestUser != null) {
 			ClassSubscription userSubscription = subscriptionFormService.findBySubscriptionId(subscriptionId);
 			if(userSubscription != null) {
-				response.setSubscriptionClass(userSubscription.getSubscriptionClass().getClassId());
+				response.setSubscriptionClass(userSubscription.getSubscriptionClass());
 				response.setSubscriptionId(userSubscription.getSubscriptionId());
-				response.setEducationBoard(userSubscription.getEducationBoard().getEducationBoardName());
-				response.setMedium(userSubscription.getMedium().getMediumLanguage());
+//				response.setEducationBoard(userSubscription.getEducationBoard().getEducationBoardName());
+//				response.setMedium(userSubscription.getMedium().getMediumLanguage());
 				
 				SubscriptionStatusJson json=new SubscriptionStatusJson();
 				json.setSubscriptionStatusid(userSubscription.getSubscriptionId());

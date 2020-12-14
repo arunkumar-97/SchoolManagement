@@ -86,7 +86,7 @@ public class TopicAttachmentSubscriptionController {
 		  if(topicFromDb != null) {
 			  topicAttachmentSubscriptionService.findByTopic(topicFromDb).forEach(topic->{
 				  if(!topic.getSubscriptionStatus().getStatus().equalsIgnoreCase(SubscriptionStatusTag.SUBSCRIBED)) {
-			  response.add(new TopicAttachmentSubscriptionResponse(topic.getSubscriptionId(),topic.getTopics().getTopicId(),topic.getTopicAttachment(),topic.getSubscriptionStatus(),topic.getUsers()));
+			  response.add(new TopicAttachmentSubscriptionResponse(topic.getSubscriptionId(),topic.getTopics(),topic.getTopicAttachment(),topic.getSubscriptionStatus(),topic.getUsers()));
 				  }
 				  });
 		  }
@@ -103,7 +103,7 @@ public class TopicAttachmentSubscriptionController {
 			  topicAttachmentSubscriptionService.saveTopicSubscription(topicSubscriptionFromDb);
 			  response.setStatuscode(200);
 				response.setDescription("Successfully updated the SubscriptionStatus");
-				subscriptionResponse.setTopicId(topicSubscriptionFromDb.getTopics().getTopicId());
+				subscriptionResponse.setTopic(topicSubscriptionFromDb.getTopics());
 				subscriptionResponse.setSubscriptionId(topicSubscriptionFromDb.getSubscriptionId());
 				subscriptionResponse.setSubscriptionStatus(subscriptionStatusRequest);
 				subscriptionResponse.setUser(topicSubscriptionFromDb.getUsers());
@@ -121,7 +121,7 @@ public class TopicAttachmentSubscriptionController {
 		  if(userFromDb != null) {
 			  topicAttachmentSubscriptionService.findByUser(userFromDb).forEach(user->{
 				  if(!user.getSubscriptionStatus().getStatus().equalsIgnoreCase(SubscriptionStatusTag.UNSUBSCRIBED)) {
-					  response.add(new TopicAttachmentSubscriptionResponse(user.getSubscriptionId(),user.getTopics().getTopicId(),user.getTopicAttachment(),user.getSubscriptionStatus(),user.getUsers()));
+					  response.add(new TopicAttachmentSubscriptionResponse(user.getSubscriptionId(),user.getTopics(),user.getTopicAttachment(),user.getSubscriptionStatus(),user.getUsers()));
 
 				  }else {
 					  

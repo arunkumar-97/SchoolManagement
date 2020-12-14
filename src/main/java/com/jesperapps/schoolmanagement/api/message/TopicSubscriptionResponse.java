@@ -7,7 +7,7 @@ import com.jesperapps.schoolmanagement.api.model.User;
 public class TopicSubscriptionResponse  {
 	
 	private int topicSubscriptionId;
-	private int topicId;
+	private TopicResponse topic;
 	private SubscriptionStatusJson subscriptionStatus;
 	private UserSubscriptionResponse user;
 	
@@ -21,7 +21,9 @@ public class TopicSubscriptionResponse  {
 	public TopicSubscriptionResponse(Topic topic, SubscriptionStatus subscriptionStatus2, Integer topicSubscriptionId2,
 			User user2) {
 		this.topicSubscriptionId=topicSubscriptionId2;
-		this.topicId=topic.getTopicId();
+//		this.topicId=topic.getTopicId();
+		this.topic=new TopicResponse(topic);
+	
 		this.subscriptionStatus=new SubscriptionStatusJson(subscriptionStatus2);
 		this.user=new UserSubscriptionResponse(user2);
 		
@@ -34,15 +36,34 @@ public class TopicSubscriptionResponse  {
 	public void setTopicSubscriptionId(int topicSubscriptionId) {
 		this.topicSubscriptionId = topicSubscriptionId;
 	}
-	public int getTopicId() {
-		return topicId;
-	}
-	public void setTopicId(int topicId) {
-		this.topicId = topicId;
-	}
+//	public int getTopicId() {
+//		return topicId;
+//	}
+//	public void setTopicId(int topicId) {
+//		this.topicId = topicId;
+//	}
+	
+	
+	
 	public SubscriptionStatusJson getSubscriptionStatus() {
 		return subscriptionStatus;
 	}
+	
+
+
+
+	public TopicResponse getTopic() {
+		return topic;
+	}
+
+
+
+	public void setTopic(Topic topic) {
+		this.topic =new TopicResponse(topic);
+	}
+
+
+
 	public void setSubscriptionStatus(SubscriptionStatusJson subscriptionStatus) {
 		this.subscriptionStatus = subscriptionStatus;
 	}

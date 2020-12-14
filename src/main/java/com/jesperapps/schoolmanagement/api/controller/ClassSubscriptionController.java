@@ -100,10 +100,10 @@ public class ClassSubscriptionController {
 						response.setStatuscode(200);
 						response.setDescription("Successfully updated the SubscriptionStatus");
 						subscriptionResponse.setUser(subscriptionFromDb.getUser());
-						subscriptionResponse.setSubscriptionClass(subscriptionFromDb.getSubscriptionClass().getClassId());
-						subscriptionResponse.setEducationBoard(subscriptionFromDb.getEducationBoard().getEducationBoardName());
+						subscriptionResponse.setSubscriptionClass(subscriptionFromDb.getSubscriptionClass());
+//						subscriptionResponse.setEducationBoard(subscriptionFromDb.getEducationBoard().getEducationBoardName());
 						subscriptionResponse.setSubscriptionStatus(updateJson);
-						subscriptionResponse.setMedium(subscriptionFromDb.getMedium().getMediumLanguage());
+//						subscriptionResponse.setMedium(subscriptionFromDb.getMedium().getMediumLanguage());
 						subscriptionResponse.setSubscriptionId(subscriptionFromDb.getSubscriptionId());
 					
 					}

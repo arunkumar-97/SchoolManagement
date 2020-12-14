@@ -96,7 +96,7 @@ public class TopicSubscriptionController {
 		  topicSubscriptionService.saveTopicSubscription(topicSubscriptionFromDb);
 		  response.setStatuscode(200);
 			response.setDescription("Successfully updated the SubscriptionStatus");
-			subscriptionResponse.setTopicId(topicSubscriptionFromDb.getTopic().getTopicId());
+			subscriptionResponse.setTopic(topicSubscriptionFromDb.getTopic());
 			subscriptionResponse.setTopicSubscriptionId(topicSubscriptionFromDb.getTopicSubscriptionId());
 			subscriptionResponse.setSubscriptionStatus(subscriptionStatusRequest);
 			subscriptionResponse.setUser(topicSubscriptionFromDb.getUserTopic());
