@@ -16,7 +16,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +28,7 @@ import com.jesperapps.schoolmanagement.api.repository.UserRepository;
 public class EmailSServiceImplementationService implements EmailSenderService {
 	
 	
+	@SuppressWarnings("unused")
 	private JavaMailSender javaMailSender;
 	private final Integer OTP_LENGTH = 6;
 //	private final String FROM_ADDRESS = "arun.thril@gmail.com";
@@ -122,7 +122,9 @@ public class EmailSServiceImplementationService implements EmailSenderService {
 			ConfirmationToken oneTimePassword = this.getConfirmationTokenForUser(otpUser);
 
 			msg.setSubject("OTP FOR LOGIN");
-			msg.setText("Hi "+otpUser.getUserName()+", The One Time Password for your login request is "+oneTimePassword.getConfirmationToken());
+			msg.setText("Hi "+otpUser.getUserName()+","
+					
+					+ "<br> <br> Use OTP "+oneTimePassword.getConfirmationToken() + " to login to your Educatizzy Account.Educatizzy doesn't ask for OTP or Contact number to be shared with anyone including Educatizzy Personnel");
 			
 			
 			msg.setSentDate(new Date());

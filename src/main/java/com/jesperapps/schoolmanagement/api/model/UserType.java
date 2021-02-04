@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 //import javax.persistence.Id;
 
 @Entity
@@ -19,6 +21,7 @@ public class UserType {
 	private Integer userTypeId;
 
 	private String userTypeRole;
+	
 	
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "userType")
 	private List<User> user;

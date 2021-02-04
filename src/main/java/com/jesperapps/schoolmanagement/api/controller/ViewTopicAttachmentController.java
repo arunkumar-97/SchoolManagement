@@ -1,7 +1,10 @@
 package com.jesperapps.schoolmanagement.api.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jesperapps.schoolmanagement.api.model.Attachment;
 import com.jesperapps.schoolmanagement.api.model.TopicAttachment;
 import com.jesperapps.schoolmanagement.api.service.TopicAttachmentService;
 
@@ -61,4 +65,17 @@ public class ViewTopicAttachmentController {
 		return ResponseEntity.status(HttpStatus.OK).body("No picture found");
 	}
 
+	
+	@GetMapping("/download_attachment/{pictureId}")
+	public ResponseEntity downloadImage(@PathVariable Integer pictureId) {
+		TopicAttachment pictureFromDB = this.topicAttachmentService.getByPictureId(pictureId);
+		if (pictureFromDB  != null) {
+			return ResponseEntity.ok().header("Content-Type", "video/mp4")
+					.header(HttpHeaders.CONTENT_DISPOSITION,
+							"attachment; filename=\"" + pictureFromDB.getPictureName())
+					.body(new ByteArrayResource(topicAttachmentService.getFileBytes(pictureFromDB.getPictureName())));
+			
+	}
+		return ResponseEntity.status(HttpStatus.OK).body("No picture found");
+}
 }

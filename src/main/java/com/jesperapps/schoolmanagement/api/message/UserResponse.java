@@ -69,6 +69,25 @@ public class UserResponse extends BaseResponseForUser{
 		userType=userTypeRole;
 		
 	}
+	public UserResponse(User userFromDb, User userFromDb2) {
+		this.userId = userFromDb2.getUserId();
+		this.userName = userFromDb.getUserName();
+		this.email = userFromDb.getEmail();
+//		this.password = user.getPassword();
+		this.phoneNumber = userFromDb.getPhoneNumber();
+		this.userType = userFromDb.getUserType() != null? userFromDb.getUserType().getUserTypeRole() : null;
+//		this.userProfilePicture=user.getUserProfile() != null ? user.getUserProfile().getPictureName() : null;
+		this.authenticationType=userFromDb.getAuthentication();
+	}
+	public UserResponse(UserRequest userFromDb) {
+		// TODO Auto-generated constructor stub
+		this.userId = userFromDb.getUserId();
+		this.userName = userFromDb.getUserName();
+		this.email = userFromDb.getEmail();
+//		this.password = userFromDb.getPassword();
+		this.phoneNumber = userFromDb.getPhoneNumber();
+		this.userType = userFromDb.getUserType() != null? userFromDb.getUserType().getUserTypeRole() : null;
+	}
 	public String getUserProfilePicture() {
 		return userProfilePicture;
 	}

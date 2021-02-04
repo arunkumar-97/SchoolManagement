@@ -56,7 +56,7 @@ public class SubscriptionformImplementationService implements SubscriptionFormSe
 		
 		Response response= new Response(409,"Error While subscribing");
 		ClassSubscription classSubscription= new ClassSubscription();
-		List <ClassSubscription>  userSubscription = subscriptionFormRepository.findAllBySubscriptionClass_classIdAndUser_userId(subscriptionRequest.getSubscriptionClass().getClassId() , subscriptionRequest.getUser().getUserId());
+		List <ClassSubscription>  userSubscription = subscriptionFormRepository.findAllBySubscriptionClass_classIdAndUser_userIdAndMedium_mediumIdAndEducationBoard_educationBoardId(subscriptionRequest.getSubscriptionClass().getClassId() , subscriptionRequest.getUser().getUserId() , subscriptionRequest.getMedium().getMediumId(),subscriptionRequest.getEducationBoard().getEducationBoardId());
 		  System.out.println("userSubscription"+userSubscription.toString());
 		  System.out.println("userSubscription"+userSubscription.size());
 		if(userSubscription.isEmpty() == false)

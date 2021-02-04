@@ -18,6 +18,8 @@ public interface YearService {
 
 	Year findById(Integer yearId);
 
+	void deleteYear(Year yearFromDb);
+
 	
 
 	

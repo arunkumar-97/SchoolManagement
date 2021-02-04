@@ -32,9 +32,9 @@ public class LoginController {
 			if(userService.checkPasswordIsSame(adminRequest.getPassword(), emailFromDb.getPassword())) {
 				
 			User userFromDb=userService.findByEmailAndPassword(emailFromDb.getEmail(),emailFromDb.getPassword());
-      		System.out.println(userFromDb);	
-      		System.out.println("Login Successfull");	
-			UserResponse response=new UserResponse(userFromDb.getUserId(),userFromDb.getUserName(),userFromDb.getEmail(),userFromDb.getPhoneNumber(),userFromDb.getAuthentication(),userFromDb.getUserProfile().getPictureName(),userFromDb.getUserType().getUserTypeRole());
+//     		System.out.println(userFromDb);	
+//      		System.out.println("Login Successfull");	
+			UserResponse response=new UserResponse(userFromDb,userFromDb);
 				
 				
 

@@ -8,7 +8,7 @@ import com.jesperapps.schoolmanagement.api.model.Class;
 //import com.jesperapps.schoolmanagement.api.model.Medium;
 
 
-public class ClassResponse {
+public class ClassResponse extends BaseResponse {
 
 	private Integer classId;
 	private String className;
@@ -44,6 +44,12 @@ public class ClassResponse {
 	public ClassResponse(ClassResponse subscriptionClass) {
 		this.classId=subscriptionClass.getClassId();
 		this.className=subscriptionClass.getClassName();
+	}
+
+
+	public ClassResponse(int i, String string) {
+	this.statuscode=i;
+	this.description=string;
 	}
 
 

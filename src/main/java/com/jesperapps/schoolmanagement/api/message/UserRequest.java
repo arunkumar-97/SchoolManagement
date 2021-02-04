@@ -1,16 +1,34 @@
 package com.jesperapps.schoolmanagement.api.message;
 
-public class UserRequest {
+import com.jesperapps.schoolmanagement.api.model.User;
+import com.jesperapps.schoolmanagement.api.model.UserType;
+
+public class UserRequest extends BaseResponse {
 	private Integer userId;
 	private String userName;
 	private String email;
 	private String password;
 	private String confirmPassword;
 	private Long phoneNumber;
-	private UserTypeRequest userType;
+	private UserType userType;
 	
 	
 	
+	public UserRequest(User userData) {
+		// TODO Auto-generated constructor stub
+		this.userId=userData.getUserId();
+		this.userName=userData.getUserName();
+		this.email=userData.getEmail();
+		this.password=userData.getPassword();
+		this.confirmPassword=userData.getConfirmPassword();
+		this.phoneNumber=userData.getPhoneNumber();
+		this.userType=userData.getUserType();
+	}
+
+	public UserRequest() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Integer getUserId() {
 		return userId;
 	}
@@ -57,13 +75,14 @@ public class UserRequest {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public UserTypeRequest getUserType() {
+	public UserType getUserType() {
 		return userType;
 	}
 
-	public void setUserType(UserTypeRequest userType) {
+	public void setUserType(UserType userType) {
 		this.userType = userType;
 	}
 
+	
 
 }

@@ -4,7 +4,7 @@ import com.jesperapps.schoolmanagement.api.model.SubscriptionStatus;
 import com.jesperapps.schoolmanagement.api.model.Topic;
 import com.jesperapps.schoolmanagement.api.model.User;
 
-public class TopicSubscriptionResponse  {
+public class TopicSubscriptionResponse  extends BaseResponse{
 	
 	private int topicSubscriptionId;
 	private TopicResponse topic;

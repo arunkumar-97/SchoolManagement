@@ -2,7 +2,7 @@ package com.jesperapps.schoolmanagement.api.message;
 
 import com.jesperapps.schoolmanagement.api.model.Topic;
 
-public class TopicResponse {
+public class TopicResponse extends BaseResponse {
 	
 	private Integer topicId;
 	private String topicName;

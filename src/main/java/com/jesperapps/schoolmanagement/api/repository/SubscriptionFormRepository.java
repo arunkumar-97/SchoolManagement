@@ -20,6 +20,9 @@ public interface SubscriptionFormRepository extends JpaRepository<ClassSubscript
 	List<ClassSubscription> findByUser(User userFromDb);
 
 	List<ClassSubscription> findAllBySubscriptionClass_classIdAndUser_userId(int ClassID , int UserID);
+
+	List<ClassSubscription> findAllBySubscriptionClass_classIdAndUser_userIdAndMedium_mediumIdAndEducationBoard_educationBoardId(
+			Integer classId, Integer userId, int mediumId, Integer educationBoardId);
 	
 	
 

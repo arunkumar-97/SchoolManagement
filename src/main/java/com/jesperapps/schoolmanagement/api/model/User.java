@@ -70,6 +70,9 @@ public class User {
 	@OneToMany(cascade = CascadeType.ALL,mappedBy="users")
 	private Set<TopicAttachmentSubscription> topicAttachmentSubscription;
 	
+	@OneToMany(cascade = CascadeType.ALL,mappedBy="user")
+	private Set<Bookmark> bookmark;
+	
 	
 	public int getUserId() {
 		return userId;
@@ -182,6 +185,24 @@ public class User {
 		
 	}
 	
+	
+	
+	public Set<ClassSubscription> getClassSubscription() {
+		return classSubscription;
+	}
+
+	public void setClassSubscription(Set<ClassSubscription> classSubscription) {
+		this.classSubscription = classSubscription;
+	}
+
+	public Set<Bookmark> getBookmark() {
+		return bookmark;
+	}
+
+	public void setBookmark(Set<Bookmark> bookmark) {
+		this.bookmark = bookmark;
+	}
+
 	public User(UserRequest userRequest) {
 		this.email=userRequest.getEmail();
 		this.password=userRequest.getPassword();
@@ -196,6 +217,18 @@ public class User {
 		this.userName = userRequest.getUserName();	
 //		this.userType=userRequest.getUserType().getUserTypeId();
 		this.authentication=userRequest.getAuthenticationType();
+	}
+
+	public User(Integer userId2, UserRequest userRequestEntity) {
+		this.userId = userRequestEntity.getUserId();
+		this.userName = userRequestEntity.getUserName();
+		this.phoneNumber = userRequestEntity.getPhoneNumber();
+		this.email = userRequestEntity.getEmail();
+		this.password=userRequestEntity.getPassword();
+		this.confirmPassword=userRequestEntity.getConfirmPassword();
+//		this.authentication=userRequestEntity.getAuthenticationType();
+//		this.alternatePhoneNumber = userRequestEntity.getAlternatePhoneNumber();
+		this.userType = userRequestEntity.getUserType();
 	}
 
 	

@@ -90,7 +90,7 @@ public class UserImplementationService implements UserService{
 					userRepository.save(newUsersList);
 					
 					}else {
-						
+						userRepository.save(newUsersList);
 					}
 				}
 				catch(Exception e) {
@@ -184,7 +184,7 @@ public class UserImplementationService implements UserService{
 			message = URLEncoder.encode(message, "UTF-8");
 			String language = "english";
 
-			String route = "p";
+			String route = "t";
 
 			String myUrl = "https://www.fast2sms.com/dev/bulk?authorization=" + apiKey + "&sender_id=" + sendId
 					+ "&message=" + message + "&language=" + language + "&route=" + route + "&numbers=" + long1;

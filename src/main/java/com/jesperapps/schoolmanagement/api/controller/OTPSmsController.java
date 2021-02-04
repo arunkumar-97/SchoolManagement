@@ -193,7 +193,7 @@ public class OTPSmsController {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(409,"Invalid Otp"));
 
 			}
-		} else {
+		}else {
 //			ObjectNode jsonObject = objectMapper.createObjectNode();
 //			jsonObject.put("statusCode", res.FAILURE);
 //			jsonObject.put("message", res.setDescription("Entered Otp is invalid"));

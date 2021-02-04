@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jesperapps.schoolmanagement.api.message.BaseResponse;
 import com.jesperapps.schoolmanagement.api.message.ClassResponse;
 import com.jesperapps.schoolmanagement.api.message.Response;
 import com.jesperapps.schoolmanagement.api.message.SubscriptionRequest;
@@ -50,9 +53,19 @@ public class ClassSubscriptionController {
 	
 	
 	@GetMapping("/subcriptionform")
-		public List<ClassResponse> listAllClassesBasedOnSubscription(){
+		public ResponseEntity listAllClassesBasedOnSubscription(){
 		List<ClassResponse> response=new ArrayList<>();
-		subscriptionFormService.findAll().forEach(subscription ->{
+	List<ClassSubscription> su=subscriptionFormService.findAll();
+//	System.out.println("Check" + su);
+	if (su.isEmpty()) {
+//		System.out.println("empty" + su);
+		ClassResponse userResponseEntity = new ClassResponse();
+		userResponseEntity.setStatuscode(201);
+		userResponseEntity.setDescription("No Data is Available");
+		return new ResponseEntity(userResponseEntity, HttpStatus.NOT_FOUND);
+	}else {
+		
+		su.forEach(subscription ->{
 			if(!this.subscriptionFormService.checkClassInResponse(response, subscription.getSubscriptionClass())) {
 				if(!subscription.getSubscriptionStatus().getStatus().equalsIgnoreCase(SubscriptionStatusTag.SUBSCRIBED)) {
 					response.add(new ClassResponse(subscription.getSubscriptionClass()));			
@@ -62,11 +75,23 @@ public class ClassSubscriptionController {
 	
 	
 		});
-	return response;
+		
+		 if(response.isEmpty())
+		 {
+			 ClassResponse userResponseEntity = new ClassResponse();
+				userResponseEntity.setStatuscode(201);
+				userResponseEntity.setDescription("No Data is Available");
+				return new ResponseEntity(userResponseEntity, HttpStatus.NOT_FOUND);
+		 }
 	}
+
+	return new ResponseEntity(response, HttpStatus.OK);
+	}
+
+	
 	
 	@GetMapping("/subscriptionform/{classId}")
-		public List<SubscriptionResponse> getAllUsersForTheSubscribedClass(@PathVariable Integer classId){
+		public ResponseEntity getAllUsersForTheSubscribedClass(@PathVariable Integer classId){
 		
 		List<SubscriptionResponse> response=new ArrayList<>();
 		Class classFromDb=classService.findById(classId);
@@ -80,9 +105,25 @@ public class ClassSubscriptionController {
 				}
 			});
       
-      
+			 if(response.isEmpty())
+			 {
+				 ClassResponse userResponseEntity = new ClassResponse();
+					userResponseEntity.setStatuscode(201);
+					userResponseEntity.setDescription("No Data is Available");
+					return new ResponseEntity(userResponseEntity, HttpStatus.NOT_FOUND);
+			 }
+		}else {
+			SubscriptionResponse userResponseEntity = new SubscriptionResponse();
+			userResponseEntity.setStatuscode(201);
+			userResponseEntity.setDescription("No Data  Not Found");
+			return new ResponseEntity(userResponseEntity, HttpStatus.CONFLICT);
 		}
-		return response;
+				
+			
+			
+			
+		
+		return new ResponseEntity(response, HttpStatus.ACCEPTED);
 		
 	}
 		
@@ -114,7 +155,7 @@ public class ClassSubscriptionController {
 	
 	
 	@GetMapping("/subscriptionForm/{userId}")
-	private List<SubscriptionResponse> getAllSubscribedClassForUsers(@PathVariable Integer userId){
+	private ResponseEntity getAllSubscribedClassForUsers(@PathVariable Integer userId){
 	
 		List<SubscriptionResponse> response=new ArrayList<>();
 			User userFromDb=userService.findById(userId);
@@ -130,9 +171,22 @@ public class ClassSubscriptionController {
 	  
 					});
 		      
+					 if(response.isEmpty())
+					 {
+						 SubscriptionResponse userResponseEntity = new SubscriptionResponse();
+							userResponseEntity.setStatuscode(201);
+							userResponseEntity.setDescription("No Data is Available");
+							return new ResponseEntity(userResponseEntity, HttpStatus.NOT_FOUND);
+					 }
+					
 		
+				}else {
+					SubscriptionResponse userResponseEntity = new SubscriptionResponse();
+					userResponseEntity.setStatuscode(201);
+					userResponseEntity.setDescription("No Data  Not Found");
+					return new ResponseEntity(userResponseEntity, HttpStatus.CONFLICT);
 				}
-	return response;
+	return new ResponseEntity(response, HttpStatus.ACCEPTED);
 		}
 
 }

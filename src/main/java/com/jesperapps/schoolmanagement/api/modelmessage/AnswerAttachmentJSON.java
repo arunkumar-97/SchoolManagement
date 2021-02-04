@@ -10,6 +10,7 @@ public class AnswerAttachmentJSON {
 	private String type;
 	private String viewUrl;
 	private String previewUrl;
+	private String downloadUrl;
 	//only for request purpose
 	private String fileByte;
 	private String previewfileByte;
@@ -47,9 +48,9 @@ public class AnswerAttachmentJSON {
 	
 	public AnswerAttachmentJSON(TopicAttachment topicAttachment) {
 		
-//		String HOST_NAME = "https://www.jespersoft.com:6007/schoolQA";
+	String HOST_NAME = "https://www.jespersoft.com:6007/schoolQA";
 		
-		String HOST_NAME="http://192.168.1.244:8080";
+//		String HOST_NAME="http://192.168.1.248:8080";
 		
 		this.id=topicAttachment.getPictureId();
 		this.name=topicAttachment.getPictureName();
@@ -67,6 +68,7 @@ public class AnswerAttachmentJSON {
 		}else {
 		this.viewUrl=HOST_NAME + topicAttachment.getPictureLocation();
 		this.previewUrl=HOST_NAME +topicAttachment.getPreviewLocation();
+		this.downloadUrl=HOST_NAME+"/"+"topic/"+"download_attachment/"+topicAttachment.getPictureId();
 		System.out.println(topicAttachment.getPreviewLocation());
 		}
 	}
@@ -77,6 +79,14 @@ public class AnswerAttachmentJSON {
 	
 
 
+
+	public String getDownloadUrl() {
+		return downloadUrl;
+	}
+
+	public void setDownloadUrl(String downloadUrl) {
+		this.downloadUrl = downloadUrl;
+	}
 
 	public Integer getId() {
 		return id;

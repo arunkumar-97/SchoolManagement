@@ -7,16 +7,18 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jesperapps.schoolmanagement.api.message.ClassBaseResponse;
 import com.jesperapps.schoolmanagement.api.message.YearBaseResponse;
 import com.jesperapps.schoolmanagement.api.message.YearRequest;
 import com.jesperapps.schoolmanagement.api.message.YearResponse;
-
+import com.jesperapps.schoolmanagement.api.model.Class;
 import com.jesperapps.schoolmanagement.api.model.Year;
 import com.jesperapps.schoolmanagement.api.service.SubjectService;
 import com.jesperapps.schoolmanagement.api.service.YearService;
@@ -98,5 +100,21 @@ public class YearController {
 		return response;
 	}
 	
+	
+	@DeleteMapping("/year/{yearId}")
+	public YearBaseResponse deleteYearById(@PathVariable Integer yearId)
+	{
+		YearBaseResponse response = new YearBaseResponse(409, "No such Id found");
+
+		Year YearFromDb=yearService.findById(yearId);
+		if(YearFromDb != null)
+		{
+			yearService.deleteYear(YearFromDb);
+			response.setDescription("deleted Successfully");
+			response.setStatuscode(200);
+		}
+		return response;
+
+	}
 	
 }
