@@ -33,6 +33,7 @@ public class User {
 	private Long phoneNumber;
 	private String confirmPassword;
 	private String authentication;
+	private int verificationStatus;
 	
 	public String getConfirmPassword() {
 		return confirmPassword;
@@ -49,6 +50,18 @@ public class User {
 	public void setAuthentication(String authentication) {
 		this.authentication = authentication;
 	}
+	
+	
+
+	public int getVerificationStatus() {
+		return verificationStatus;
+	}
+
+	public void setVerificationStatus(int verificationStatus) {
+		this.verificationStatus = verificationStatus;
+	}
+
+
 
 	@ManyToOne
 	@JoinColumn(name="userTypeId", referencedColumnName ="userTypeId")

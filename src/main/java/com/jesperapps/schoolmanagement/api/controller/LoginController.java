@@ -28,19 +28,26 @@ public class LoginController {
 
 		User emailFromDb=userService.findByEmail(adminRequest.getEmail());
 		if(emailFromDb!=null) {
-			
+		
 			if(userService.checkPasswordIsSame(adminRequest.getPassword(), emailFromDb.getPassword())) {
-				
-			User userFromDb=userService.findByEmailAndPassword(emailFromDb.getEmail(),emailFromDb.getPassword());
-//     		System.out.println(userFromDb);	
-//      		System.out.println("Login Successfull");	
-			UserResponse response=new UserResponse(userFromDb,userFromDb);
-				
-				
+				if(emailFromDb.getVerificationStatus()==1) {
+					User userFromDb=userService.findByEmailAndPassword(emailFromDb.getEmail(),emailFromDb.getPassword());
+//		     		System.out.println(userFromDb);	
+//		      		System.out.println("Login Successfull");	
+					UserResponse response=new UserResponse(userFromDb,userFromDb);
+						
+						
 
-			response.setStatusCode(200);
-			response.setDescription("Login Successfull");
-			return  new ResponseEntity(response, HttpStatus.OK);
+					response.setStatusCode(200);
+					response.setDescription("Login Successfull");
+					return  new ResponseEntity(response, HttpStatus.OK);
+				}else {
+					UserResponse response2=new UserResponse();
+					response2.setStatusCode(409);
+					response2.setDescription("Please Verify to login");
+					return new ResponseEntity(response2, HttpStatus.CONFLICT);
+				}
+			
 			}else {
 				System.out.println("Password Invalid");	
 				UserResponse response1=new UserResponse();
@@ -60,6 +67,7 @@ public class LoginController {
 		response3.setDescription("Email does not exists");
 		 return new ResponseEntity(response3, HttpStatus.CONFLICT);
 	}
+//		return new ResponseEntity(response2, HttpStatus.CONFLICT);
 		
 	}
 }

@@ -6,30 +6,25 @@ import com.jesperapps.schoolmanagement.api.model.User;
 
 public class BookmarkResponseEntity extends BaseResponse {
 
-	
 	private Integer bookmarkId;
-    private String filename;
-    private int user;
-    
-    
-    public BookmarkResponseEntity() {
+	private String filename;
+	private int userId;
+
+	public BookmarkResponseEntity() {
 		super();
 	}
-    
 
 	public BookmarkResponseEntity(Integer bookmarkId2, String filename2, int user2) {
-		this.bookmarkId=bookmarkId2;
-		this.filename=filename2;
-		this.user=user2;
+		this.bookmarkId = bookmarkId2;
+		this.filename = filename2;
+		this.userId = user2;
 	}
-
 
 	public BookmarkResponseEntity(Bookmark book) {
-		this.bookmarkId=book.getBookmarkId();
-		this.filename=book.getFilename();
-		this.user=book.getUser().getUserId();
+		this.bookmarkId = book.getBookmarkId();
+		this.filename = book.getFilename();
+		this.userId = book.getUser().getUserId();
 	}
-
 
 	public Integer getBookmarkId() {
 		return bookmarkId;
@@ -49,17 +44,13 @@ public class BookmarkResponseEntity extends BaseResponse {
 	
 	
 
-	
-
-	public int getUser() {
-		return user;
+	public int getUserId() {
+		return userId;
 	}
 
-
-	public void setUser(int user) {
-		this.user = user;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
-
 
 	@Override
 	public String toString() {

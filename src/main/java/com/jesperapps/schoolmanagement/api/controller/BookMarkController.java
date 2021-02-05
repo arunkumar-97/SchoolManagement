@@ -86,7 +86,7 @@ public class BookMarkController {
 			
 			bookmarkResponse.setBookmarkId(cls.getBookmarkId());
 			bookmarkResponse.setFilename(cls.getFilename());
-			bookmarkResponse.setUser(cls.getUser().getUserId());
+			bookmarkResponse.setUserId(cls.getUser().getUserId());
 //			classResponse.setClassId(cls.getClassId());
 //			classResponse.setClassName(cls.getClassName());
 //			classResponse.setStatus(cls.getStatus());

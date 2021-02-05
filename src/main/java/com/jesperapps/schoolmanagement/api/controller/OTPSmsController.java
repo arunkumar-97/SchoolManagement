@@ -147,8 +147,10 @@ public class OTPSmsController {
 		LocalDateTime now = LocalDateTime.now();
 		String otpValidationTime = dtf.format(now);
 		if (otp >= 0) {
-
+ 
+//			otpSmsService.clearOTP(phoneNumber);
 			Optional<OtpSms> Otp = otpSmsService.getOtp(phoneNumber);
+			System.out.println("otp  :" + Otp );
 			if (Otp == null) {
 //				ObjectNode jsonObject = objectMapper.createObjectNode();
 //				jsonObject.put("statusCode", res.FAILURE);
@@ -206,7 +208,9 @@ public class OTPSmsController {
 		if (phone.isPresent()) {
 //			phone.get().setOtpVerification("Verified");
 			@SuppressWarnings("unused")
-			User user = userRegistrationService.save(phone.get());
+		User user = userRegistrationService.save(phone.get());
+			user.setVerificationStatus(1);
+			userRegistrationService.save(user);
 //			UserResponseEntity userResponseEntity = new UserResponseEntity(user, user, user);
 //			userResponseEntity.setStatusCode(res.SUCCESS);
 //			userResponseEntity.setDescription("Entered Otp is valid");

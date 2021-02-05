@@ -67,7 +67,7 @@ public class UserImplementationService implements UserService{
 						newUsersList.setUserType(userTypeRepository.findByUserTypeId(1));
 					}
 				}
-				//save profilePIcuter
+				//save profilePIcutre
 				try {
 					
 					int otp = otpService.generateOTP(user.getPhoneNumber());
@@ -144,6 +144,9 @@ public class UserImplementationService implements UserService{
 			User requestUser = this.findByEmail(request.getEmail());
 			if(requestUser != null) {
 				if(emailService.checkOTP(requestUser, request.getOtp())) {
+					User user=this.findByEmail(requestUser.getEmail());
+					user.setVerificationStatus(1);
+					userRepository.save(user);
 					response.setStatuscode(200);
 					response.setDescription("Otp Matched");
 				}else {
