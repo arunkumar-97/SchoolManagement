@@ -1,10 +1,15 @@
 package com.jesperapps.schoolmanagement.api.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jesperapps.schoolmanagement.api.model.AnswerAttachment;
+
+import com.jesperapps.schoolmanagement.api.model.AnswerContent;
 import com.jesperapps.schoolmanagement.api.model.Answers;
+import com.jesperapps.schoolmanagement.api.modelmessage.AnswerContentJSON;
 import com.jesperapps.schoolmanagement.api.modelmessage.AnswerJson;
 import com.jesperapps.schoolmanagement.api.repository.AnswerRepository;
 
@@ -13,22 +18,31 @@ import com.jesperapps.schoolmanagement.api.repository.AnswerRepository;
 public class AnswerImplementationService implements AnswerService {
 	
 	@Autowired
-	private AnswerAttachmentService answerAttachmentService;
+	private AnswerContentService answerContentService;
 	
 	@Autowired
 	private AnswerRepository answerRepository;
 
 	@Override
 	public Answers saveAnswer(AnswerJson requestAnswer) {
-		try {
+		
 			Answers newAnswer = new Answers(requestAnswer);
-			if(requestAnswer.getAnswerAttachment()!=null) {
-				if(answerAttachmentService.saveFile(requestAnswer.getAnswerAttachment())) {
-					AnswerAttachment imageAttachment=new AnswerAttachment(requestAnswer.getAnswerAttachment());
-					newAnswer.setImageAttachment(imageAttachment);
-					imageAttachment.setAnswer(newAnswer);
+			
+		try {
+			List<AnswerContent> newContentListForDB = new ArrayList<AnswerContent>();
+			List<AnswerContentJSON> requestContentList= requestAnswer.getAnswerContent();
+			for(AnswerContentJSON eachContent: requestContentList) {
+			System.out.println("For Loop" );
+				AnswerContent newAnswerContent = this.answerContentService.save(eachContent);
+				if(newAnswerContent != null) {
+					System.out.println("if" );
+					newAnswerContent.setAnswer(newAnswer);
+					newContentListForDB.add(newAnswerContent);
+				}else {
+					System.out.println("else" );
 				}
 			}
+			newAnswer.setAnswerContent(newContentListForDB);
 			return newAnswer;
 		}catch(Exception e) {
 			return null;
@@ -44,9 +58,9 @@ public class AnswerImplementationService implements AnswerService {
 
 
 	@Override
-	public void saveAnswer(Answers answerFromDb) {
-		// TODO Auto-generated method stub
-		answerRepository.save(answerFromDb);
+	public Answers saveAnswer(Answers answerFromDb) {
+		System.out.println("repository funcion called" );
+		return answerRepository.save(answerFromDb);
 		
 	}
 

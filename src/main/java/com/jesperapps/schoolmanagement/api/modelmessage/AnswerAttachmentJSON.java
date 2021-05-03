@@ -2,6 +2,7 @@ package com.jesperapps.schoolmanagement.api.modelmessage;
 
 import com.jesperapps.schoolmanagement.api.model.AnswerAttachment;
 import com.jesperapps.schoolmanagement.api.model.TopicAttachment;
+import com.jesperapps.schoolmanagement.api.model.UserProfilePicture;
 
 public class AnswerAttachmentJSON {
 	
@@ -27,30 +28,42 @@ public class AnswerAttachmentJSON {
 	}
 	
 	public AnswerAttachmentJSON(AnswerAttachment answerAttachment) {
-		String HOST_NAME = "https://www.jespersoft.com:6007/schoolQA";
-		this.name=answerAttachment.getPictureName();
-		this.setType("unknown");
-		String pictureName = answerAttachment.getPictureName();
-		if(pictureName.contains(".")) {
-			String[] fileNameAndFileType = pictureName.split("\\.");
-			if(fileNameAndFileType.length > 0) {
-				this.setType(fileNameAndFileType[fileNameAndFileType.length-1]);	
+		
+		if(answerAttachment != null) {
+			
+			System.out.println("answerAttachment"+answerAttachment);
+		String HOST_NAME="http://192.168.1.248:8080";
+//			String HOST_NAME = "https://www.jespersoft.com:6007/schoolQA";
+			this.id = answerAttachment.getPictureId();
+			this.name=answerAttachment.getPictureName();
+			this.setType("unknown");
+			String pictureName = answerAttachment.getPictureName();
+			if(pictureName.contains(".")) {
+				String[] fileNameAndFileType = pictureName.split("\\.");
+				if(fileNameAndFileType.length > 0) {
+					this.setType(fileNameAndFileType[fileNameAndFileType.length-1]);	
+				}
 			}
+			String urlFromDB = HOST_NAME+answerAttachment.getPictureLocation();
+			if(urlFromDB.contains(":")) {
+				this.viewUrl = urlFromDB;
+			}else {
+				System.out.println("viewUrl" + HOST_NAME +answerAttachment.getPictureLocation() );
+			this.viewUrl= HOST_NAME +answerAttachment.getPictureLocation();
 		}
-		String urlFromDB = answerAttachment.getPictureLocation();
-		if(urlFromDB.contains(":")) {
-			this.viewUrl = urlFromDB;
-		}else {
-		this.viewUrl= HOST_NAME +answerAttachment.getPictureLocation();
+		 
+			 
+		
+	
 		
 	}
 	}
 	
 	public AnswerAttachmentJSON(TopicAttachment topicAttachment) {
 		
-	String HOST_NAME = "https://www.jespersoft.com:6007/schoolQA";
+// String HOST_NAME = "https://www.jespersoft.com:6007/schoolQA";
 		
-//		String HOST_NAME="http://192.168.1.248:8080";
+		String HOST_NAME="http://192.168.1.248:8080";
 		
 		this.id=topicAttachment.getPictureId();
 		this.name=topicAttachment.getPictureName();
@@ -100,6 +113,40 @@ public class AnswerAttachmentJSON {
 		this.name=eachAttachment.getName();
 		this.type=eachAttachment.getType();
 		this.viewUrl=eachAttachment.getViewUrl();
+		
+	}
+
+	public AnswerAttachmentJSON(UserProfilePicture attachment) {
+		// TODO Auto-generated constructor stub
+
+		
+		System.out.println("answerAttachment"+attachment);
+	String HOST_NAME="http://192.168.1.248:8080";
+//		String HOST_NAME = "https://www.jespersoft.com:6007/schoolQA";
+		this.id = attachment.getPictureId();
+		this.name=attachment.getPictureName();
+		this.setType("unknown");
+		String pictureName = attachment.getPictureName();
+		if(pictureName.contains(".")) {
+			String[] fileNameAndFileType = pictureName.split("\\.");
+			if(fileNameAndFileType.length > 0) {
+				this.setType(fileNameAndFileType[fileNameAndFileType.length-1]);	
+			}
+		}
+		String urlFromDB = HOST_NAME+attachment.getPictureLocation();
+		if(urlFromDB.contains(":")) {
+			this.viewUrl = urlFromDB;
+		}else {
+			System.out.println("viewUrl" + HOST_NAME +attachment.getPictureLocation() );
+		this.viewUrl= HOST_NAME +attachment.getPictureLocation();
+	}
+	 
+		 
+	
+
+	
+
+		
 		
 	}
 

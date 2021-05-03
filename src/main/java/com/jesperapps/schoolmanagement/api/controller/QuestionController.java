@@ -1,7 +1,9 @@
 package com.jesperapps.schoolmanagement.api.controller;
 
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,9 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jesperapps.schoolmanagement.api.message.QuestionRequest;
 import com.jesperapps.schoolmanagement.api.message.QuestionResponse;
+import com.jesperapps.schoolmanagement.api.model.ClassSubjects;
 import com.jesperapps.schoolmanagement.api.model.Question;
+
+import com.jesperapps.schoolmanagement.api.modelmessage.AnswerJson;
 import com.jesperapps.schoolmanagement.api.modelmessage.QuestionJson;
+import com.jesperapps.schoolmanagement.api.service.ClassSubjectsService;
 import com.jesperapps.schoolmanagement.api.service.QuestionService;
+import com.jesperapps.schoolmanagement.api.service.YearService;
 import com.jesperapps.schoolmanagement.api.utils.StatusQuestion;
 
 
@@ -30,9 +37,13 @@ import com.jesperapps.schoolmanagement.api.utils.StatusQuestion;
 public class QuestionController {
 	
 	
-	
+	@Autowired
+	private YearService yearService;
 	@Autowired
 	private QuestionService questionService;
+	@Autowired
+	private ClassSubjectsService classSubjectsService;
+	
 	
 	@PostMapping("/add")
 	public QuestionResponse addQuestions(@RequestBody List<QuestionJson> requestQuestionsList) {
@@ -49,20 +60,22 @@ public class QuestionController {
 		return response;
 	}
 	
+	
 	@PutMapping("/update")
 	public QuestionResponse updateQuestioByID(@RequestBody QuestionRequest questionRequest) {
 		QuestionResponse response=new QuestionResponse(200,"Successfully Updated");
 		if(questionRequest.getQuestionId()!=null) {
-			Question QuestionFromDB=questionService.getQuestionId(questionRequest.getQuestionId());
-			if(QuestionFromDB != null) {
-				QuestionFromDB.setQuestionId(questionRequest.getQuestionId());
-				QuestionFromDB.setQuestion(questionRequest.getQuestion());
+			Optional<Question> QuestionFromDB=questionService.getQuestionId(questionRequest.getQuestionId());
+			Question question = new Question(QuestionFromDB.get());
+			if(question != null) {
+				question.setQuestionId(questionRequest.getQuestionId());
+				question.setQuestion(questionRequest.getQuestion());
 //				QuestionFromDB.setStatus();
-				questionService.saveQuestion(QuestionFromDB);
+				questionService.saveQuestion(question);
 //				response.setQuestion(QuestionFromDB);
-				response.setStatuscode(200);
+				response.setStatusCode(200);
 				response.setDescription("Success");
-				response.setQuestion(new QuestionJson(QuestionFromDB));
+				response.setQuestion(new QuestionJson(question));
 			}
 		}
 			
@@ -76,7 +89,7 @@ public class QuestionController {
 		
 		questionService. findAll().forEach(question->{
 			if(!question.getStatus().equalsIgnoreCase(StatusQuestion.DELETED)) {
-			QuestionJson questionJson=new QuestionJson(question.getQuestionId(),question.getQuestion(),question.getStatus(),question.getAnswers());
+			QuestionJson questionJson=new QuestionJson(question.getQuestionId(),question.getQuestion(),question.getStatus(),new AnswerJson(question.getAnswers()));
 			
 			response.add(questionJson);
 			}
@@ -86,29 +99,90 @@ public class QuestionController {
 		return response;
 	}
 
+//	@GetMapping("/question/{questionId}")
+//	public QuestionJson getQuestion(@PathVariable Integer questionId) {
+//		
+//	Optional<Question> question=questionService.getQuestionId(questionId);
+//	  System.out.println("question"+question);
+//	QuestionJson questionJson=new QuestionJson();
+//	if(question.isPresent()) {
+//		questionJson=new QuestionJson(question.get());
+//		System.out.println("questionJson"+questionJson);
+//
+//	}
+//	return questionJson;
+//	}
+	
 	@GetMapping("/question/{questionId}")
-	public QuestionJson getQuestion(@PathVariable Integer questionId) {
+	public QuestionJson getByQuestionId(@PathVariable Integer questionId) {
+		QuestionJson response=new QuestionJson();
 		
-	Question question=questionService.getQuestionId(questionId);
-	QuestionJson questionJson=new QuestionJson();
-	if(question!=null) {
-		questionJson=new QuestionJson(question.getQuestionId(), question.getQuestion(), question.getStatus(), question.getAnswers());
-
+					Question questionFromDb=questionService.findByQuestionId(questionId);
+					if(questionFromDb != null) {
+						response.setQuestionId(questionFromDb.getQuestionId());
+						response.setQuestion(questionFromDb.getQuestion());
+						response.setStatus(questionFromDb.getStatus());
+						response.setYear(questionFromDb.getYear());
+						response.setClassSubjects(questionFromDb.getClassSubjects());
+						System.out.println(questionFromDb.getAnswers() == null);
+//						System.out.println("questionFromDb.getAnswers()"+questionFromDb.getAnswers());
+						System.out.println("questionFromDb.getAnswers()"+questionFromDb.getAnswers().getAnswerContent().get(0));
+						response.setAnswer(new AnswerJson(questionFromDb.getAnswers()));
+					}
+					return response;
 	}
-	return questionJson;
-	}
+	
+	
+//	@GetMapping("/question/{yearId}/{classSubjectsId}")
+//	public QuestionJson getByQuestionId(@PathVariable Integer yearId,@PathVariable Integer classSubjectsId ) {
+//
+//		com.jesperapps.schoolmanagement.api.model.Year yearFromdb=yearService.findByYearId(yearId);
+//	
+//	if(yearFromdb !=null) {
+//ClassSubjects	classSubjectsFromDb=classSubjectsService.findClassSubjectsFromId(classSubjectsId);
+//		if(classSubjectsFromDb !=null) {
+//			
+//			List<Question> questions=questionService.findByYearAndClassSubjects(yearFromdb, classSubjectsFromDb);
+//			
+//			QuestionJson response=new QuestionJson();
+//			
+////			Question questionFromDb=questionService.findByQuestionId(classSubjectsFromDb.questionId);
+//			if(questions != null) {
+//				for(Question questionFromDb:questions) {
+//					response.setQuestionId(questionFromDb.getQuestionId());
+//					response.setQuestion(questionFromDb.getQuestion());
+//					response.setStatus(questionFromDb.getStatus());
+//					response.setYear(questionFromDb.getYear());
+//					response.setClassSubjects(questionFromDb.getClassSubjects());
+//					System.out.println(questionFromDb.getAnswers() == null);
+////					System.out.println("questionFromDb.getAnswers()"+questionFromDb.getAnswers());
+//					System.out.println("questionFromDb.getAnswers()"+questionFromDb.getAnswers().getAnswerContent().get(0));
+//					response.setAnswer(new AnswerJson(questionFromDb.getAnswers()));
+//				}
+//				
+//			}
+//			return response;
+//		}
+//	
+//	}
+//	
+//	return null;
+//		
+//	}
+	
+	
 	
 	@DeleteMapping("/question/{questionId}")
 	public QuestionResponse deleteClassById(@PathVariable int questionId)
 	{
 		QuestionResponse response = new QuestionResponse(409, "No such Id found");
 
-		Question questionFromId = questionService.getQuestionId(questionId);
+		Optional<Question> questionFromId = questionService.getQuestionId(questionId);
 		if(questionFromId != null)
 		{
-			questionService.deleteQuestion(questionFromId);
+			questionService.deleteQuestion(questionFromId.get());
 			response.setDescription("deleted Successfully");
-			response.setStatuscode(200);
+			response.setStatusCode(200);
 		}
 		return response;
 

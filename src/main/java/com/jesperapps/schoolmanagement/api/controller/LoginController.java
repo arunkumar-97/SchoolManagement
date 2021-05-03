@@ -45,7 +45,7 @@ public class LoginController {
 					UserResponse response2=new UserResponse();
 					response2.setStatusCode(409);
 					response2.setDescription("Please Verify to login");
-					return new ResponseEntity(response2, HttpStatus.CONFLICT);
+					return new ResponseEntity(response2, HttpStatus.NOT_ACCEPTABLE);
 				}
 			
 			}else {

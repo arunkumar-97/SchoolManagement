@@ -2,7 +2,7 @@ package com.jesperapps.schoolmanagement.api.message;
 
 import com.jesperapps.schoolmanagement.api.model.Medium;
 
-public class MediumResponse {
+public class MediumResponse extends BaseResponse{
 	
 	private Integer mediumId;
 	private String mediumLanguage;
@@ -22,6 +22,12 @@ public class MediumResponse {
 		this.mediumLanguage = mediumLanguage;
 	}
 	
+	public MediumResponse(MediumRequest mediumReqEntity) {
+		// TODO Auto-generated constructor stub
+		this.mediumId=mediumReqEntity.getMediumId();
+		this.mediumLanguage=mediumReqEntity.getMediumLanguage();
+	}
+
 	public Integer getMediumId() {
 		return mediumId;
 	}

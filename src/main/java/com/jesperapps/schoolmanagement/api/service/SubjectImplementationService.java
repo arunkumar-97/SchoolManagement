@@ -27,23 +27,23 @@ public class SubjectImplementationService implements SubjectService {
 	}
 
 
-	@Override
-	public Subject checksubject(String subjectName,Class clas) {
-		
-		return subjectRepository.findBySubjectNameAndStatusNotAndClasses(subjectName, StatusClass.DELETED,clas);
-	}
+//	@Override
+//	public Subject checksubject(String subjectName,Class clas) {
+//		
+//		return subjectRepository.findBySubjectNameAndStatusNotAndClasses(subjectName, StatusClass.DELETED,clas);
+//	}
 
 
 	@Override
-	public Subject createnewSubject(String subjectName, Integer subjectId, String status,Integer classId) {
+	public Subject createnewSubject(String subjectName, Integer subjectId, String status) {
 		Subject newsubject=new Subject();
 		newsubject.setSubjectName(subjectName);
 		newsubject.setSubjectId(subjectId);
 		newsubject.setStatus(status);
-		Class requestedClass = classService.findById(classId);
-		newsubject.setClasses(requestedClass);
-		newsubject.setCls(requestedClass);
-		requestedClass.addSubject(newsubject);
+//		Class requestedClass = classService.findById(classId);
+//		newsubject.setClasses(requestedClass);
+//		newsubject.setCls(requestedClass);
+//		requestedClass.addSubject(newsubject);
 		subjectRepository.save(newsubject);
 		return (newsubject);
 	}
@@ -90,6 +90,13 @@ public class SubjectImplementationService implements SubjectService {
 		return subjectRepository.findByStatusIsNot(StatusSubject.DELETED);
 	
 	
+	}
+
+
+	@Override
+	public Subject checkSubject(String subjectName) {
+		// TODO Auto-generated method stub
+		return this.subjectRepository.findBySubjectName(subjectName);
 	}
 
 

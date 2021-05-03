@@ -1,5 +1,7 @@
 package com.jesperapps.schoolmanagement.api.model;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
-public class TopicSubscription {
+public class TopicSubscription extends AbstractAuditingEntity implements Serializable {
 
 	
 	@Id

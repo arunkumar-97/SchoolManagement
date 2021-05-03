@@ -42,31 +42,42 @@ public class SubjectController {
 	public SubjectBaseResponse checksubject(@RequestBody SubjectRequest subjectRequest) {
 		SubjectBaseResponse response=new SubjectBaseResponse(409,"Subject already exists");
 		SubjectResponse subjectResponse = new SubjectResponse();
-		response.setSubject(subjectResponse);
-		Class classFromDb=classService.findById(subjectRequest.getClas().getClassId());
-		if(classFromDb !=null) {
-			
-			Subject subjectName=subjectService.checksubject(subjectRequest.getSubjectName(),classFromDb);
-
 		
+		
+	Subject subjectName=subjectService.checkSubject(subjectRequest.getSubjectName());
+		
+		if(subjectName!= null)
+		{
 			
-			if(subjectName!=null) {
-				subjectResponse.setSubjectId(subjectName.getSubjectId());
-				subjectResponse.setSubjectName(subjectRequest.getSubjectName());
-				subjectResponse.setStatus(subjectRequest.getStatus());
-				
-			}
-			else {
-			Subject newsubject=	subjectService.createnewSubject(subjectRequest.getSubjectName(),subjectRequest.getSubjectId(),StatusSubject.getStatus(subjectRequest.getStatus()),subjectRequest.getClas().getClassId());
+		}
+		else
+		{
+//		response.setSubject(subjectResponse);
+//		Class classFromDb=classService.findById(subjectRequest.getClas().getClassId());
+//		if(classFromDb !=null) {
+//			
+//			Subject subjectName=subjectService.checksubject(subjectRequest.getSubjectName(),classFromDb);
+//
+//		
+//			
+//			if(subjectName!=null) {
+//				subjectResponse.setSubjectId(subjectName.getSubjectId());
+//				subjectResponse.setSubjectName(subjectRequest.getSubjectName());
+//				subjectResponse.setStatus(subjectRequest.getStatus());
+//				
+//			}
+//			else {
+//			Subject newsubject=	subjectService.createnewSubject(subjectRequest.getSubjectName(),subjectRequest.getSubjectId(),StatusSubject.getStatus(subjectRequest.getStatus()),subjectRequest.getClas().getClassId());
+			Subject newsubject=	subjectService.createnewSubject(subjectRequest.getSubjectName(),subjectRequest.getSubjectId(),StatusSubject.getStatus(subjectRequest.getStatus()));
 			subjectResponse.setSubjectId(newsubject.getSubjectId());
 			subjectResponse.setSubjectName(newsubject.getSubjectName());
 			subjectResponse.setStatus(StatusSubject.getStatus(newsubject.getStatus()));
-			subjectResponse.setClas(new ClassJSON(newsubject.getClasses()));
-			response.setStatuscode(200);
+//			subjectResponse.setClas(new ClassJSON(newsubject.getClasses()));
+			response.setStatusCode(200);
 			response.setDescription("subject Created successfully");
-			}
+//			}
+//		}
 		}
-		
 		
 		return response;
 		
@@ -87,7 +98,7 @@ public class SubjectController {
 		 if(subjectFromDatabase!=null) {
 			subjectFromDatabase.setSubjectName(subjectRequest.getSubjectName());
 			subjectService.savesubject(subjectFromDatabase);
-			response.setStatuscode(200);
+			response.setStatusCode(200);
 			response.setDescription("successfully updated");
 			subjectResponse.setSubjectId(subjectFromDatabase.getSubjectId());
 			subjectResponse.setSubjectName(subjectRequest.getSubjectName());
@@ -124,7 +135,7 @@ public class SubjectController {
 			subjectResponse.setSubjectId(sub.getSubjectId());
 			subjectResponse.setSubjectName(sub.getSubjectName());
 			subjectResponse.setStatus(sub.getStatus());
-			subjectResponse.setClas(new ClassJSON(sub.getCls()));
+//			subjectResponse.setClas(new ClassJSON(sub.getCls()));
 		}
 		return subjectResponse;
 	}
@@ -140,7 +151,7 @@ public class SubjectController {
 				{
 					subjectService.deleteSubject(subjectFromId);
 					response.setDescription("deleted Successfully");
-					response.setStatuscode(200);
+					response.setStatusCode(200);
 				}
 		return response;
 		

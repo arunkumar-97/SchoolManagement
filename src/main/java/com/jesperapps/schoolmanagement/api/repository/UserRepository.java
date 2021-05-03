@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.jesperapps.schoolmanagement.api.model.School;
 import com.jesperapps.schoolmanagement.api.model.User;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
@@ -18,6 +19,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	Optional<User> findByPhoneNumber(Long phone);
 
 	User findByEmailAndPassword(String email, String password);
+
+	Iterable<User> findBySchool(School schoolFromDb);
 
 	
 

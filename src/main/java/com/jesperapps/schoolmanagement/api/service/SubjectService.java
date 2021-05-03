@@ -9,9 +9,9 @@ import com.jesperapps.schoolmanagement.api.model.Class;
 
 public interface SubjectService {
 
-	Subject checksubject(String subjectName,Class clas);
+//	Subject checksubject(String subjectName,Class clas);
 
-	Subject createnewSubject(String subjectName, Integer subjectId, String status,Integer classId);
+//	Subject createnewSubject(String subjectName, Integer subjectId, String status,Integer classId);
 
 	Subject fromSubjectId(Integer subjectId);
 
@@ -22,6 +22,10 @@ public interface SubjectService {
 	void deleteSubject(Subject subjectFromId);
 
 	List<Subject> findAll();
+
+	Subject createnewSubject(String subjectName, Integer subjectId, String status);
+
+	Subject checkSubject(String subjectName);
 
 
 

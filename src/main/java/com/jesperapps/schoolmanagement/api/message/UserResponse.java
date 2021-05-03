@@ -4,12 +4,19 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.jesperapps.schoolmanagement.api.model.Attachment;
 import com.jesperapps.schoolmanagement.api.model.ClassSubscription;
+import com.jesperapps.schoolmanagement.api.model.School;
+import com.jesperapps.schoolmanagement.api.model.TopicAttachment;
 import com.jesperapps.schoolmanagement.api.model.User;
+import com.jesperapps.schoolmanagement.api.model.UserProfilePicture;
 //import com.jesperapps.schoolmanagement.api.model.UserProfilePicture;
 import com.jesperapps.schoolmanagement.api.model.UserType;
+import com.jesperapps.schoolmanagement.api.modelmessage.AnswerAttachmentJSON;
 
-public class UserResponse extends BaseResponseForUser{
+
+
+public class UserResponse extends BaseResponse{
 
 	
 	private Integer userId;
@@ -21,6 +28,10 @@ public class UserResponse extends BaseResponseForUser{
 	private String userProfilePicture;
 //	private String confirmPassword;
 	private String authenticationType;
+	private AnswerAttachmentJSON attachment;
+	private School school;
+	
+	
 	private List<SubscriptionResponse> subscriptionForm;
 
 	
@@ -78,6 +89,7 @@ public class UserResponse extends BaseResponseForUser{
 		this.userType = userFromDb.getUserType() != null? userFromDb.getUserType().getUserTypeRole() : null;
 //		this.userProfilePicture=user.getUserProfile() != null ? user.getUserProfile().getPictureName() : null;
 		this.authenticationType=userFromDb.getAuthentication();
+		this.school=userFromDb2.getSchool();
 	}
 	public UserResponse(UserRequest userFromDb) {
 		// TODO Auto-generated constructor stub
@@ -87,7 +99,21 @@ public class UserResponse extends BaseResponseForUser{
 //		this.password = userFromDb.getPassword();
 		this.phoneNumber = userFromDb.getPhoneNumber();
 		this.userType = userFromDb.getUserType() != null? userFromDb.getUserType().getUserTypeRole() : null;
+		Attachment topicAttachmentFromDB = userFromDb.getAttachment();
+		if(topicAttachmentFromDB !=null) {
+			this.setAttachment(new AnswerAttachmentJSON(attachment));
+		}
+//		if(topicAttachmentFromDB !=null) {
+//			topicAttachmentFromDB.forEach(attachment -> {
+//				this.addTopicAttachment(new AnswerAttachmentJSON(attachment));
+//			});
+//		}					
 	}
+
+//	public UserResponse(int userId2, String userName2, String email2, String authentication, UserType userType2) {
+//		// TODO Auto-generated constructor stub
+//		this.userType=userType2.getUserTypeRole();
+//	}
 	public String getUserProfilePicture() {
 		return userProfilePicture;
 	}
@@ -137,6 +163,12 @@ public class UserResponse extends BaseResponseForUser{
 
 	
 	
+	public School getSchool() {
+		return school;
+	}
+	public void setSchool(School school) {
+		this.school = school;
+	}
 	public String getUserType() {
 		return userType;
 	}
@@ -166,14 +198,29 @@ public class UserResponse extends BaseResponseForUser{
 	public void setSubscriptionForm(List<SubscriptionResponse> subscriptionForm) {
 		this.subscriptionForm = subscriptionForm;
 	}
+	public AnswerAttachmentJSON getAttachment() {
+		return attachment;
+	}
+	public void setAttachment(AnswerAttachmentJSON attachment) {
+		this.attachment = attachment;
+	}
+	
 	public void setSubscriptionFormFromUser(Set<ClassSubscription> subscriptionFormList) {
 		if(subscriptionFormList == null) {
 			this.subscriptionForm = null;
 		}else {
 		this.subscriptionForm = subscriptionFormList.stream().map((subscription) -> new SubscriptionResponse(subscription)).collect(Collectors.toList());
 		}
+		
 		}
-
+	@Override
+	public String toString() {
+		return "UserResponse [userId=" + userId + ", getStatusCode()=" + getStatusCode() + ", userName=" + userName + ", email=" + email + ", phoneNumber="
+				+ phoneNumber + ", userType=" + userType + ", userProfilePicture=" + userProfilePicture
+				+ ", authenticationType=" + authenticationType + ", school=" + school + ", subscriptionForm="
+				+ subscriptionForm  + "]";
+	}
+	
 	
 	
 }

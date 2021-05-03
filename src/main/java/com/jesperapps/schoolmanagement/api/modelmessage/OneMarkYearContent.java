@@ -3,26 +3,24 @@ package com.jesperapps.schoolmanagement.api.modelmessage;
 import java.util.List;
 
 import com.jesperapps.schoolmanagement.api.message.ClassJSON;
+import com.jesperapps.schoolmanagement.api.model.ClassSubjects;
+import com.jesperapps.schoolmanagement.api.model.SchoolClasses;
 
 public class OneMarkYearContent {
 	
-	private ClassJSON clas;
-	private SubjectJSON subject;
+	private ClassSubjects classSubjects;
 	private YearJSON year;
 	private List<OneMarkQuestionJSON> mcq;
 	
+
 	
-	public ClassJSON getClas() {
-		return clas;
+	
+	
+	public ClassSubjects getClassSubjects() {
+		return classSubjects;
 	}
-	public void setClas(ClassJSON clas) {
-		this.clas = clas;
-	}
-	public SubjectJSON getSubject() {
-		return subject;
-	}
-	public void setSubject(SubjectJSON subject) {
-		this.subject = subject;
+	public void setClassSubjects(ClassSubjects classSubjects) {
+		this.classSubjects = classSubjects;
 	}
 	public YearJSON getYear() {
 		return year;

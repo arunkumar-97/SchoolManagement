@@ -37,9 +37,9 @@ public class TopicController {
 		TopicBaseResponse response = new TopicBaseResponse(200, "Topics created successfully");
 		response.setTopic(null);
 		topicRequestList.forEach(topicRequest -> {
-			Topic topicFromDB = topicService.checkTopic(topicRequest.getTopic().getTopicName());
+			Topic topicFromDB = topicService.checkTopic(topicRequest.getTopic().getTopicName(),topicRequest.getTopic().getSchool());
 			if(topicFromDB == null) {
-				topicFromDB = topicService.createnewTopic(topicRequest.getTopic().getTopicId(),topicRequest.getTopic().getTopicName());
+				topicFromDB = topicService.createnewTopic(topicRequest.getTopic().getTopicId(),topicRequest.getTopic().getTopicName(),topicRequest.getTopic().getSchool());
 				if(topicRequest.getAttachment() != null) {
 					this.topicService.addTopicAttachment(topicFromDB, topicRequest.getAttachment());
 				}
@@ -51,7 +51,7 @@ public class TopicController {
 				topicResponse.setTopicId(topicFromDB.getTopicId());
 				topicResponse.setTopicName(topicFromDB.getTopicName());
 				response.setTopic(topicResponse);
-				response.setStatuscode(409);
+				response.setStatusCode(409);
 				response.setDescription("topic already exists");
 			}
 			this.topicService.saveTopic(topicFromDB);
@@ -61,7 +61,7 @@ public class TopicController {
 	
 	
 	@GetMapping("/topic")
-private List<TopicResponse> getAllTopics() {
+	private List<TopicResponse> getAllTopics() {
 		
 		List<TopicResponse> response=new ArrayList<>();
 		topicService.findAll().forEach(topic ->{

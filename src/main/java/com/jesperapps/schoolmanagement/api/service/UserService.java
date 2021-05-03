@@ -8,6 +8,7 @@ import com.jesperapps.schoolmanagement.api.message.OtpResponse;
 //import com.jesperapps.schoolmanagement.api.message.UserListResponse;
 import com.jesperapps.schoolmanagement.api.message.UserRequestWithProfilePicture;
 import com.jesperapps.schoolmanagement.api.message.UserResponse;
+import com.jesperapps.schoolmanagement.api.model.School;
 //import com.jesperapps.schoolmanagement.api.model.Class;
 import com.jesperapps.schoolmanagement.api.model.User;
 
@@ -30,5 +31,9 @@ public interface UserService {
 	User save(User user);
 
 	User findByEmailAndPassword(String email, String password);
+
+	Iterable<User> findBySchool(School schoolFromDb);
+
+	UserResponse addMultipleUser(List<UserRequestWithProfilePicture> userRequestWithProfilePicture);
 
 }

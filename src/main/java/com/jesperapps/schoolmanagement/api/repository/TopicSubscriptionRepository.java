@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-
+import com.jesperapps.schoolmanagement.api.model.School;
 import com.jesperapps.schoolmanagement.api.model.Topic;
 import com.jesperapps.schoolmanagement.api.model.TopicSubscription;
 import com.jesperapps.schoolmanagement.api.model.User;
@@ -20,4 +20,6 @@ public interface TopicSubscriptionRepository  extends JpaRepository<TopicSubscri
 	List<TopicSubscription> findByUserTopic(User userFromDb);
 
 	List<TopicSubscription> findAllByTopic_topicIdAndUserTopic_userId(Integer topicId, Integer userId);
+
+	List<TopicSubscription> findAllByTopic_School(School school);
 }

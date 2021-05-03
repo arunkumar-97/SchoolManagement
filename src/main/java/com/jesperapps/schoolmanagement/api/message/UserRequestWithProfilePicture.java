@@ -2,6 +2,8 @@ package com.jesperapps.schoolmanagement.api.message;
 
 
 import com.jesperapps.schoolmanagement.api.model.Attachment;
+import com.jesperapps.schoolmanagement.api.model.School;
+import com.jesperapps.schoolmanagement.api.model.UserType;
 
 public class UserRequestWithProfilePicture {
 
@@ -10,9 +12,28 @@ public class UserRequestWithProfilePicture {
 	private String password;
 	private Long phoneNumber;
 	private String authenticationType;
-	private UserTypeRequest userType;
+	private UserType userType;
+	private String createdBy;
+	private String updatedBy;
+	private School school;
 	private Attachment attachment;
 	
+	
+	
+	
+	
+	public String getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
 	public String getUserName() {
 		return userName;
 	}
@@ -43,10 +64,11 @@ public class UserRequestWithProfilePicture {
 	public void setAttachment(Attachment attachment) {
 		this.attachment = attachment;
 	}
-	public UserTypeRequest getUserType() {
+	
+	public UserType getUserType() {
 		return userType;
 	}
-	public void setUserType(UserTypeRequest userType) {
+	public void setUserType(UserType userType) {
 		this.userType = userType;
 	}
 	public String getAuthenticationType() {
@@ -55,6 +77,19 @@ public class UserRequestWithProfilePicture {
 	public void setAuthentication(String authentication) {
 		this.authenticationType = authentication;
 	}
+	public School getSchool() {
+		return school;
+	}
+	public void setSchool(School school) {
+		this.school = school;
+	}
+	@Override
+	public String toString() {
+		return "UserRequestWithProfilePicture [userName=" + userName + ", email=" + email + ", password=" + password
+				+ ", phoneNumber=" + phoneNumber + ", authenticationType=" + authenticationType + ", userType="
+				+ userType + ", school=" + school + ", attachment=" + attachment + "]";
+	}
+	
 	
 	
 }

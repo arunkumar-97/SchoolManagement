@@ -1,5 +1,6 @@
 package com.jesperapps.schoolmanagement.api.message;
 
+import com.jesperapps.schoolmanagement.api.model.Attachment;
 import com.jesperapps.schoolmanagement.api.model.User;
 import com.jesperapps.schoolmanagement.api.model.UserType;
 
@@ -10,7 +11,10 @@ public class UserRequest extends BaseResponse {
 	private String password;
 	private String confirmPassword;
 	private Long phoneNumber;
+	private String createdBy;
+	private String updatedBy;
 	private UserType userType;
+	private Attachment attachment;
 	
 	
 	
@@ -23,6 +27,7 @@ public class UserRequest extends BaseResponse {
 		this.confirmPassword=userData.getConfirmPassword();
 		this.phoneNumber=userData.getPhoneNumber();
 		this.userType=userData.getUserType();
+		
 	}
 
 	public UserRequest() {
@@ -81,6 +86,30 @@ public class UserRequest extends BaseResponse {
 
 	public void setUserType(UserType userType) {
 		this.userType = userType;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	public Attachment getAttachment() {
+		return attachment;
+	}
+
+	public void setAttachment(Attachment attachment) {
+		this.attachment = attachment;
 	}
 
 	

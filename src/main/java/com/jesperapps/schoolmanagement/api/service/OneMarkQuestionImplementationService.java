@@ -7,9 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jesperapps.schoolmanagement.api.model.Class;
+import com.jesperapps.schoolmanagement.api.model.ClassSubjects;
 import com.jesperapps.schoolmanagement.api.model.OneMarkAnswers;
 import com.jesperapps.schoolmanagement.api.model.OneMarkQuestion;
-
+import com.jesperapps.schoolmanagement.api.model.SchoolClasses;
 import com.jesperapps.schoolmanagement.api.model.Subject;
 import com.jesperapps.schoolmanagement.api.model.Year;
 import com.jesperapps.schoolmanagement.api.modelmessage.OneMarkAnswerJSON;
@@ -70,27 +71,30 @@ public class OneMarkQuestionImplementationService implements OneMarkQuestionServ
 	
 
 	@Override
-	public void saveQuestionWithSubjectAndYear(OneMarkQuestion newQuestion, Subject subject, Year year, Class clas) {
-		if(subject != null) {
-			newQuestion.setSubjects(subject);
-			subject.addQuestion(newQuestion);
+	public void saveQuestionWithSubjectAndYear(OneMarkQuestion newQuestion, Year year,ClassSubjects classSubjects) {
+		if(classSubjects != null) {
+			newQuestion.setClassSubjects(classSubjects);
+			classSubjects.addQuestion(newQuestion);
 			}
 			if(year != null) {
 			newQuestion.setYears(year);
 			year.addQuestion(newQuestion);
 			}
-			if(clas !=null) {
-				newQuestion.setClasss(clas);
-				clas.addQuestion(newQuestion);
-			}
+			
 			this.saveQuestion(newQuestion);
 		
 	}
 
 	@Override
-	public List<OneMarkQuestion> findBySubjectAndYearAndClass(Subject subjectFromDb, Class classFromDb, Year yearFromDb) {
-		
-		return this.oneMarkQuestionRepository.findBySubjectsAndYearsAndClasss(subjectFromDb,yearFromDb,classFromDb);
+	public List<OneMarkQuestion> findByClassSubjectsAndYears(ClassSubjects classFromDb, Year yearFromDb) {
+		// TODO Auto-generated method stub
+		return this.oneMarkQuestionRepository.findByClassSubjectsAndYears(classFromDb,yearFromDb);
 	}
+
+//	@Override
+//	public List<OneMarkQuestion> findBySchoolClassesAndYears(SchoolClasses schoolClasses, Year yearFromDb) {
+//		
+//		return this.oneMarkQuestionRepository.findBySchoolClassesAndYears(schoolClasses,yearFromDb);
+//	}
 
 }

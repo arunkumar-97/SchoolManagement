@@ -1,9 +1,12 @@
 package com.jesperapps.schoolmanagement.api.controller;
 
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +21,7 @@ import com.jesperapps.schoolmanagement.api.model.TopicAttachment;
 import com.jesperapps.schoolmanagement.api.modelmessage.TopicJSON;
 import com.jesperapps.schoolmanagement.api.service.TopicAttachmentService;
 import com.jesperapps.schoolmanagement.api.service.TopicService;
+import com.jesperapps.schoolmanagement.api.utils.StorageUtils;
 
 
 
@@ -26,6 +30,9 @@ import com.jesperapps.schoolmanagement.api.service.TopicService;
 public class TopicAttachmentController {
 	
 	
+	private static final String Paths = StorageUtils.getFolderLocation("video_answers");;
+
+
 	@Autowired
 	private TopicService topicService;
 	
@@ -55,7 +62,7 @@ public class TopicAttachmentController {
 			return response;
 		}
 		response.setDescription("error");
-		response.setStatuscode(409);
+		response.setStatusCode(409);
 		return null;
 		
 	
@@ -74,6 +81,46 @@ List<TopicAttachment>	AttachmentFromDb=IdFromDb.getTopicAttachment();
 		topic=new TopicJSON(IdFromDb);
 	}
 	return topic;
+		
+		
+	}
+	
+	@DeleteMapping("/attachments/{topicId}")
+		public TopicJSON deleteAllAttachments(@PathVariable Integer topicId) {
+		System.out.println("Id" + topicId);
+		Topic IdFromDb=topicService.findByTopicId(topicId);
+		List<TopicAttachment>	AttachmentFromDb=IdFromDb.getTopicAttachment();
+//		for(TopicAttachment each:AttachmentFromDb) {
+//			
+//		}
+	if(AttachmentFromDb != null) {
+		for(TopicAttachment each:AttachmentFromDb) {
+//			each.getPictureName();
+			System.out.println(Paths +each.getPictureName() + "//"+each.getPreviewName());
+			File file = new File(Paths +each.getPictureName());
+//			File file1=new File(Paths +each.getPreviewName()); 
+			if(file.exists()) {
+				 if (file.delete()) {
+					 System.out.println("file" + file.getName());
+		               System.out.println(file.getName() + " is deleted!");
+		           } else {
+		               System.out.println("Sorry, unable to delete the file.");
+		           }
+			}
+			
+//			 if (file1.delete()) {
+//	               System.out.println(file1.getName() + " is deleted!");
+//	           } else {
+//	               System.out.println("Sorry, unable to delete the file.");
+//	           }
+		}
+		
+	
+	}
+		
+			
+		return null;
+		
 		
 		
 	}

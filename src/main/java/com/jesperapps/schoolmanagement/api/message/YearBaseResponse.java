@@ -6,8 +6,7 @@ public class YearBaseResponse extends BaseResponse{
 	
 	
 	public YearBaseResponse(int statuscode,String description) {
-		this.statuscode=statuscode;
-		this.description=description;
+	super(statuscode,description);
 		
 	}
 

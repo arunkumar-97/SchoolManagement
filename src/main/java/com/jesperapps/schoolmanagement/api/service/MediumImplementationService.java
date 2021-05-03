@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.jesperapps.schoolmanagement.api.model.Class;
 import com.jesperapps.schoolmanagement.api.message.ClassResponse;
 import com.jesperapps.schoolmanagement.api.model.Medium;
+import com.jesperapps.schoolmanagement.api.model.School;
 import com.jesperapps.schoolmanagement.api.repository.MediumRepository;
 
 @Service
@@ -46,6 +47,36 @@ public class MediumImplementationService implements MediumService{
 		// TODO Auto-generated method stub
 		return mediumRepository.findAll();
 	}
+
+	@Override
+	public Medium findById(Integer mediumId) {
+		// TODO Auto-generated method stub
+		return mediumRepository.findMediumByMediumId(mediumId);
+	}
+
+	@Override
+	public List<Medium> findAllByMediumLanguage(String mediumLanguage) {
+		// TODO Auto-generated method stub
+		return mediumRepository.findAllByMediumLanguage(mediumLanguage);
+	}
+
+	@Override
+	public Medium save(Medium mediums) {
+		// TODO Auto-generated method stub
+		return mediumRepository.save(mediums);
+	}
+
+	@Override
+	public void deleteMedium(Medium mediumFromDb) {
+		// TODO Auto-generated method stub
+		mediumRepository.delete(mediumFromDb);
+	}
+
+//	@Override
+//	public Iterable<Medium> findBySchool(School schoolFromDb) {
+//		// TODO Auto-generated method stub
+//		return mediumRepository.findBySchool(schoolFromDb);
+//	}
 
 	
 

@@ -1,5 +1,6 @@
 package com.jesperapps.schoolmanagement.api.model;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,7 +21,7 @@ import com.jesperapps.schoolmanagement.api.message.UserRequestWithProfilePicture
 
 
 @Entity
-public class User {
+public class User extends AbstractAuditingEntity implements Serializable {
 	
 	
 	@Id
@@ -62,6 +63,10 @@ public class User {
 	}
 
 
+	
+	@ManyToOne
+	@JoinColumn(name="schoolId" , referencedColumnName = "schoolId")
+	private School school;
 
 	@ManyToOne
 	@JoinColumn(name="userTypeId", referencedColumnName ="userTypeId")
@@ -87,6 +92,17 @@ public class User {
 	private Set<Bookmark> bookmark;
 	
 	
+	
+	
+	
+	public School getSchool() {
+		return school;
+	}
+
+	public void setSchool(School school) {
+		this.school = school;
+	}
+
 	public int getUserId() {
 		return userId;
 	}
@@ -194,9 +210,6 @@ public class User {
 		this.topicAttachmentSubscription = topicAttachmentSubscription;
 	}
 
-	public User() {
-		
-	}
 	
 	
 	
@@ -232,16 +245,98 @@ public class User {
 		this.authentication=userRequest.getAuthenticationType();
 	}
 
-	public User(Integer userId2, UserRequest userRequestEntity) {
-		this.userId = userRequestEntity.getUserId();
-		this.userName = userRequestEntity.getUserName();
-		this.phoneNumber = userRequestEntity.getPhoneNumber();
-		this.email = userRequestEntity.getEmail();
-		this.password=userRequestEntity.getPassword();
-		this.confirmPassword=userRequestEntity.getConfirmPassword();
-//		this.authentication=userRequestEntity.getAuthenticationType();
-//		this.alternatePhoneNumber = userRequestEntity.getAlternatePhoneNumber();
-		this.userType = userRequestEntity.getUserType();
+//	public User(Integer userId2, UserRequest userRequestEntity) {
+//		this.userId = userRequestEntity.getUserId();
+//		this.userName = userRequestEntity.getUserName();
+//		this.phoneNumber = userRequestEntity.getPhoneNumber();
+//		this.email = userRequestEntity.getEmail();
+////		this.password=userRequestEntity.getPassword();
+//		this.confirmPassword=userRequestEntity.getConfirmPassword();
+////		this.authentication=userRequestEntity.getAuthenticationType();
+////		this.alternatePhoneNumber = userRequestEntity.getAlternatePhoneNumber();
+//		this.userType = userRequestEntity.getUserType();
+//	}
+
+//	public User(Integer userId2, User userDatas, UserRequest userRequestEntity) {
+//		// TODO Auto-generated constructor stub
+//		this.userId = userRequestEntity.getUserId();
+//		this.userName = userRequestEntity.getUserName();
+//		this.phoneNumber = userRequestEntity.getPhoneNumber();
+//		this.email = userRequestEntity.getEmail();
+//		this.password=userDatas.getPassword();
+//		this.confirmPassword=userRequestEntity.getConfirmPassword();
+////		this.authentication=userRequestEntity.getAuthenticationType();
+////		this.alternatePhoneNumber = userRequestEntity.getAlternatePhoneNumber();
+//		this.userType = userRequestEntity.getUserType();
+//	}
+
+//	public User(Integer userId2, String password2, UserRequest userRequestEntity) {
+//		this.userId = userRequestEntity.getUserId();
+//		this.userName = userRequestEntity.getUserName();
+//		this.phoneNumber = userRequestEntity.getPhoneNumber();
+//		this.email = userRequestEntity.getEmail();
+//		this.password=password2;
+//		this.confirmPassword=userRequestEntity.getConfirmPassword();
+////		this.authentication=userRequestEntity.getAuthenticationType();
+////		this.alternatePhoneNumber = userRequestEntity.getAlternatePhoneNumber();
+//		this.userType = userRequestEntity.getUserType();	// TODO Auto-generated constructor stub
+//	
+//	}
+
+//	public User(Integer userId2, String password2, int verificationStatus2, String authentication2,
+//			UserRequest userRequestEntity) {
+//		// TODO Auto-generated constructor stub
+//		this.userId = userRequestEntity.getUserId();
+//		this.userName = userRequestEntity.getUserName();
+//		this.phoneNumber = userRequestEntity.getPhoneNumber();
+//		this.email = userRequestEntity.getEmail();
+//		this.password=password2;
+//		this.verificationStatus=verificationStatus2;
+////		this.confirmPassword=userRequestEntity.getConfirmPassword();
+//	this.authentication=authentication2;
+////		this.alternatePhoneNumber = userRequestEntity.getAlternatePhoneNumber();
+//		this.userType = userRequestEntity.getUserType();
+//	}
+
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public User(Integer userId2, String password2, int verificationStatus2, String authentication2, String createdBy,
+			String updatedBy, UserType userType2, UserProfilePicture userProfile2, School school2,
+			UserRequest userRequestEntity) {
+		// TODO Auto-generated constructor stub
+		this.userId=userRequestEntity.getUserId();
+		this.userName=userRequestEntity.getUserName();
+		this.email=userRequestEntity.getEmail();
+		this.password=password2;
+		this.phoneNumber=userRequestEntity.getPhoneNumber();
+		this.verificationStatus=verificationStatus2;
+		this.authentication=authentication2;
+		this.setLastUpdatedBy(userRequestEntity.getUpdatedBy());
+		this.userType=userType2;
+		this.userProfile=userProfile2;
+		this.school=school2;
+	}
+
+//	public User(Integer userId2, String password2, int verificationStatus2, String authentication2, String createdBy,
+//			String updatedBy, School school,UserRequest userRequestEntity) {
+//		// TODO Auto-generated constructor stub
+//		
+//		this.userId = userRequestEntity.getUserId();
+//		this.userName = userRequestEntity.getUserName();
+//		this.phoneNumber = userRequestEntity.getPhoneNumber();
+//		this.email = userRequestEntity.getEmail();
+//		this.password=password2;
+//		this.verificationStatus=verificationStatus2;
+////		this.confirmPassword=userRequestEntity.getConfirmPassword();
+//		this.setCreatedBy(createdBy);
+//		this.setLastUpdatedBy(userRequestEntity.getUpdatedBy());
+//		this.authentication=authentication2;
+//		this.school=school;
+////		this.alternatePhoneNumber = userRequestEntity.getAlternatePhoneNumber();
+//		this.userType = userRequestEntity.getUserType();
+//	}
 	}
 
 	
@@ -253,4 +348,4 @@ public class User {
 	
 	
 
-}
+

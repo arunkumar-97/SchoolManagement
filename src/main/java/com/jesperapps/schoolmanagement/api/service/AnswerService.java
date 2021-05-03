@@ -13,7 +13,7 @@ static final String BASE_URL = "/profile";
 
 	Answers getAnswerId(Integer answerId);
 
-	void saveAnswer(Answers answerFromDb);
+	Answers saveAnswer(Answers answerFromDb);
 
 
 }

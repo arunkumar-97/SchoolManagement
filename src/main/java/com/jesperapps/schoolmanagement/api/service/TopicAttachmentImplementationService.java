@@ -7,6 +7,8 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Random;
+
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -80,9 +82,16 @@ public class TopicAttachmentImplementationService  implements TopicAttachmentSer
 
 	@Override
 	public boolean saveFile(AnswerAttachmentJSON requestAttachment) {
-		if(this.saveFileToLocalStorage(requestAttachment.getName(), requestAttachment.getFileByte())) {
+		String[] fname = requestAttachment.getName().split("\\.(?=[^\\.]+$)");
+//		System.out.println("Name" + fname);
+//		System.out.println("Name" + fname.length);
+//		System.out.println("Name" + fname[0]);
+		Random rand = new Random(); 
+		int rand_int1 = rand.nextInt(1000); 
+		if(this.saveFileToLocalStorage(requestAttachment.getName(),requestAttachment.getFileByte())) {
+		
 			if(requestAttachment.getPreviewfileByte() !=null) {
-				if(this.saveFileToLocalStorage("Preview" +requestAttachment.getName(),requestAttachment.getPreviewfileByte())){
+				if(this.saveFileToLocalStorage("Preview"+requestAttachment.getName(),requestAttachment.getPreviewfileByte())){
 					return true;
 					}
 				return false;

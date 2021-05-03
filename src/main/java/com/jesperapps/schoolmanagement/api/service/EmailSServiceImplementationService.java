@@ -124,7 +124,7 @@ public class EmailSServiceImplementationService implements EmailSenderService {
 			msg.setSubject("OTP FOR LOGIN");
 			msg.setText("Hi "+otpUser.getUserName()+","
 					
-					+ "<br> <br> Use OTP "+oneTimePassword.getConfirmationToken() + " to login to your Educatizzy Account.Educatizzy doesn't ask for OTP or Contact number to be shared with anyone including Educatizzy Personnel");
+					+ " Use OTP "+oneTimePassword.getConfirmationToken() + " to login to your Educatizzy Account.Educatizzy doesn't ask for OTP or Contact number to be shared with anyone including Educatizzy Personnel");
 			
 			
 			msg.setSentDate(new Date());

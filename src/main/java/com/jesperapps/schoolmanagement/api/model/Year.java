@@ -3,6 +3,7 @@ package com.jesperapps.schoolmanagement.api.model;
 
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,11 +15,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 
 
 @Entity
-public class Year {
+public class Year extends AbstractAuditingEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer yearId;
@@ -26,6 +29,7 @@ public class Year {
 	private Integer year;
 	
 	
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL,mappedBy ="year")
 	private List<Question> questionsList;
 	

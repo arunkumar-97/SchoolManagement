@@ -6,4 +6,6 @@ import com.jesperapps.schoolmanagement.api.model.UserProfilePicture;
 public interface UserProfilePictureRepository extends JpaRepository<UserProfilePicture, Integer>
 {
 
+	UserProfilePicture findByPictureId(Integer pictureId);
+
 }

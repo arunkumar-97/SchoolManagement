@@ -3,20 +3,16 @@ package com.jesperapps.schoolmanagement.api.modelmessage;
 import java.util.List;
 
 import com.jesperapps.schoolmanagement.api.message.ClassJSON;
+import com.jesperapps.schoolmanagement.api.model.ClassSubjects;
+import com.jesperapps.schoolmanagement.api.model.SchoolClasses;
 
 public class YearContent {
 	
-	private ClassJSON clas;
-	private SubjectJSON subject;
+	private ClassSubjects classSubjects;
 	private YearJSON year;
 	private List<QuestionJson> question;
 	
-	public SubjectJSON getSubject() {
-		return subject;
-	}
-	public void setSubject(SubjectJSON subject) {
-		this.subject = subject;
-	}
+	
 	public List<QuestionJson> getQuestion() {
 		return question;
 	}
@@ -29,12 +25,14 @@ public class YearContent {
 	public void setYear(YearJSON year) {
 		this.year = year;
 	}
-	public ClassJSON getClas() {
-		return clas;
+	public ClassSubjects getClassSubjects() {
+		return classSubjects;
 	}
-	public void setClas(ClassJSON clas) {
-		this.clas = clas;
+	public void setClassSubjects(ClassSubjects classSubjects) {
+		this.classSubjects = classSubjects;
 	}
+	
+
 	
 	
 	

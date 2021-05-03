@@ -9,7 +9,6 @@ public class SubjectResponse {
 	private Integer subjectId;
 	private String subjectName;
 	private String status;
-	private ClassJSON clas;
 	
 	public SubjectResponse() {
 	}
@@ -47,12 +46,12 @@ public class SubjectResponse {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public ClassJSON getClas() {
-		return clas;
-	}
-	public void setClas(ClassJSON clas) {
-		this.clas = clas;
-	}
-	
+//	public ClassJSON getClas() {
+//		return clas;
+//	}
+//	public void setClas(ClassJSON clas) {
+//		this.clas = clas;
+//	}
+//	
 	
 }

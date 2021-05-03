@@ -1,5 +1,11 @@
 package com.jesperapps.schoolmanagement.api.message;
 
+import java.util.List;
+
+import com.jesperapps.schoolmanagement.api.model.EducationBoard;
+import com.jesperapps.schoolmanagement.api.model.Medium;
+import com.jesperapps.schoolmanagement.api.model.School;
+
 public class ClassRequest {
 	
 	
@@ -7,21 +13,22 @@ public class ClassRequest {
 	private Integer classId;
 	private String className;
 	private String status;
-	private MediumResponse medium;
-	private EducationBoardJson educationBoard;
+	private Medium medium;
+	private EducationBoard educationBoard;
+
 	
-	
-	public EducationBoardJson getEducationBoard() {
-		return educationBoard;
-	}
-	public void setEducationBoard(EducationBoardJson educationBoard) {
-		this.educationBoard = educationBoard;
-	}
-	public MediumResponse getMedium() {
+
+	public Medium getMedium() {
 		return medium;
 	}
-	public void setMedium(MediumResponse medium) {
+	public void setMedium(Medium medium) {
 		this.medium = medium;
+	}
+	public EducationBoard getEducationBoard() {
+		return educationBoard;
+	}
+	public void setEducationBoard(EducationBoard educationBoard) {
+		this.educationBoard = educationBoard;
 	}
 	public Integer getClassId() 
 	{

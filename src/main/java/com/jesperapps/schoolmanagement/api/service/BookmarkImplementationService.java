@@ -40,6 +40,12 @@ public class BookmarkImplementationService  implements  BookmarkService {
 		return bookmarkRepository.findByBookmarkId(bookmarkId);
 	}
 
+	@Override
+	public void deleteBookmark(Bookmark cls) {
+		// TODO Auto-generated method stub
+		bookmarkRepository.delete(cls);
+	}
+
 	
 	
 }

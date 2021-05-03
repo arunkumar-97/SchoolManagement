@@ -6,9 +6,7 @@ public class TopicBaseResponse extends BaseResponse {
 	private TopicResponse topic;
 	
 	public TopicBaseResponse(int statuscode,String description) {
-		this.statuscode=statuscode;
-		this.description=description;
-		
+super(statuscode,description);
 	}
 
 	public TopicResponse getTopic() {

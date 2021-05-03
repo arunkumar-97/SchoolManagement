@@ -2,35 +2,66 @@ package com.jesperapps.schoolmanagement.api.message;
 
 public  abstract class BaseResponse {
 	
-	public int statuscode=200;
-	public String description="Listed Succesfully" ;
+	public static final int SUCCESS = 200;
+	public static final int FAILURE = 400;
+	//@JsonProperty(access = Access.WRITE_ONLY)
+	private Integer statusCode;
+	//@JsonProperty(access = Access.WRITE_ONLY)
+	private String description;
+	//@JsonProperty(access = Access.WRITE_ONLY)
+	private Integer errorCode;
+	//@JsonProperty(access = Access.WRITE_ONLY)
+	private String message;;
 	
-	
-	
-	
+	public BaseResponse(Integer statusCode2, String description2) {
+		this.statusCode=statusCode2;
+		this.description=description2;
+	}
+
 	public BaseResponse() {
-	
+		// TODO Auto-generated constructor stub
 	}
-	
-	public BaseResponse(int statuscode, String description) {
-	
-		this.statuscode=statuscode;
-		this.description=description;
+
+	public Integer getStatusCode() {
+		return statusCode;
 	}
-	public int getStatuscode() {
-		return statuscode;
+
+	public Integer setStatusCode(Integer statusCode) {
+		return this.statusCode = statusCode;
 	}
-	public void setStatuscode(int statuscode) {
-		this.statuscode = statuscode;
-	}
+
 	public String getDescription() {
 		return description;
 	}
-	public void setDescription(String description) {
-		this.description = description;
+
+	public String setDescription(String description) {
+		return this.description = description;
 	}
-	
-	
+
+	public Integer getErrorCode() {
+		return errorCode;
+	}
+
+	public Integer setErrorCode(Integer errorCode) {
+		return this.errorCode = errorCode;
+	}
+
+	public static int getSuccess() {
+		return SUCCESS;
+	}
+
+	public static int getFailure() {
+		return FAILURE;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public String setMessage(String message) {
+		return this.message = message;
+	}
+
 	
 
 }

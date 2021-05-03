@@ -2,14 +2,19 @@ package com.jesperapps.schoolmanagement.api.service;
 
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
 import com.jesperapps.schoolmanagement.api.utils.StatusClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jesperapps.schoolmanagement.api.message.EducationBoardJson;
+import com.jesperapps.schoolmanagement.api.message.MediumResponse;
 import com.jesperapps.schoolmanagement.api.model.Class;
 import com.jesperapps.schoolmanagement.api.model.EducationBoard;
 import com.jesperapps.schoolmanagement.api.model.Medium;
-
+import com.jesperapps.schoolmanagement.api.model.School;
 import com.jesperapps.schoolmanagement.api.repository.ClassRepository;
 
 @Service
@@ -22,6 +27,10 @@ public class ClassImplementationService implements ClassService {
 	private MediumService mediumService;
 	@Autowired
 	private EducationBoardService educationBoardService;
+	
+	
+	@Autowired
+	private SchoolService schoolService;
 	
 	public void addclass(List<Class> classes)
 	{
@@ -94,27 +103,62 @@ public class ClassImplementationService implements ClassService {
 
 
 
+//	@Override
+//	public Class createnewclass(String className, Integer classId, String status, i,String educationBoard) {
+//		Class newclass = new Class();
+//		newclass.setClassName(className);
+//		newclass.setClassId(classId);
+//		newclass.setStatus(status);
+//		Medium requestMedium = mediumService.findMediumFromId(Integer.parseInt(medium));
+//		newclass.setMedium(requestMedium);
+//		EducationBoard requesteB=educationBoardService.findEducationBoardFromId(Integer.parseInt(educationBoard));
+//		newclass.setEducationBoard(requesteB);
+//		requestMedium.addClass(newclass);
+////		List<Subject> classSubjects=newclass.getSubject();
+////		if(classSubjects==null) {
+////			classSubjects=new ArrayList<>();
+////		}
+////		
+////		newclass.setSubject(classSubjects);
+////		classSubjects.add(newSubject);
+//		 classRepository.save(newclass);
+//		return(newclass);
+//	}
+
+
+
 	@Override
-	public Class createnewclass(String className, Integer classId, String status,String medium,String educationBoard) {
-		Class newclass = new Class();
+	public Class checkclass(String className, EducationBoard educationBoard, Medium medium) {
+		// TODO Auto-generated method stub
+		return classRepository.findByClassNameAndEducationBoardAndMediumAndStatusNot(className, educationBoard,medium,StatusClass.DELETED);
+	}
+
+
+
+	@Override
+	public Class createnewclass(String className, Integer classId, String status, int mediumId,
+			Integer educationBoardId) {
+		Class newclass=new Class();
+		
 		newclass.setClassName(className);
 		newclass.setClassId(classId);
 		newclass.setStatus(status);
-		Medium requestMedium = mediumService.findMediumFromId(Integer.parseInt(medium));
+		Medium requestMedium = mediumService.findMediumFromId(mediumId);
 		newclass.setMedium(requestMedium);
-		EducationBoard requesteB=educationBoardService.findEducationBoardFromId(Integer.parseInt(educationBoard));
+		EducationBoard requesteB=educationBoardService.findEducationBoardFromId(educationBoardId);
 		newclass.setEducationBoard(requesteB);
+//		School requestSchool=schoolService.findBySchoolId(integer);
 		requestMedium.addClass(newclass);
-//		List<Subject> classSubjects=newclass.getSubject();
-//		if(classSubjects==null) {
-//			classSubjects=new ArrayList<>();
-//		}
-//		
-//		newclass.setSubject(classSubjects);
-//		classSubjects.add(newSubject);
 		 classRepository.save(newclass);
-		return(newclass);
+			return(newclass);
 	}
+
+
+
+
+
+
+
 
 
 

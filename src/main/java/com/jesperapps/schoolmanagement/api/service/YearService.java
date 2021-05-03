@@ -20,6 +20,8 @@ public interface YearService {
 
 	void deleteYear(Year yearFromDb);
 
+	Year findByYearId(Integer yearId);
+
 	
 
 	

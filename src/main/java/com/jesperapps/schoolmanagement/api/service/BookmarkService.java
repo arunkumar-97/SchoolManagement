@@ -20,6 +20,8 @@ public interface BookmarkService {
 
 	Bookmark findById(int bookmarkId);
 
+	void deleteBookmark(Bookmark cls);
+
 	
 
 }

@@ -12,7 +12,7 @@ public interface SubjectRepository extends JpaRepository<Subject, Integer>{
 
 	Subject findBySubjectId(Integer subjectId);
 	
-	Subject findBySubjectNameAndStatusNotAndClasses(String subjectName, String status,Class clas);
+//	Subject findBySubjectNameAndStatusNotAndClasses(String subjectName, String status,Class clas);
 
 	List<Subject> findByStatusIsNot(String dELETED);
 

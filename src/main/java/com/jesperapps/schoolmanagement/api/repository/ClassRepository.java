@@ -5,7 +5,12 @@
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.jesperapps.schoolmanagement.api.message.EducationBoardJson;
+import com.jesperapps.schoolmanagement.api.message.MediumResponse;
 import com.jesperapps.schoolmanagement.api.model.Class;
+import com.jesperapps.schoolmanagement.api.model.EducationBoard;
+import com.jesperapps.schoolmanagement.api.model.Medium;
+import com.jesperapps.schoolmanagement.api.model.School;
 
 public interface ClassRepository extends JpaRepository<Class, Integer> 
 {
@@ -19,6 +24,11 @@ public interface ClassRepository extends JpaRepository<Class, Integer>
 	Class findByClassNameAndStatusNot(String className, String status);
 	
 	List<Class> findByStatusIsNot(String status);
+
+	Class findByClassNameAndEducationBoardAndMediumAndStatusNot(String className, EducationBoard educationBoard,
+			Medium medium, String dELETED);
+
+	
 
 }
 

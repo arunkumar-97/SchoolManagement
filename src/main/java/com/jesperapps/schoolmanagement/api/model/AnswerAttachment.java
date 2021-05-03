@@ -1,6 +1,9 @@
 package com.jesperapps.schoolmanagement.api.model;
 
 
+import java.io.Serializable;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,8 +24,9 @@ public class AnswerAttachment {
 	    private Integer pictureId;
 	    private String pictureName;
 	    private String pictureLocation;
-	    @OneToOne(mappedBy="imageAttachment")
-	    private Answers answer;
+	    
+	    @OneToOne(mappedBy="imageAttachment",cascade = CascadeType.ALL)
+	    private AnswerContent answerContent;
 	
 	public AnswerAttachment() {
 		super();
@@ -30,6 +34,7 @@ public class AnswerAttachment {
 	
 	
 	public AnswerAttachment(AnswerAttachmentJSON image) {
+	
 		this.pictureName=image.getName();
 	}
 	
@@ -51,13 +56,23 @@ public class AnswerAttachment {
 	public void setPictureLocation(String pictureLocation) {
 		this.pictureLocation = pictureLocation;
 	}
-	public Answers getAnswer() {
-		return answer;
+
+
+	public AnswerContent getAnswerContent() {
+		return answerContent;
 	}
-	public void setAnswer(Answers answer) {
-		this.answer = answer;
+
+
+	public void setAnswerContent(AnswerContent answerContent) {
+		this.answerContent = answerContent;
 	}
-	
+
+
+//	@Override
+//	public String toString() {
+//		return "AnswerAttachment [pictureId=" + pictureId + ", pictureName=" + pictureName + ", pictureLocation="
+//				+ pictureLocation + ", answerContent=" + answerContent + "]";
+//	}
 	
 	
 	

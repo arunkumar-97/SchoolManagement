@@ -52,7 +52,7 @@ public class YearController {
 			yearResponse.setYear(newYear.getYear());
 
 			response.setYear(yearResponse);
-			response.setStatuscode(200);
+			response.setStatusCode(200);
 			response.setDescription("Year Created Successfully");
 			
 		}
@@ -72,7 +72,7 @@ public class YearController {
 				yearResponse.setYearId(yearFromDB.getYearId());
 				yearResponse.setYear(yearFromDB.getYear());
 				response.setYear(yearResponse);
-				response.setStatuscode(409);
+				response.setStatusCode(409);
 				response.setDescription("Year already exists");
 			}
 		});
@@ -111,7 +111,7 @@ public class YearController {
 		{
 			yearService.deleteYear(YearFromDb);
 			response.setDescription("deleted Successfully");
-			response.setStatuscode(200);
+			response.setStatusCode(200);
 		}
 		return response;
 

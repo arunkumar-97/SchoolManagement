@@ -1,5 +1,6 @@
 package com.jesperapps.schoolmanagement.api.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -10,13 +11,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jesperapps.schoolmanagement.api.modelmessage.QuestionJson;
 import com.jesperapps.schoolmanagement.api.utils.StatusQuestion;
 
 @Entity
-public class Question {
+public class Question extends AbstractAuditingEntity implements Serializable{
 	
 		
 		@Id
@@ -26,17 +28,23 @@ public class Question {
 		private String status=StatusQuestion.ACTIVE;
 
 		
-		@OneToMany(cascade = CascadeType.ALL,mappedBy = "question")
-		private List<Answers> answers;
+		@OneToOne(cascade = CascadeType.ALL,mappedBy = "question")
+		private Answers answers;
+		
+//		
+//		@ManyToOne
+//		@JoinColumn(name="subjectId")
+//		private Subject subject;
+//	
+//		@ManyToOne
+//		@JoinColumn(name="classId")
+//		private Class clas;
 		
 		
 		@ManyToOne
-		@JoinColumn(name="subjectId")
-		private Subject subject;
-	
-		@ManyToOne
-		@JoinColumn(name="classId")
-		private Class clas;
+		@JoinColumn(name = "classSubjectsId")
+		private ClassSubjects classSubjects;
+		
 		
 		@ManyToOne
 		@JoinColumn(name="yearId")
@@ -47,8 +55,23 @@ public class Question {
 		}
 		
 		public Question(QuestionJson question) {
-			
+			this.questionId=question.getQuestionId();
+			this.year=question.getYear();
+			this.classSubjects=question.getClassSubjects();
 			this.question = question.getQuestion();
+		
+		}
+
+		public Question(Question question2) {
+			this.questionId=question2.getQuestionId();
+			this.year=question2.getYear();
+			this.classSubjects=question2.getClassSubjects();
+			this.question = question2.getQuestion();
+		}
+
+		public Question(QuestionJson newQuestion, QuestionJson newQuestion2) {
+			// TODO Auto-generated constructor stub
+			this.questionId=newQuestion.getQuestionId();
 		}
 
 		public Integer getQuestionId() {
@@ -67,11 +90,13 @@ public class Question {
 			this.question = question;
 		}
 
-		public List<Answers> getAnswers() {
+		
+
+		public Answers getAnswers() {
 			return answers;
 		}
 
-		public void setAnswers(List<Answers> answers) {
+		public void setAnswers(Answers answers) {
 			this.answers = answers;
 		}
 
@@ -83,13 +108,13 @@ public class Question {
 			this.status = status;
 		}
 
-		public Subject getSubject() {
-			return subject;
-		}
-
-		public void setSubject(Subject subject) {
-			this.subject = subject;
-		}
+//		public Subject getSubject() {
+//			return subject;
+//		}
+//
+//		public void setSubject(Subject subject) {
+//			this.subject = subject;
+//		}
 
 		public Year getYear() {
 			return year;
@@ -99,14 +124,30 @@ public class Question {
 			this.year = year;
 		}
 
-		public Class getClas() {
-			return clas;
+		public ClassSubjects getClassSubjects() {
+			return classSubjects;
 		}
 
-		public void setClas(Class clas) {
-			this.clas = clas;
+		public void setClassSubjects(ClassSubjects classSubjects) {
+			this.classSubjects = classSubjects;
 		}
-		
+
+		@Override
+		public String toString() {
+			return "Question [questionId=" + questionId + ", question=" + question + ", status=" + status + ", answers="
+					+ answers + ", classSubjects=" + classSubjects + ", year=" + year + "]";
+		}
+
+	
+
+//		public Class getClas() {
+//			return clas;
+//		}
+//
+//		public void setClas(Class clas) {
+//			this.clas = clas;
+//		}
+//		
 		
 
 		

@@ -2,8 +2,6 @@ package com.jesperapps.schoolmanagement.api.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +20,14 @@ import com.jesperapps.schoolmanagement.api.message.UserRequest;
 import com.jesperapps.schoolmanagement.api.message.UserRequestWithProfilePicture;
 import com.jesperapps.schoolmanagement.api.message.UserResponse;
 import com.jesperapps.schoolmanagement.api.model.ClassSubscription;
+import com.jesperapps.schoolmanagement.api.model.School;
 import com.jesperapps.schoolmanagement.api.model.User;
-import com.jesperapps.schoolmanagement.api.model.UserType;
+import com.jesperapps.schoolmanagement.api.model.UserProfilePicture;
+import com.jesperapps.schoolmanagement.api.modelmessage.AnswerAttachmentJSON;
+import com.jesperapps.schoolmanagement.api.service.SchoolService;
 import com.jesperapps.schoolmanagement.api.service.SubscriptionFormService;
 import com.jesperapps.schoolmanagement.api.service.UserService;
+
 
 
 @CrossOrigin(origins="*",allowedHeaders="*")
@@ -37,6 +39,10 @@ public class UserController {
 	
 	@Autowired
 	private SubscriptionFormService subscriptionFormService;
+	
+	
+	@Autowired
+	private SchoolService schoolService;
 	
 	@SuppressWarnings("rawtypes")
 	@PostMapping("/user")
@@ -50,11 +56,33 @@ public class UserController {
 		}
 	}
 	
+	@PostMapping("/user/multiple")
+	public ResponseEntity addMultipleUser(@RequestBody List<UserRequestWithProfilePicture> userRequestWithProfilePicture){
+
+		UserResponse createdUsersList = userService.addMultipleUser(userRequestWithProfilePicture);
+		if(createdUsersList != null) {
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(createdUsersList);
+		}else {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(createdUsersList);
+		}
+	}
+	
 	
 	@PostMapping("/check-otp")
-	public List<OtpResponse> checkOTP(@RequestBody List<OtpRequest> emailOtpRequest){
+	public ResponseEntity checkOTP(@RequestBody List<OtpRequest> emailOtpRequest){
+		
 		List<OtpResponse> responseList = userService.validateOTP(emailOtpRequest);
-		return responseList;
+		for(OtpResponse each:responseList) {
+			if(each.getStatusCode()==200) {
+				return new ResponseEntity(each,HttpStatus.ACCEPTED);
+			}else if(each.getStatusCode()==400) {
+				return new ResponseEntity(each,HttpStatus.CONFLICT);
+			}
+		}
+		OtpResponse response=new OtpResponse();
+		response.setStatusCode(409);
+		response.setDescription("Email Id Does Not Exists");
+		return new ResponseEntity(response,HttpStatus.CONFLICT);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -62,13 +90,13 @@ public class UserController {
 	public ResponseEntity updateUser(@RequestBody UserRequest userRequestEntity) {
 		if (userRequestEntity.getUserId() == null) {
 			UserRequest userResponseEntity = new UserRequest();
-			userResponseEntity.setStatuscode(404);
+			userResponseEntity.setStatusCode(404);
 			userResponseEntity.setDescription("UserId Not Found");
 			return new ResponseEntity(userResponseEntity, HttpStatus.CONFLICT);
 		}
 		User userDatas = userService.findById(userRequestEntity.getUserId());
 		if (userDatas != null) {
-			User users = new User(userRequestEntity.getUserId(), userRequestEntity);
+			User users = new User(userRequestEntity.getUserId(),userDatas.getPassword(),userDatas.getVerificationStatus(),userDatas.getAuthentication(),userDatas.getCreatedBy(),userRequestEntity.getUpdatedBy(),userDatas.getUserType(),userDatas.getUserProfile(),userDatas.getSchool(),userRequestEntity);
 //			users.setCreatedByUser(userDatas.get().getCreatedByUser());
 //			if (userRequestEntity.getAttachment() == null) {
 //			} else {
@@ -89,8 +117,10 @@ public class UserController {
 //				}
 //			}
 //			users.setPasscode(userDatas.get().getPasscode());
+			System.out.println("UserDatas "+ userDatas);
 			User userData = userService.save(users);
 			if (userData != null) {
+				
 				UserRequest userReqEntity = new UserRequest(userData);
 				UserResponse userResponseEntity = new UserResponse(userReqEntity);
 //				UserType uTypes = userRequestEntity.getUserType();
@@ -104,14 +134,14 @@ public class UserController {
 				return new ResponseEntity(userResponseEntity, HttpStatus.OK);
 			} else {
 				UserResponse userResponseEntity = new UserResponse();
-				userResponseEntity.setErrorCode(400);
-				userResponseEntity.setMessage("Unable to Update User");
+				userResponseEntity.setStatusCode(400);
+				userResponseEntity.setDescription("Unable to Update User");
 				return new ResponseEntity(userResponseEntity, HttpStatus.CONFLICT);
 			}
 		} else {
 			UserResponse userResponseEntity = new UserResponse();
-				userResponseEntity.setErrorCode(404);
-				userResponseEntity.setMessage("User Not Found");
+				userResponseEntity.setStatusCode(404);
+				userResponseEntity.setDescription("User Not Found");
 				return new ResponseEntity(userResponseEntity, HttpStatus.CONFLICT);
 		}
 	}
@@ -119,25 +149,18 @@ public class UserController {
 	
 
 	@GetMapping("/user")
-	public List<UserResponse>  listAllusers()
-	{
+	private List<UserResponse> getAllYears() {
+		
 		List<UserResponse> response=new ArrayList<>();
-		
-
-	
-		userService.findAll().forEach(user->{
-			UserResponse userResponse = new UserResponse(user.getUserId(),user.getUserName(),user.getEmail(),user.getPassword(),user.getConfirmPassword(),user.getUserProfile().getPictureName(),user.getAuthentication(),user.getUserType(),user.getSubscriptionForm());
-			userResponse.setPhoneNumber(user.getPhoneNumber());
-
-			response.add(userResponse);
-		});
-		
-		return response;
+		userService.findAll().forEach(year ->{
+			response.add(new UserResponse(year));
+			});
+			return response;
 	}
 	
 	
 	@GetMapping("/user/{userId}")
-	public UserResponse viewUser(@PathVariable int userId)
+	public ResponseEntity viewUser(@PathVariable int userId)
 	{
 		User user = userService.findById(userId);
 		UserResponse userResponse= new UserResponse();
@@ -149,13 +172,20 @@ public class UserController {
 
 			userResponse.setPhoneNumber(user.getPhoneNumber());
 			userResponse.setUserType(user.getUserType().getUserTypeRole());
-			userResponse.setUserProfilePicture(user.getUserProfile().getPictureName());
+//			userResponse.setUserProfilePicture(user.getUserProfile().getPictureName());
 			userResponse.setAuthenticationType(user.getAuthentication());
-			userResponse.setSubscriptionFormFromUser(user.getSubscriptionForm());
+			userResponse.setSchool(user.getSchool());
+			UserProfilePicture		attachment	=				user.getUserProfile();
+			if(attachment != null) {
+				userResponse.setAttachment(new AnswerAttachmentJSON(attachment));
+			}
+			userResponse.setStatusCode(200);
+			userResponse.setDescription("User Listed Successfully");
+//			userResponse.setSubscriptionFormFromUser(user.getSubscriptionForm());
 			
 
 		}
-		return userResponse;
+		return new ResponseEntity(userResponse,HttpStatus.OK);
 
 	}
 	
@@ -183,6 +213,39 @@ public class UserController {
 	}
 	
 
+	
+	@GetMapping("/user/school/{schoolId}")
+	private ResponseEntity getAllSubscribedClassForUsers(@PathVariable Integer schoolId){
+	
+		List<UserResponse> response=new ArrayList<>();
+			School schoolFromDb=schoolService.findBySchoolId(schoolId);
+				if(schoolFromDb != null)
+				{
+			
+					userService.findBySchool(schoolFromDb).forEach(user ->{
+	
+									response.add(new UserResponse(user));
+							
+	  
+					});
+		      
+					 if(response.isEmpty())
+					 {
+						 UserResponse userResponseEntity = new UserResponse();
+							userResponseEntity.setStatusCode(201);
+							userResponseEntity.setDescription("No Data is Available");
+							return new ResponseEntity(userResponseEntity, HttpStatus.NOT_FOUND);
+					 }
+					
+		
+				}else {
+					UserResponse userResponseEntity = new UserResponse();
+					userResponseEntity.setStatusCode(201);
+					userResponseEntity.setDescription("No Data  Not Found");
+					return new ResponseEntity(userResponseEntity, HttpStatus.CONFLICT);
+				}
+	return new ResponseEntity(response, HttpStatus.OK);
+		}
 	
 
 	

@@ -3,11 +3,14 @@ package com.jesperapps.schoolmanagement.api.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.jesperapps.schoolmanagement.api.message.Response;
 import com.jesperapps.schoolmanagement.api.message.TopicResponse;
 import com.jesperapps.schoolmanagement.api.message.TopicSubscriptionRequest;
+import com.jesperapps.schoolmanagement.api.model.School;
 import com.jesperapps.schoolmanagement.api.model.SubscriptionStatus;
 import com.jesperapps.schoolmanagement.api.model.Topic;
 import com.jesperapps.schoolmanagement.api.model.TopicSubscription;
@@ -35,16 +38,16 @@ public class TopicSubscriptionImplementationService  implements TopicSubscriptio
 	private TopicService topicService;
 
 	@Override
-	public Response createTopicSubscription(TopicSubscriptionRequest topicSubscriptionRequest) {
+	public ResponseEntity createTopicSubscription(TopicSubscriptionRequest topicSubscriptionRequest) {
 		
 		
 		Response response=new Response();
 		TopicSubscription subscription=new TopicSubscription();
 		List<TopicSubscription >SubscriptionFromDb=topicSubscriptionRepository.findAllByTopic_topicIdAndUserTopic_userId(topicSubscriptionRequest.getSubscriptionTopic().getTopicId(),topicSubscriptionRequest.getUser().getUserId());
 		if(SubscriptionFromDb.isEmpty()==false) {
-			response.setStatuscode(409);
+			response.setStatusCode(409);
 			response.setDescription("Topic Already Subscribed For User");
-			return response;
+			return new ResponseEntity(response, HttpStatus.CONFLICT);
 		}else {
 			subscription.setTopic(topicService.findByTopicId(topicSubscriptionRequest.getSubscriptionTopic().getTopicId()));
 			User subscriptionUser = userRepository.findByUserId(topicSubscriptionRequest.getUser().getUserId());
@@ -61,17 +64,19 @@ public class TopicSubscriptionImplementationService  implements TopicSubscriptio
 				subscriptionUser.addSubscription(subscription);
 				userRepository.save(subscriptionUser);
 				response.setDescription("Successly subscribed");
-				response.setStatuscode(200);
+				response.setStatusCode(200);
 				
-				return response;	
+				return new ResponseEntity(response, HttpStatus.OK);	
 		}
 		
 		
 		
 	
 		}
-		
-		return response;
+		Response response1=new Response();
+		response1.setStatusCode(409);
+		response1.setDescription("No Such User Found");
+		return new ResponseEntity(response1, HttpStatus.CONFLICT);	
 	}
 
 	@Override
@@ -124,6 +129,12 @@ public class TopicSubscriptionImplementationService  implements TopicSubscriptio
 	public List<TopicSubscription> findAllByTopic_topicIdAndUserTopic_userId(Integer topicId, Integer userId) {
 	
 		return topicSubscriptionRepository.findAllByTopic_topicIdAndUserTopic_userId(topicId, userId);
+	}
+
+	@Override
+	public List<TopicSubscription> findAllByTopic_School(School school) {
+		// TODO Auto-generated method stub
+		return topicSubscriptionRepository.findAllByTopic_School(school);
 	}
 
 }

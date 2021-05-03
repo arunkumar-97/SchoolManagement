@@ -1,5 +1,7 @@
 package com.jesperapps.schoolmanagement.api.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +13,7 @@ import javax.persistence.ManyToOne;
 import com.jesperapps.schoolmanagement.api.modelmessage.BookmarkRequestEntity;
 
 @Entity
-public class Bookmark {
+public class Bookmark extends AbstractAuditingEntity implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

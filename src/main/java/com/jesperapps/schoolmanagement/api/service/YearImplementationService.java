@@ -64,6 +64,15 @@ public class YearImplementationService implements YearService {
 		yearRepository.delete(yearFromDb);
 	}
 
+
+
+
+	@Override
+	public Year findByYearId(Integer yearId) {
+		// TODO Auto-generated method stub
+		return yearRepository.findByYearId(yearId);
+	}
+
 	
 	
 	

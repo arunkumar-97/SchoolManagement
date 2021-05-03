@@ -2,18 +2,25 @@ package com.jesperapps.schoolmanagement.api.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jesperapps.schoolmanagement.api.model.AnswerAttachment;
+import com.jesperapps.schoolmanagement.api.model.AnswerContent;
 import com.jesperapps.schoolmanagement.api.model.Answers;
 import com.jesperapps.schoolmanagement.api.model.Question;
+import com.jesperapps.schoolmanagement.api.model.SchoolClasses;
 import com.jesperapps.schoolmanagement.api.model.Subject;
 import com.jesperapps.schoolmanagement.api.model.Class;
+import com.jesperapps.schoolmanagement.api.model.ClassSubjects;
 import com.jesperapps.schoolmanagement.api.model.Year;
+import com.jesperapps.schoolmanagement.api.modelmessage.AnswerAttachmentJSON;
+import com.jesperapps.schoolmanagement.api.modelmessage.AnswerContentJSON;
 import com.jesperapps.schoolmanagement.api.modelmessage.AnswerJson;
 import com.jesperapps.schoolmanagement.api.modelmessage.QuestionJson;
+import com.jesperapps.schoolmanagement.api.repository.AnswerContentRepository;
 import com.jesperapps.schoolmanagement.api.repository.QuestionRepository;
 import com.jesperapps.schoolmanagement.api.utils.StatusQuestion;
 
@@ -24,40 +31,60 @@ public class QuestionImplementationService implements QuestionService{
 	@Autowired
 	private QuestionRepository questionRepository;
 	
-	
+
 	@Autowired
 	private AnswerService answerService;
 	
+	@Autowired
+	private AnswerContentService answerContentService;
+	
+	@Autowired
+	private AnswerAttachmentService answerAttachmentService;
+	
+//	@Autowired
+//	private AnswerContentRepository answerContentRepository;
+	
 	public Question createQuestionFromRequest(QuestionJson newQuestion) {
+		System.out.println("newQuestion"+newQuestion.getQuestionId());
+		System.out.println("answer"+newQuestion.getAnswer());
 		Question newQuestionSaveToDB = new Question(newQuestion);
-		List<Answers> answersListSaveToDB = new ArrayList<>(); 
-		for(AnswerJson eachRequestAnswer : newQuestion.getAnswer()) {
+		Answers answersListSaveToDB = new Answers(); 
+		AnswerJson eachRequestAnswer= newQuestion.getAnswer();
+	eachRequestAnswer.setQuestion(newQuestionSaveToDB);
+	System.out.println("function call");
+	   
 			Answers newAnswerSaveToDB = answerService.saveAnswer(eachRequestAnswer);
 			if(newAnswerSaveToDB!=null) {
 				newAnswerSaveToDB.setQuestion(newQuestionSaveToDB);
-				answersListSaveToDB.add(newAnswerSaveToDB);
+         		answerService.saveAnswer(newAnswerSaveToDB);
+			//answersListSaveToDB.add(newAnswerSaveToDB);
+				
 			}
 			
-		}
-		newQuestionSaveToDB.setAnswers(answersListSaveToDB);
+		
+		//newQuestionSaveToDB.setAnswers(answersListSaveToDB);
 		return newQuestionSaveToDB;
 	}
 
 	@Override
 	public void saveQuestion(QuestionJson newQuestion) {
-		Question newQuestionSaveToDB = this.createQuestionFromRequest(newQuestion);
-		this.saveQuestion(newQuestionSaveToDB);
+//		Question newQuestionSaveToDB = this.createQuestionFromRequest(newQuestion);
+//		this.saveQuestion(newQuestionSaveToDB);
+		Question newQuestionSave = new Question(newQuestion);
+		Question questionsaved = this.saveQuestion(newQuestionSave);
+		 newQuestion.setQuestionId(questionsaved.getQuestionId());
+		 this.createQuestionFromRequest(newQuestion);
 	}
 	
 	private Question updateAnswerAttachmentURL(Question newQuestionSaveToDB) {
-		newQuestionSaveToDB.getAnswers().forEach(answer ->{
-			AnswerAttachment attachment = answer.getImageAttachment();
-			if(attachment != null) {
-				attachment.setPictureLocation(AnswerService.BASE_URL +"/"+attachment.getPictureId());
-			}
-		});
+//		newQuestionSaveToDB.getAnswers().forEach(answer ->{
+//			AnswerAttachment attachment = answer.getImageAttachment();
+//			if(attachment != null) {
+//				attachment.setPictureLocation(AnswerService.BASE_URL +"/"+attachment.getPictureId());
+//			}
+//		});
 		return newQuestionSaveToDB;
-	}
+}
 
 	@Override
 	public void saveAllQuestions(List<QuestionJson> newQuestionsList) {
@@ -69,17 +96,17 @@ public class QuestionImplementationService implements QuestionService{
 	}
 
 	@Override
-	public Question getQuestionId(Integer questionId) {
+	public Optional<Question> getQuestionId(Integer questionId) {
 		
-		return questionRepository.findByQuestionId(questionId);
+		return questionRepository.findById(questionId);
 	}
 
 	@Override
-	public void saveQuestion(Question questionFromDB) {
+	public Question saveQuestion(Question questionFromDB) {
 		
-		questionRepository.save(questionFromDB);
-		questionFromDB = this.updateAnswerAttachmentURL(questionFromDB);
-		this.questionRepository.save(questionFromDB);
+		return questionRepository.save(questionFromDB);
+		//questionFromDB = this.updateAnswerAttachmentURL(questionFromDB);
+		//this.questionRepository.save(questionFromDB);
 	}
 
 	@Override
@@ -96,41 +123,44 @@ public class QuestionImplementationService implements QuestionService{
 	}
 
 	@Override
-	public void saveQuestionWithSubjectAndYear(Question newQuestion, Subject subject, Year year,Class clas) {
-		if(subject != null) {
-		newQuestion.setSubject(subject);
-		subject.addQuestion(newQuestion);
+	public void saveQuestionWithSubjectAndYear(Question newQuestion,Year year,ClassSubjects schoolClassesFromDb) {
+		if(schoolClassesFromDb != null) {
+		newQuestion.setClassSubjects(schoolClassesFromDb);
+		schoolClassesFromDb.addQuestion(newQuestion);
 		}
 		if(year != null) {
 		newQuestion.setYear(year);
 		year.addQuestion(newQuestion);
 		}
-		if(clas !=null) {
-			newQuestion.setClas(clas);
-			clas.addQuestion(newQuestion);
-		}
+		
 		this.saveQuestion(newQuestion);
 	}
 
 	@Override
-	public List<Question> findBySubjectAndYearAndClass(Subject subject,Class clas, Year year) {
-		return this.questionRepository.findBySubjectAndYearAndClas(subject, year,clas);
+	public List<Question> findByYearAndClassSubjects(Year year,ClassSubjects classSubjects) {
+		return this.questionRepository.findByYearAndClassSubjects( year,classSubjects);
 	}
 
 	@Override
-	public void saveQuestionWithSubject(Question newQuestionCreated, Subject subjectFromDb) {
-		if(subjectFromDb !=null) {
-			newQuestionCreated.setSubject(subjectFromDb);
-			subjectFromDb.addQuestion(newQuestionCreated);
-		}
-		this.saveQuestion(newQuestionCreated);
+	public Question findByQuestionId(Integer questionId) {
+		// TODO Auto-generated method stub
+		return questionRepository.findByQuestionId(questionId);
 	}
 
-	@Override
-	public List<Question> findBySubject(Subject subjectFromDb) {
-	
-		return this.questionRepository.findBySubject(subjectFromDb);
-	}
+//	@Override
+//	public void saveQuestionWithSubject(Question newQuestionCreated, Subject subjectFromDb) {
+//		if(subjectFromDb !=null) {
+//			newQuestionCreated.setSubject(subjectFromDb);
+//			subjectFromDb.addQuestion(newQuestionCreated);
+//		}
+//		this.saveQuestion(newQuestionCreated);
+//	}
+
+//	@Override
+//	public List<Question> findBySubject(Subject subjectFromDb) {
+//	
+//		return this.questionRepository.findBySubject(subjectFromDb);
+//	}
 	
 	
 

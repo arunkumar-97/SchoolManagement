@@ -3,6 +3,9 @@ package com.jesperapps.schoolmanagement.api.message;
 
 
 import com.jesperapps.schoolmanagement.api.model.Class;
+import com.jesperapps.schoolmanagement.api.model.EducationBoard;
+import com.jesperapps.schoolmanagement.api.model.Medium;
+
 
 //import com.jesperapps.schoolmanagement.api.model.EducationBoard;
 //import com.jesperapps.schoolmanagement.api.model.Medium;
@@ -13,33 +16,30 @@ public class ClassResponse extends BaseResponse {
 	private Integer classId;
 	private String className;
 	private String status;
-	private String medium;
-	private String educationBoard;
+	private Medium medium;
+	private EducationBoard educationBoard;
+
 	
 	
 
 	public ClassResponse() {
 		
+	
 	}
+	
 	
 	
 	public ClassResponse(Class cls) {
+		
 		this.classId = cls.getClassId();
 		this.className = cls.getClassName();
 		this.status = cls.getStatus();
-		this.medium=cls.getMedium().getMediumLanguage();
-		this.educationBoard=cls.getEducationBoard()!=null? cls.getEducationBoard().getEducationBoardName():null;
+		this.medium=cls.getMedium();
+		this.educationBoard=cls.getEducationBoard()!=null? cls.getEducationBoard():null;
+//		this.school=cls.getSchool();
 	}
 	
-	
-	public ClassResponse(Integer classId, String className, String status,String medium,String educationBoard) {
-		
-		this.classId = classId;
-		this.className = className;
-		this.status = status;
-		this.medium=medium;
-		this.educationBoard=educationBoard;
-	}
+
 
 	public ClassResponse(ClassResponse subscriptionClass) {
 		this.classId=subscriptionClass.getClassId();
@@ -47,36 +47,47 @@ public class ClassResponse extends BaseResponse {
 	}
 
 
-	public ClassResponse(int i, String string) {
-	this.statuscode=i;
-	this.description=string;
-	}
-
-
-	public String getEducationBoard() {
-		return educationBoard;
-	}
-
-
-	public void setEducationBoard(String educationBoard) {
-		this.educationBoard = educationBoard;
-	}
+//	public ClassResponse(int i, String string) {
+//	this.statuscode=i;
+//	this.description=string;
+//	}
 
 
 	
 
 
+	public ClassResponse(Integer classId2, String className2, String status2, Medium medium2,
+			EducationBoard educationBoard2) {
+		this.classId=classId2;
+		this.className=className2;
+		this.status=status2;
+		this.medium=medium2;
+		this.educationBoard=educationBoard2;
+		
+	}
 
-	public String getMedium() {
+	
+
+
+
+	public Medium getMedium() {
 		return medium;
 	}
 
 
-
-	public void setMedium(String medium) {
+	public void setMedium(Medium medium) {
 		this.medium = medium;
 	}
 
+
+	public EducationBoard getEducationBoard() {
+		return educationBoard;
+	}
+
+
+	public void setEducationBoard(EducationBoard educationBoard) {
+		this.educationBoard = educationBoard;
+	}
 
 
 	public Integer getClassId() {

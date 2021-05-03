@@ -14,13 +14,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jesperapps.schoolmanagement.api.message.ClassResponse;
 import com.jesperapps.schoolmanagement.api.message.Response;
-import com.jesperapps.schoolmanagement.api.message.SubscriptionResponse;
 import com.jesperapps.schoolmanagement.api.message.SubscriptionStatusJson;
 import com.jesperapps.schoolmanagement.api.message.TopicResponse;
 import com.jesperapps.schoolmanagement.api.message.TopicSubscriptionRequest;
 import com.jesperapps.schoolmanagement.api.message.TopicSubscriptionResponse;
+import com.jesperapps.schoolmanagement.api.model.School;
 import com.jesperapps.schoolmanagement.api.model.SubscriptionStatus;
 import com.jesperapps.schoolmanagement.api.model.Topic;
 import com.jesperapps.schoolmanagement.api.model.TopicSubscription;
@@ -49,20 +48,20 @@ public class TopicSubscriptionController {
 	
 	
 	@PostMapping("/topicSubscription")
-	public Response createTopicSubscription(@RequestBody TopicSubscriptionRequest topicSubscriptionRequest) {
+	public ResponseEntity createTopicSubscription(@RequestBody TopicSubscriptionRequest topicSubscriptionRequest) {
 		return topicSubscriptionService.createTopicSubscription(topicSubscriptionRequest);
 	}
 
 
-  @GetMapping("/topicSubscription")
-  public ResponseEntity getAllTopicsForSubscriptionRequest(){
+  @GetMapping("/topicSubscription/school/{schoolId}")
+  public ResponseEntity getAllTopicsForSubscriptionRequestBasedOnSchool(@PathVariable("schoolId")Integer schoolId){
 	  
-	  
+	  School school=new School(schoolId);
 	  List<TopicResponse> response = new ArrayList<>();
-	  List<TopicSubscription> to=topicSubscriptionService.findAll();
+	  List<TopicSubscription> to=topicSubscriptionService.findAllByTopic_School(school);
 	  if(to.isEmpty()) {
 		  TopicResponse userResponseEntity = new TopicResponse();
-			userResponseEntity.setStatuscode(201);
+			userResponseEntity.setStatusCode(201);
 			userResponseEntity.setDescription("No Data is Available");
 			return new ResponseEntity(userResponseEntity, HttpStatus.NOT_FOUND);
 	  }
@@ -77,13 +76,47 @@ public class TopicSubscriptionController {
 	  if(response.isEmpty())
 		 {
 		  TopicResponse userResponseEntity = new TopicResponse();
-				userResponseEntity.setStatuscode(201);
+				userResponseEntity.setStatusCode(201);
 				userResponseEntity.setDescription("No Data is Available");
 				return new ResponseEntity(userResponseEntity, HttpStatus.NOT_FOUND);
 		 }
 	return  new ResponseEntity(response, HttpStatus.OK);
 	  
 }
+  
+  
+
+  @GetMapping("/topicSubscription")
+  public ResponseEntity getAllTopicsForSubscriptionRequest(){
+	  
+	  
+	  List<TopicResponse> response = new ArrayList<>();
+	  List<TopicSubscription> to=topicSubscriptionService.findAll();
+	  if(to.isEmpty()) {
+		  TopicResponse userResponseEntity = new TopicResponse();
+			userResponseEntity.setStatusCode(201);
+			userResponseEntity.setDescription("No Data is Available");
+			return new ResponseEntity(userResponseEntity, HttpStatus.NOT_FOUND);
+	  }
+	  to.forEach(topicSubscription ->{
+		  if(!this.topicSubscriptionService.checkTopicInResponse(response,topicSubscription.getTopic())) {
+			  if(!topicSubscription.getSubscriptionStatus().getStatus().equalsIgnoreCase(SubscriptionStatusTag.SUBSCRIBED)) {
+				  response.add(new TopicResponse(topicSubscription.getTopic()));
+				  }
+		  }
+		 
+		  });
+	  if(response.isEmpty())
+		 {
+		  TopicResponse userResponseEntity = new TopicResponse();
+				userResponseEntity.setStatusCode(201);
+				userResponseEntity.setDescription("No Data is Available");
+				return new ResponseEntity(userResponseEntity, HttpStatus.NOT_FOUND);
+		 }
+	return  new ResponseEntity(response, HttpStatus.OK);
+	  
+}
+  
   
   
   @GetMapping("/topicSubscription/{topicId}")
@@ -101,14 +134,14 @@ public class TopicSubscriptionController {
 	  if(response.isEmpty())
 		 {
 		  TopicSubscriptionResponse userResponseEntity = new TopicSubscriptionResponse();
-				userResponseEntity.setStatuscode(201);
+				userResponseEntity.setStatusCode(201);
 				userResponseEntity.setDescription("No Data is Available");
 				return new ResponseEntity(userResponseEntity, HttpStatus.NOT_FOUND);
 		 }
 	 
   }else {
 	  TopicSubscriptionResponse userResponseEntity = new TopicSubscriptionResponse();
-		userResponseEntity.setStatuscode(201);
+		userResponseEntity.setStatusCode(201);
 		userResponseEntity.setDescription("No Data  Not Found");
 		return new ResponseEntity(userResponseEntity, HttpStatus.CONFLICT);
 	}
@@ -125,7 +158,7 @@ return new ResponseEntity(response, HttpStatus.ACCEPTED);
 	  if(topicSubscriptionFromDb != null) {
 		  topicSubscriptionFromDb.setSubscriptionStatus(new SubscriptionStatus(subscriptionStatusRequest));
 		  topicSubscriptionService.saveTopicSubscription(topicSubscriptionFromDb);
-		  response.setStatuscode(200);
+		  response.setStatusCode(200);
 			response.setDescription("Successfully updated the SubscriptionStatus");
 			subscriptionResponse.setTopic(topicSubscriptionFromDb.getTopic());
 			subscriptionResponse.setTopicSubscriptionId(topicSubscriptionFromDb.getTopicSubscriptionId());
@@ -153,14 +186,14 @@ return new ResponseEntity(response, HttpStatus.ACCEPTED);
 		  if(response.isEmpty())
 			 {
 			  TopicSubscriptionResponse userResponseEntity = new TopicSubscriptionResponse();
-					userResponseEntity.setStatuscode(201);
+					userResponseEntity.setStatusCode(201);
 					userResponseEntity.setDescription("No Data is Available");
 					return new ResponseEntity(userResponseEntity, HttpStatus.NOT_FOUND);
 			 }
 		 
 	  }else {
 		  TopicSubscriptionResponse userResponseEntity = new TopicSubscriptionResponse();
-			userResponseEntity.setStatuscode(201);
+			userResponseEntity.setStatusCode(201);
 			userResponseEntity.setDescription("No Data  Not Found");
 			return new ResponseEntity(userResponseEntity, HttpStatus.CONFLICT);
 		}

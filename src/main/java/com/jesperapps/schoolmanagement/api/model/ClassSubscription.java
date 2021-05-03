@@ -1,5 +1,7 @@
 package com.jesperapps.schoolmanagement.api.model;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +14,7 @@ import javax.persistence.OneToOne;
 
 
 @Entity
-public class ClassSubscription {
+public class ClassSubscription extends AbstractAuditingEntity implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,16 +29,16 @@ public class ClassSubscription {
 	private User user;
 	
 	@OneToOne
-	@JoinColumn(name="subscriptionClassId" ,referencedColumnName = "classId")
-	private Class subscriptionClass;
+	@JoinColumn(name="schoolClassesId" ,referencedColumnName ="schoolClassesId")
+	private SchoolClasses subscriptionClass;
 	
-	@OneToOne
-	@JoinColumn(name="mediumId" ,referencedColumnName ="mediumId")
-	private Medium medium;
-	
-	@OneToOne
-	@JoinColumn(name="educationBoardId" ,referencedColumnName ="educationBoardId")
-	private EducationBoard educationBoard;
+//	@OneToOne
+//	@JoinColumn(name="mediumId" ,referencedColumnName ="mediumId")
+//	private Medium medium;
+//	
+//	@OneToOne
+//	@JoinColumn(name="educationBoardId" ,referencedColumnName ="educationBoardId")
+//	private EducationBoard educationBoard;
 	
 	
 	public User getUser() {
@@ -51,31 +53,38 @@ public class ClassSubscription {
 	public void setSubscriptionId(int subscriptionId) {
 		this.subscriptionId = subscriptionId;
 	}
-	public Class getSubscriptionClass() {
+	
+	public SchoolClasses getSubscriptionClass() {
 		return subscriptionClass;
 	}
-	public void setSubscriptionClass(Class subscriptionClass) {
+	public void setSubscriptionClass(SchoolClasses subscriptionClass) {
 		this.subscriptionClass = subscriptionClass;
 	}
-	public Medium getMedium() {
-		return medium;
-	}
-	public void setMedium(Medium medium) {
-		this.medium = medium;
-	}
-	public EducationBoard getEducationBoard() {
-		return educationBoard;
-	}
-	public void setEducationBoard(EducationBoard educationBoard) {
-		this.educationBoard = educationBoard;
-	}
+//	public Medium getMedium() {
+//		return medium;
+//	}
+//	public void setMedium(Medium medium) {
+//		this.medium = medium;
+//	}
+//	public EducationBoard getEducationBoard() {
+//		return educationBoard;
+//	}
+//	public void setEducationBoard(EducationBoard educationBoard) {
+//		this.educationBoard = educationBoard;
+//	}
 	public SubscriptionStatus getSubscriptionStatus() {
 		return subscriptionStatus;
 	}
 	public void setSubscriptionStatus(SubscriptionStatus subscriptionStatus) {
 		this.subscriptionStatus = subscriptionStatus;
 	}
-	
+//	@Override
+//	public String toString() {
+//		return "ClassSubscription [subscriptionId=" + subscriptionId + ", subscriptionStatus=" + subscriptionStatus
+//				+ ", user=" + user + ", subscriptionClass=" + subscriptionClass + ", medium=" + medium
+//				+ ", educationBoard=" + educationBoard + "]";
+//	}
+//	
 	
 	
 	

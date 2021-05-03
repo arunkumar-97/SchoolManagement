@@ -44,13 +44,13 @@ public class TopicAttachmentSubscriptionController {
 		Response response=new Response();
 	List<TopicAttachmentSubscription>	attachmentSubscriptionFromDb= topicAttachmentSubscriptionService.findAllByUsers_userIdAndTopics_topicIdAndTopicAttachment_pictureId(topicAttSub.getUsers().getUserId(),topicAttSub.getTopics().getTopicId(),topicAttSub.getTopicAttachment().getPictureId());
 	if(attachmentSubscriptionFromDb.isEmpty()==false) {
-		response.setStatuscode(409);
+		response.setStatusCode(409);
 		response.setDescription("Topic Attachment Already Subscribed For User");
 		return response;
 	}else {
 		TopicAttachmentSubscription topicAttachmentSubscription = new TopicAttachmentSubscription(topicAttSub);
 		topicAttachmentSubscriptionService.createSubscription(topicAttachmentSubscription);
-		response.setStatuscode(200);
+		response.setStatusCode(200);
 		response.setDescription("Topic Attachment Successfully subscribed for the user");
 		return response;
 	}
@@ -101,7 +101,7 @@ public class TopicAttachmentSubscriptionController {
 		  if(topicSubscriptionFromDb != null) {
 			  topicSubscriptionFromDb.setSubscriptionStatus(new SubscriptionStatus(subscriptionStatusRequest));
 			  topicAttachmentSubscriptionService.saveTopicSubscription(topicSubscriptionFromDb);
-			  response.setStatuscode(200);
+			  response.setStatusCode(200);
 				response.setDescription("Successfully updated the SubscriptionStatus");
 				subscriptionResponse.setTopic(topicSubscriptionFromDb.getTopics());
 				subscriptionResponse.setSubscriptionId(topicSubscriptionFromDb.getSubscriptionId());

@@ -22,8 +22,8 @@ import com.jesperapps.schoolmanagement.api.utils.StorageUtils;
 public class AnswerAttachmentImplementationService  implements AnswerAttachmentService{
 
 	
-private static final String LOCATION = StorageUtils.getFolderLocation("image_answers");
-	
+
+     private static final String LOCATION = StorageUtils.getFolderLocation("image_answers");
 	@Autowired
 	private AnswerAttachmentRepository answerAttachementRepository;
 	

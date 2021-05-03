@@ -1,5 +1,6 @@
 package com.jesperapps.schoolmanagement.api.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -14,7 +15,7 @@ import javax.persistence.OneToMany;
 import com.jesperapps.schoolmanagement.api.modelmessage.OneMarkQuestionJSON;
 
 @Entity
-public class OneMarkQuestion {
+public class OneMarkQuestion extends AbstractAuditingEntity implements Serializable{
 
 	
 	@Id
@@ -26,13 +27,19 @@ public class OneMarkQuestion {
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "question")
 	List<OneMarkAnswers> answers;
 	
+//	@ManyToOne
+//	@JoinColumn(name="subjectId")
+//	private Subject subjects;
+//
+//	@ManyToOne
+//	@JoinColumn(name="classId")
+//	private Class classs;
+	
+	
 	@ManyToOne
-	@JoinColumn(name="subjectId")
-	private Subject subjects;
-
-	@ManyToOne
-	@JoinColumn(name="classId")
-	private Class classs;
+	@JoinColumn(name = "classSubjectsId")
+	private ClassSubjects classSubjects;
+	
 	
 	@ManyToOne
 	@JoinColumn(name="yearId")
@@ -50,6 +57,19 @@ public class OneMarkQuestion {
 	}
 	
 	
+	
+
+
+	public ClassSubjects getClassSubjects() {
+		return classSubjects;
+	}
+
+
+	public void setClassSubjects(ClassSubjects classSubjects) {
+		this.classSubjects = classSubjects;
+	}
+
+
 	public Integer getOneMarkQuestionId() {
 		return oneMarkQuestionId;
 	}
@@ -68,18 +88,18 @@ public class OneMarkQuestion {
 	public void setAnswers(List<OneMarkAnswers> answers) {
 		this.answers = answers;
 	}
-	public Subject getSubjects() {
-		return subjects;
-	}
-	public void setSubjects(Subject subjects) {
-		this.subjects = subjects;
-	}
-	public Class getClasss() {
-		return classs;
-	}
-	public void setClasss(Class classs) {
-		this.classs = classs;
-	}
+//	public Subject getSubjects() {
+//		return subjects;
+//	}
+//	public void setSubjects(Subject subjects) {
+//		this.subjects = subjects;
+//	}
+//	public Class getClasss() {
+//		return classs;
+//	}
+//	public void setClasss(Class classs) {
+//		this.classs = classs;
+//	}
 	public Year getYears() {
 		return years;
 	}

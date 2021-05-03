@@ -2,6 +2,7 @@ package com.jesperapps.schoolmanagement.api.model;
 
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ import com.jesperapps.schoolmanagement.api.utils.StatusSubject;
 
 
 @Entity
-public class Subject  {
+public class Subject extends AbstractAuditingEntity implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,16 +35,16 @@ public class Subject  {
 	@JoinTable(name="classSubject",joinColumns=@JoinColumn(name="subjectId", referencedColumnName="subjectId"), inverseJoinColumns=@JoinColumn(name="classId", referencedColumnName="classId"))
 	private Class cls;
 	
-	@ManyToOne
-	@JoinColumn(name="classId", referencedColumnName="classId")
-	private Class classes;
+//	@ManyToOne
+//	@JoinColumn(name="classId", referencedColumnName="classId")
+//	private Class classes;
 	
 	
-	@OneToMany(cascade = CascadeType.ALL,mappedBy="subject")
-	private List<Question> questionsList;
+//	@OneToMany(cascade = CascadeType.ALL,mappedBy="subject")
+//	private List<Question> questionsList;
  	
-	@OneToMany(cascade = CascadeType.ALL,mappedBy="subjects")
-	private List<OneMarkQuestion> questions;
+//	@OneToMany(cascade = CascadeType.ALL,mappedBy="subjects")
+//	private List<OneMarkQuestion> questions;
 	
 	public Class getCls() {
 		return cls;
@@ -82,40 +83,40 @@ public class Subject  {
 		this.status = subjectRequest.getStatus() != null ? subjectRequest.getStatus() : this.status;
 	}
 
-	public Class getClasses() {
-		return classes;
-	}
+//	public Class getClasses() {
+//		return classes;
+//	}
+//
+//	public void setClasses(Class classes) {
+//		this.classes = classes;
+//	}
 
-	public void setClasses(Class classes) {
-		this.classes = classes;
-	}
-
-	public List<Question> getQuestionsList() {
-		return questionsList;
-	}
-
-	public void setQuestionsList(List<Question> questionsList) {
-		this.questionsList = questionsList;
-	}
+//	public List<Question> getQuestionsList() {
+//		return questionsList;
+//	}
+//
+//	public void setQuestionsList(List<Question> questionsList) {
+//		this.questionsList = questionsList;
+//	}
 	
-	public void addQuestion(Question question) {
-		if(this.questionsList == null) {
-			this.questionsList = new ArrayList<>();
-		}
-		if(question != null) {
-			this.questionsList.add(question);	
-		}
-	}
+//	public void addQuestion(Question question) {
+//		if(this.questionsList == null) {
+//			this.questionsList = new ArrayList<>();
+//		}
+//		if(question != null) {
+//			this.questionsList.add(question);	
+//		}
+//	}
 
-	public void addQuestion(OneMarkQuestion newQuestion) {
-		if(this.questions==null) {
-			this.questions=new ArrayList<>();
-		}
-		if(newQuestion !=null) {
-			this.questions.add(newQuestion);
-		}
-		
-	}
-	
+//	public void addQuestion(OneMarkQuestion newQuestion) {
+//		if(this.questions==null) {
+//			this.questions=new ArrayList<>();
+//		}
+//		if(newQuestion !=null) {
+//			this.questions.add(newQuestion);
+//		}
+//		
+//	}
+//	
 
 }
